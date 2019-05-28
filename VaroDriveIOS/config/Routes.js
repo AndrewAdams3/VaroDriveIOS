@@ -5,7 +5,6 @@ import React from 'react';
 import SlideMenu from '../components/SlideMenu'
 import LeftMenu from '../components/LeftMenu'
 // Route Imports
-import LoginScreen from '../screens/Login/Login.js'
 import HomeScreen from '../screens/Home/Home.js'
 import SignUpScreen from '../screens/SignUp/SignUp.js'
 import AuthScreen from '../screens/Auth.js'

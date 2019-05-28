@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert, ScrollView, ActivityIndicator, Platform, PermissionsAndroid, TouchableOpacity, StyleSheet, Image, FlatList, TextInput } from 'react-native';
+import { View, Text, Alert, Dimensions, ScrollView, ActivityIndicator, Platform, PermissionsAndroid, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
 import { colors } from '../config/styles'
 import ImagePicker from 'react-native-image-picker'
 
@@ -12,6 +12,8 @@ import { setLocation } from '../redux/store2'
 const GOOGLE_API_KEY = 'AIzaSyB-_ttHRMq1Qslv1TLRZOxRbXlkMJc5YWM'
 import Geolocation from 'react-native-geolocation-service';
 
+const HEIGHT = Dimensions.get("screen").height;
+const WIDTH = Dimensions.get("screen").width
 
 const mapStateToProps = (state) => {
   return {
@@ -343,6 +345,7 @@ showAlert = () => {
         if (res.data.response == 0){
           console.log("sending rest of data...");
           url = 'http://' + constants.ip + ':3210/data/DriveBys/newDB';
+          console.log("coord: ", this.state.lat, this.state.lon);
           await axios.post(url,{
             path: res.data.path,
             finder: this.props.userId,
@@ -351,7 +354,9 @@ showAlert = () => {
             type: this.state.fields[2].value,
             vacant: this.state.fields[3].value,
             burned: this.state.fields[4].value,
-            boarded: this.state.fields[5].value
+            boarded: this.state.fields[5].value,
+            lat: this.state.lat,
+            lon: this.state.lon
           }).then( (res2) => {
             if(res2.data.response == 0){
               console.log("success");
@@ -422,8 +427,8 @@ const styles = StyleSheet.create({
   },
   background: {
     position: 'absolute',
-    height: '100%',
-    width: '100%',
+    height: HEIGHT,
+    width: WIDTH,
     opacity: .9,
     overlayColor: 'grey'
   },

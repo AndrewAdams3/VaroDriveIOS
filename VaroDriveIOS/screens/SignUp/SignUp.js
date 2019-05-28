@@ -154,7 +154,6 @@ class SignUpScreen extends React.Component {
           });
       this.setState({ loginSuccess: signup });
       if(this.state.loginSuccess){
-        this.showCheckEmailAlert();
         this.setState({ loginSuccess: signup });
         this.setState({userId: userId});
         this.setState({seshId: seshId });
@@ -217,6 +216,7 @@ class SignUpScreen extends React.Component {
                     <UserInput
                       source={{ uri: images.usernameIcon }}
                       placeholder={"email"}
+                      keyboardType={'email-address'}
                       autoCapitalize={'none'}
                       returnKeyType={'next'}
                       autoCorrect={false}
@@ -242,7 +242,7 @@ class SignUpScreen extends React.Component {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', padding: 20}} onPress = {() =>this.props.navigation.navigate('Auth')}>
+                <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', padding: 20}} onPress = {() =>this.props.navigation.navigate('Login')}>
                   <Text style = {[styles.buttonText, {fontSize : 16}]}>Already have an account? Login here</Text>
                 </TouchableOpacity>
               </View>

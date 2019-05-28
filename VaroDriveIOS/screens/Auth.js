@@ -152,6 +152,7 @@ class AuthScreen extends React.Component {
                     </Text>
                     <UserInput
                       source={{ uri: images.usernameIcon }}
+                      keyboardType={'email-address'}
                       placeholder={"email"}
                       autoCapitalize={'none'}
                       returnKeyType={'next'}

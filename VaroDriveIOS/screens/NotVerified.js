@@ -31,7 +31,7 @@ class NotVerifiedScreen extends React.Component{
     axios.get(url)
       .then( (res) => {
         if(res.data.ok == true) {
-          this.props.navigation.navigate('Home');
+          this.props.navigation.navigate('UserInfo');
         }
         else{
           console.log("not verified")

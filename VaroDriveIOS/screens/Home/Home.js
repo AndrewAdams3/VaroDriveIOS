@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
       textAlign: 'center'
     },
     image: {
-      flex: .75, 
+      flex: .5, 
       tintColor: 'white', 
       resizeMode: 'contain'
     },

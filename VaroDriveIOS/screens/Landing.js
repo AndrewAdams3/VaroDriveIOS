@@ -87,19 +87,24 @@ class LandingScreen extends React.Component {
   }
 
    getUser = async (token, returner) => {
+     console.log("getting user");
     var url = 'http://' + constants.ip + ':3210/data/users/id';
      await axios.post(url, { seshId: token }).then((Data) => {
-      this.props.setID(Data.data.userId);
-      this.props.isLoggedIn(returner);
-      this.props.setPic(Data.data.pic)
-      if(Data.data.fName != "") this.props.setFName(Data.data.fName);
-      if(Data.data.lName != "") this.props.setLName(Data.data.lName);
-      if(Data.data.isVerified) {
-        this.props.setVerified(true)
-        this.isVerified = true;
-      };
-      console.log("test auth: " + Data.data.userId);
-      console.log("nametest: " + Data.data.fName)
+      if(Data.data.ok == 1){
+        this.props.setID(Data.data.userId);
+        this.props.isLoggedIn(returner);
+        this.props.setPic(Data.data.pic)
+        if(Data.data.fName != "") this.props.setFName(Data.data.fName);
+        if(Data.data.lName != "") this.props.setLName(Data.data.lName);
+        if(Data.data.isVerified) {
+          this.props.setVerified(true)
+          this.isVerified = true;
+        };
+        console.log("test auth: " + Data.data.userId);
+        console.log("nametest: " + Data.data.fName)
+      }
+    }, (err) => {
+      console.log("err getting info: ", err);
     })
   }
   // Fetch the token from storage then navigate to our appropriate place
@@ -108,19 +113,18 @@ class LandingScreen extends React.Component {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    console.log("sesh token: " + userToken, "ID: ", this.props.id);
+    console.log("sesh token: " + userToken);
     const returner = userToken ? true : false;
-    await this.getUser(userToken);
     if(returner){
+      await this.getUser(userToken, returner);
       if (this.props.userId == "") {
-        console.log("no user found");
         this.props.navigation.navigate('Auth');
         return;
       }
       this.isVerified?
         this.props.navigation.navigate('App') : this.props.navigation.navigate('NotVerified'); //isVerified
     }else{
-      this.props.navigation.navigate('SignUp');
+      this.props.navigation.navigate('Auth');
     }
   };
 
