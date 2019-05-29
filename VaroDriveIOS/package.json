@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "test": "jest",
+    "clean": "watchman watch-del-all && del -rf $TMPDIR/react-* && del -rf $TMPDIR/metro* && del -rf $TMPDIR/haste-*"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -15,6 +16,7 @@
     "react-native": "^0.59.6",
     "react-native-awesome-viewpager": "^1.0.9",
     "react-native-calendar-picker": "^6.0.0",
+    "react-native-clean-project": "^3.2.1",
     "react-native-fast-image": "^6.0.1",
     "react-native-geolocation-service": "^1.1.0",
     "react-native-gesture-handler": "^1.1.0",
