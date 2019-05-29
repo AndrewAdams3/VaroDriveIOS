@@ -71,13 +71,16 @@ class TimeInScreen extends React.Component {
         var address = JSON.stringify(responseJson.results[0].formatted_address).replace("\"", "");
         address = address.substr(0,address.length-1);
         this.props.setLocation(address);
+        this.setState({ searching: false });
     })
   }
 
   getCurrentLocation = async () => {
+    this.setState({searching: true});
     if (Platform.OS === 'android') { 
       const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION); 
       if (!granted) {
+        this.setState({ searching: false });
         console.log("permission problemo"); 
         return; 
       } 
@@ -88,6 +91,7 @@ class TimeInScreen extends React.Component {
       },
       (error) => {
         // See error code charts below.
+        this.setState({ searching: false });
         console.log(error.code, error.message);
       },
       { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
@@ -102,6 +106,7 @@ class TimeInScreen extends React.Component {
   }
 
   geoError = () => {
+    this.setState({ searching: false });
     console.log("geo problemo");
   }
 
@@ -122,6 +127,31 @@ class TimeInScreen extends React.Component {
   }
 
   msToTime = (duration, running) => {
+    if(!running){
+      var d = new Date(duration);
+      var hours = d.getHours();
+      hours = hours > 12 ? hours - 12 : hours;
+      var minutes = d.getMinutes();
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      if (!running) hours = hours == 0 ? 12 : hours;
+      return hours + ":" + minutes;
+    }
+    else{
+      var milliseconds = parseInt((duration % 1000) / 100),
+        seconds = parseInt((duration / 1000) % 60),
+        minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+      seconds = milliseconds > 5 ? (seconds + 1) : seconds;
+      hours = (hours < 10) ? "0" + hours : hours;
+      hours = (hours > 12) ? hours - 12 : hours;
+      if (!running) hours = hours == 0 ? 12 : hours;
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      seconds = (seconds < 10) ? "0" + seconds : seconds;
+      return hours + ":" + minutes + ":" + seconds;
+    }
+  }
+
+  /* msToTime = (duration, running) => {
     var milliseconds = parseInt((duration % 1000) / 100),
     seconds = parseInt((duration / 1000) % 60),
     minutes = parseInt((duration / (1000 * 60)) % 60),
@@ -132,8 +162,9 @@ class TimeInScreen extends React.Component {
     if(!running) hours = hours == 0 ? 12 : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
+    console.log("HRS: ", hours + "time: ", new Date(duration).getHours());
     return hours + ":" + minutes + ":" + seconds;
-  }
+  } */
   setUserOnClock = (on) => {
     var url = 'http://' + constants.ip + ':3210/data/users';
     axios.put(url, {
@@ -227,8 +258,30 @@ class TimeInScreen extends React.Component {
     this.setUserOnClock(false); //set user to onclock in db
   }
 
+  locAlert = () => {
+      Alert.alert(
+        'No Location Found',
+        'Please let your location load',
+        [
+          {
+            text: 'ok',
+            onPress: () => console.log('Cancel Pressed'),
+            style: 'cancel',
+          },
+          {
+            text: 'retry',
+            onPress: this.getCurrentLocation,
+            style: 'default',
+          },
+        ],
+      )
+  }
+
   clockPress() {
-    this.confirm();
+    if (this.props.location != "")
+      this.confirm();
+    else
+      this.locAlert()
   }
 
   getOnTime = async () => {
@@ -254,14 +307,12 @@ class TimeInScreen extends React.Component {
         <Image style={styles.background} source={ this.background } />
         <View style={{ height: '5%' }} />
         <View style={[styles.container, {paddingLeft: 10, paddingRight: 10}]}>
-          <View style={{ justifyContent: 'center', paddingTop: '30%', alignItems: 'center', width: '70%', position: 'absolute' }} >
-            <Text style={{ color: 'white', fontSize: 20, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
-              {this.props.location || ""}
+          <View style={styles.locationView} >
+            <Text style={{ color: this.props.location ? 'white' : 'transparent', fontSize: 20, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+              {this.props.location || "\n\n"}
             </Text>
           </View>
-          <View style={{height: '5%'}}/>
           <View style={{ alignItems: 'center', justifyContent: 'center' }}>
-            <View style={{height: '20%'}}/>
             <TouchableOpacity 
             style={styles.newTime}
               onPress={ this.clockPress.bind(this)}
@@ -309,10 +360,16 @@ const styles = StyleSheet.create({
     opacity: .9,
     overlayColor: 'grey'
   },
+  locationView: {
+    flex: .5,
+    justifyContent: 'center', 
+    paddingTop: '30%', 
+    alignItems: 'center', 
+    width: '70%'
+  },
   newTime: {
     backgroundColor: 'transparent', 
-    justifyContent: 'center', 
-    paddingTop: 10,
+    justifyContent: 'center',
     paddingBottom: 20
   },
   timeTableContainer: { 

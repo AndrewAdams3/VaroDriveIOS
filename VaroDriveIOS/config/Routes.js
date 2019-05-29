@@ -1,6 +1,8 @@
 // Library Imports
 import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
 import React from 'react';
+import { ifIphoneX } from 'react-native-iphone-x-helper'
+
 // Component Imports
 import SlideMenu from '../components/SlideMenu'
 import LeftMenu from '../components/LeftMenu'
@@ -48,7 +50,10 @@ const AppNav = createStackNavigator({
       headerStyle: {
         backgroundColor: colors.PRIMARY_BACKGROUND,
         opacity: 1,
-        height: 80
+        height: 80,
+        ...ifIphoneX({
+          height: 60
+        }),
       },
       headerTitleStyle: {
         fontWeight: 'bold',

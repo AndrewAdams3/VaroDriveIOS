@@ -2,6 +2,7 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Modal } from 'react-native';
 import { colors } from '../config/styles'
 import constants from '../config/constants'
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker'
 import { connect } from 'react-redux';
@@ -55,23 +56,24 @@ class TimeSheet extends React.Component {
     this.setState({modalVisible: false});
   }
   msToTime = (duration, running) => {
-    var milliseconds = parseInt((duration % 1000) / 100),
-    seconds = parseInt((duration / 1000) % 60)
-    if (milliseconds > 5) {
-      seconds += 1
+    if (!running) {
+      var d = new Date(duration);
+      var hours = d.getHours();
+      hours = hours > 12 ? hours - 12 : hours;
+      var minutes = d.getMinutes();
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      if (!running) hours = hours == 0 ? 12 : hours;
+      return hours + ":" + minutes;
     }
-    var minutes = parseInt((duration / (1000 * 60)) % 60)
-    if (seconds > 30) {
-      minutes += 1
+    else {
+      var minutes = parseInt((duration / (1000 * 60)) % 60),
+        hours = parseInt((duration / (1000 * 60 * 60)) % 24);
+      hours = (hours < 10) ? "0" + hours : hours;
+      hours = (hours > 12) ? hours - 12 : hours;
+      if (!running) hours = hours == 0 ? 12 : hours;
+      minutes = (minutes < 10) ? "0" + minutes : minutes;
+      return hours + ":" + minutes;
     }
-    var hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-    hours = hours + 1 > 12 ? hours - 12 : hours;
-
-    if(!running) hours = (hours == 0 ? 12 : hours);
-    hours = (hours < 10) ? "0" + hours : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-    return hours + ":" + minutes;
   }
 
   listItem = ({item}) => {
@@ -197,8 +199,8 @@ class TimeSheet extends React.Component {
 
   render(){
     return(
-      <View style={{flex: 1}}>
-      <View style={{height: 80}}/>
+      <View style={styles.container}>
+      <View style={styles.iphoneXTop}/>
       <Image style={styles.background} source={this.background} />
         <Modal
           animationType="slide"
@@ -253,7 +255,13 @@ class TimeSheet extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.PRIMARY_BACKGROUND
+    //backgroundColor: colors.PRIMARY_BACKGROUND
+  },
+  iphoneXTop: {
+    height: 80,
+    ...ifIphoneX({
+      height: 100
+    })
   },
   background: {
     position: 'absolute',

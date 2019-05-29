@@ -242,7 +242,11 @@ class SignUpScreen extends React.Component {
                 </TouchableOpacity>
               </View>
               <View>
-                <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', padding: 20}} onPress = {() =>this.props.navigation.navigate('Login')}>
+                <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', padding: 20}} onPress = {
+                  () =>{
+                    console.log("tesitng nav")
+                    this.props.navigation.navigate('Auth')
+                  }}>
                   <Text style = {[styles.buttonText, {fontSize : 16}]}>Already have an account? Login here</Text>
                 </TouchableOpacity>
               </View>
