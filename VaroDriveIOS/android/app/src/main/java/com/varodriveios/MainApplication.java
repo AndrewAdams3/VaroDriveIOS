@@ -1,4 +1,4 @@
-package com.varodriveios;
+package com.ProperySpotters;
 
 import android.app.Application;
 
