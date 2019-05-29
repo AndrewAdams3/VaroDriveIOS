@@ -308,7 +308,7 @@ class TimeInScreen extends React.Component {
         <View style={{ height: '5%' }} />
         <View style={[styles.container, {paddingLeft: 10, paddingRight: 10}]}>
           <View style={styles.locationView} >
-            <Text style={{ color: this.props.location ? 'white' : 'transparent', fontSize: 20, alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+            <Text numberOfLines = {2} adjustsFontSizeToFit={true} style={{ color: this.props.location ? 'white' : 'transparent', fontSize: 24, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
               {this.props.location || "\n\n"}
             </Text>
           </View>
@@ -348,9 +348,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(TimeInScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    ...ifIphoneX({
-      paddingBottom: vars.iPhoneXPaddingBottom
-    }),
     alignItems: 'center',
   },
   background: {
@@ -365,7 +362,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center', 
     paddingTop: '30%', 
     alignItems: 'center', 
-    width: '70%'
+    width: '80%'
   },
   newTime: {
     backgroundColor: 'transparent', 

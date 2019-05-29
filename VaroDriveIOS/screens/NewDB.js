@@ -9,7 +9,7 @@ import constants from '../config/constants'
 import { setLocation } from '../redux/store2'
 
 
-const GOOGLE_API_KEY = 'AIzaSyB-_ttHRMq1Qslv1TLRZOxRbXlkMJc5YWM'
+const GOOGLE_API_KEY = 'AIzaSyD5djt8oRYbzXGEQjrhL1gxEXso2pbTEuY'
 import Geolocation from 'react-native-geolocation-service';
 
 const HEIGHT = Dimensions.get("screen").height;
