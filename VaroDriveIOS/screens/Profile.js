@@ -3,24 +3,24 @@ import {
   View, 
   Text, 
   Picker, 
-  ScrollView, 
   Dimensions, 
-  TouchableOpacity, 
-  TextInput, StatusBar, 
+  TouchableOpacity, StatusBar, 
   StyleSheet, Image, 
   ActivityIndicator, 
   AsyncStorage, Modal, 
   FlatList } from 'react-native';
 import { colors } from '../config/styles'
 
-import ImagePicker from 'react-native-image-picker'
 import axios from 'axios';
 import { connect } from 'react-redux';
 
 import constants from '../config/constants' 
 
 import { setLName, setFName, setPic, LOG_OUT } from '../redux/store2'
+import FastImage from 'react-native-fast-image'
 import LoadImage from '../components/LoadImage';
+import ShowEditor from './ShowEditor'
+import capitalize from '../helpers';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
@@ -282,149 +282,12 @@ class ProfileScreen extends React.Component {
     this.setState({ modalVisible: true })
   }
 
-  openCamera = () => {
-    ImagePicker.showImagePicker(async (response) => {
-      //console.log('Response = ', response);
-
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-        return
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-        return
-      } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
-      } else {
-        //const source = { uri: response.uri };
-        // You can also display the image using data:
-        const source = { uri: 'data:image/jpeg;base64,' + response.data };
-
-        const data = new FormData();
-        data.append('name', 'avatar');
-        data.append('image', {
-          uri: response.uri,
-          type: response.type,
-          name: response.fileName
-        });
-
-        if (source != "") {
-          this.setState({
-            post: data
-          });
-          this.handleSubmit()
-        }
-      }
-    });
-  }
-
-  handleSubmit = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/profilePic';
-
-    const type = "profilePic"
-    const post = this.state.post
-    post.append('type', type);
-
-    const config = {
-      method: 'POST',
-      headers: {
-        'content-type': 'multipart/form-data'
-      },
-      body: post,
-    };
-
-    await axios.post(url, post, config).then(async (res) => {
-      console.log("message: " + res.data.path);
-      if (res.data.response == 0) {
-        console.log("sending rest of data...");
-        url = 'http://' + constants.ip + ':3210/data/users/profilePic';
-        await axios.put(url, {
-          value: res.data.path,
-          id: this.props.userId
-        }).then((res2) => {
-          if (res2.data.success) {
-            var p = res.data.path.split('/');
-            p = p.join('\\');
-            this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + p})
-            this.props.setPic('http://' + constants.ip + ':3210/' + p)
-            console.log("success");
-          }
-        }).catch((err) => console.log(err))
-      }
-    }, (err) => {
-      console.log(err);
-    })
-  }
-
-  submitChanges = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/name';
-    var fName = this.state.temp1 == undefined ? this.props.fName : this.state.temp1
-    var lName = this.state.temp2 == undefined ? this.props.lname : this.state.temp2
-    axios.put(url, {
-      id: this.props.userId,
-      fName: fName, 
-      lName: lName
-    }).then((res) => {
-      this.props.setFName(fName)
-      this.props.setLName(lName)
-    })
-    this.setState({ profileEditor: false })
-  }
-
-  showEditor = () => {
-    return (
-      <View style={[styles.container, {marginTop: 0, alignItems: 'stretch'}]}>       
-        <View style={{flex: 1.5}}/>
-        <View style={{flex: 2}}>
-          <ScrollView style={{flex: 1, width: '100%'}}>
-            <View style={{flex: 2, justifyContent: 'space-around', alignItems: 'center', width: '100%'}}>
-              <View style={{flex: 2, width: '100%', alignItems: 'center', margin: 10}}>
-                <View style={{ margin: 5, width: '80%', marginHorizontal: 10, borderWidth: 1, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
-                  <TextInput
-                    style={{ color: 'black' }}
-                   // value={"First Name"}
-                    placeholder={"First Name"}
-                    returnKeyType={"next"}
-                    placeholderTextColor={"black"}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(text) => this.setState({temp1: text})}
-                  />
-                </View>
-                <View style={{ margin: 5, width: '80%', marginHorizontal: 10, borderWidth: 1, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
-                  <TextInput
-                    style={{ color: 'black' }}
-                    placeholder={"Last Name"}
-                    returnKeyType={"next"}
-                    placeholderTextColor={"black"}
-                    underlineColorAndroid="transparent"
-                    onChangeText={(text) => this.setState({temp2: text})}
-                  />
-                </View>
-              </View>
-              <View style={{ margin: 10, width: '100%', alignItems: 'center', justifyContent: 'space-around' }}>
-                <View style={{ flex: .4, margin: 7, width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                  <TouchableOpacity style={[styles.button, {height: 80} ]} onPress={() => this.openCamera()}>
-                    <Text style={styles.buttonText}>Change Picture</Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{ flex: .4, margin: 7, width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
-                  <TouchableOpacity style={[styles.button, {height: 80} ]} onPress={() => this.submitChanges()}>
-                    <Text style={styles.buttonText}>Submit</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          </ScrollView>
-        </View>
-      </View>
-    )
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <Image source={this.background} style={styles.background}/>
         <View style={{flex: .5, width: '100%', alignContent: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>{(this.props.fName == "") ? ("Welcome!") : ("Hi " + this.props.fName + "!")}</Text>
+          <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>{(this.props.fName == "") ? ("Welcome!") : ("Hi " + capitalize(this.props.fName) + "!")}</Text>
         </View>
         <Modal
           animationType="slide"
@@ -438,13 +301,13 @@ class ProfileScreen extends React.Component {
           transparent={false}
           visible={this.state.profileEditor}
           onRequestClose={() => { () => this.setState({ profileEditor: false }) }}>
-          {this.showEditor()}
+          <ShowEditor props={this.props} changePic={(pic) => this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + pic})} close={() => this.setState({ profileEditor: false })} pic={this.state.profilePic}/>
         </Modal>
         
         <View style={{flex: 3, width: '100%', alignContent: 'space-around', justifyContent: 'space-around', alignItems: 'center' }}>
           <View style={{ flex: 2, alignContent: 'space-around', justifyContent: 'space-around' }}>
-            <LoadImage
-              style={[{ height: 195, width: 195, borderRadius: 101, borderWidth: 3, borderColor: colors.PRIMARY_BACKGROUND }]}
+            <FastImage
+              style={styles.profilePic}
               source={{ uri: this.state.profilePic }}
             />
           </View>
@@ -464,7 +327,7 @@ class ProfileScreen extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={{ flex: .5, width: '100%'}}>
-            <TouchableOpacity onPress={this.removeToken} style={{ flex: 1, borderWidth: 1, margin: 5, backgroundColor: colors.PRIMARY_BACKGROUND, opacity: .9, justifyContent: 'space-around', alignContent: 'center', alignItems: 'center' }}>
+            <TouchableOpacity onPress={this.removeToken} style={styles.logoutButton}>
               <Text style={{ color: 'white', fontSize: 15}}>Log out</Text>
             </TouchableOpacity>
           </View>
@@ -537,4 +400,23 @@ const styles = StyleSheet.create({
     color: colors.TEXT_COLOR,
     fontSize: 18
   },
+  profilePic: {
+    height: 195, 
+    width: 195, 
+    borderRadius: 101, 
+    borderWidth: 3, 
+    borderColor: colors.PRIMARY_BACKGROUND
+  },
+  logoutButton: { 
+    flex: 1, 
+    borderWidth: 3, 
+    margin: 5, 
+    backgroundColor: colors.PRIMARY_BACKGROUND, 
+    opacity: .9, 
+    justifyContent: 'space-around', 
+    alignContent: 'center', 
+    alignItems: 'center',
+    borderColor: 'white',
+    borderRadius: 5
+  }
 });
