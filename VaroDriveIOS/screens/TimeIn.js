@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { colors, vars } from '../config/styles'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 import constants from '../config/constants'
 import {setOnClock, setLocation} from '../redux/store2'
 
@@ -307,8 +307,8 @@ class TimeInScreen extends React.Component {
         <Image style={styles.background} source={ this.background } />
         <View style={{ height: '5%' }} />
         <View style={[styles.container, {paddingLeft: 10, paddingRight: 10}]}>
-          <View style={styles.locationView} >
-            <Text numberOfLines = {2} adjustsFontSizeToFit={true} style={{ color: this.props.location ? 'white' : 'transparent', fontSize: 24, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', textAlign: 'center' }}>
+          <View style={[styles.locationView, {paddingTop: isIphoneX() ? 80 : 0}]} >
+            <Text numberOfLines = {2} style={{ flex: 1, height: 100, borderWidth: 1, borderColor: 'white', flexWrap: 'wrap', color: this.props.location ? 'white' : 'transparent', fontSize: 24, textAlign: 'center' }}>
               {this.props.location || "\n\n"}
             </Text>
           </View>
@@ -325,9 +325,9 @@ class TimeInScreen extends React.Component {
               <Text style={[styles.timeTable, {borderLeftColor: 'white'}]}>Time Out</Text>
             </View>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingVertical: 20}}>
-              <Text style={[styles.timeTableContent, {marginHorizontal: 30}]}>{this.state.onTime != -1 ? this.msToTime(this.state.onTime) + (new Date(this.state.onTime).getHours() > 11 ? "\nPM" : "\nAM") : "-- -- : -- --"} </Text>
+              <Text style={[styles.timeTableContent, {marginHorizontal: 30}]}>{this.state.onTime != -1 ? this.msToTime(this.state.onTime) + (new Date(this.state.onTime).getHours() > 11 ? "\nPM" : "\nAM") : "-- : --"} </Text>
               <Text style={[styles.timeTableContent, {marginHorizontal: 30}]}>{this.state.hasClocked == false ? "-- : -- : --" : this.msToTime(this.state.now, true)}</Text>
-              <Text style={[styles.timeTableContent, {marginHorizontal: 30}]}>{this.state.offTime != -1 ? this.msToTime(this.state.offTime) + (new Date(this.state.offTime).getHours() > 11 ? "\nPM" : "\nAM"): "-- -- : -- --"}</Text>
+              <Text style={[styles.timeTableContent, {marginHorizontal: 30}]}>{this.state.offTime != -1 ? this.msToTime(this.state.offTime) + (new Date(this.state.offTime).getHours() > 11 ? "\nPM" : "\nAM"): "-- : --"}</Text>
             </View>
           </View>
           <View style={[styles.buttonsContainer, { position: 'absolute' }]}>
@@ -358,11 +358,11 @@ const styles = StyleSheet.create({
     overlayColor: 'grey'
   },
   locationView: {
-    flex: .5,
+    flex: .4,
     justifyContent: 'center', 
-    paddingTop: '30%', 
     alignItems: 'center', 
-    width: '80%'
+    width: '80%',
+    
   },
   newTime: {
     backgroundColor: 'transparent', 
