@@ -29,9 +29,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-               BuildableName = "ProperySpotters-tvOS.app"
-               BlueprintName = "ProperySpotters-tvOS"
-               ReferencedContainer = "container:ProperySpotters.xcodeproj">
+               BuildableName = "PropertySpotters-tvOS.app"
+               BlueprintName = "PropertySpotters-tvOS"
+               ReferencedContainer = "container:PropertySpotters.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -43,9 +43,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "ProperySpotters-tvOSTests.xctest"
-               BlueprintName = "ProperySpotters-tvOSTests"
-               ReferencedContainer = "container:ProperySpotters.xcodeproj">
+               BuildableName = "PropertySpotters-tvOSTests.xctest"
+               BlueprintName = "PropertySpotters-tvOSTests"
+               ReferencedContainer = "container:PropertySpotters.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -61,9 +61,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "2D02E48F1E0B4A5D006451C7"
-               BuildableName = "ProperySpotters-tvOSTests.xctest"
-               BlueprintName = "ProperySpotters-tvOSTests"
-               ReferencedContainer = "container:ProperySpotters.xcodeproj">
+               BuildableName = "PropertySpotters-tvOSTests.xctest"
+               BlueprintName = "PropertySpotters-tvOSTests"
+               ReferencedContainer = "container:PropertySpotters.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -71,9 +71,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "ProperySpotters-tvOS.app"
-            BlueprintName = "ProperySpotters-tvOS"
-            ReferencedContainer = "container:ProperySpotters.xcodeproj">
+            BuildableName = "PropertySpotters-tvOS.app"
+            BlueprintName = "PropertySpotters-tvOS"
+            ReferencedContainer = "container:PropertySpotters.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -94,9 +94,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "ProperySpotters-tvOS.app"
-            BlueprintName = "ProperySpotters-tvOS"
-            ReferencedContainer = "container:ProperySpotters.xcodeproj">
+            BuildableName = "PropertySpotters-tvOS.app"
+            BlueprintName = "PropertySpotters-tvOS"
+            ReferencedContainer = "container:PropertySpotters.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -113,9 +113,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "2D02E47A1E0B4A5D006451C7"
-            BuildableName = "ProperySpotters-tvOS.app"
-            BlueprintName = "ProperySpotters-tvOS"
-            ReferencedContainer = "container:ProperySpotters.xcodeproj">
+            BuildableName = "PropertySpotters-tvOS.app"
+            BlueprintName = "PropertySpotters-tvOS"
+            ReferencedContainer = "container:PropertySpotters.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

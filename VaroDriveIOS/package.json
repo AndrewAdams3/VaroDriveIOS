@@ -1,11 +1,11 @@
 {
-  "name": "ProperySpotters",
+  "name": "propertyspotters",
+  "displayName": "PropertySpotters",
   "version": "0.0.1",
   "private": true,
   "scripts": {
     "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest",
-    "clean": "watchman watch-del-all && del -rf $TMPDIR/react-* && del -rf $TMPDIR/metro* && del -rf $TMPDIR/haste-*"
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^0.18.0",
