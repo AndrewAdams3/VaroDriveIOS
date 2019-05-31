@@ -94,6 +94,7 @@ class LandingScreen extends React.Component {
         this.props.setID(Data.data.userId);
         this.props.isLoggedIn(returner);
         this.props.setPic(Data.data.pic)
+        this.props.setEmail(Data.data.email);
         if(Data.data.fName != "") this.props.setFName(Data.data.fName);
         if(Data.data.lName != "") this.props.setLName(Data.data.lName);
         if(Data.data.isVerified) {
@@ -101,7 +102,7 @@ class LandingScreen extends React.Component {
           this.isVerified = true;
         };
         console.log("test auth: " + Data.data.userId);
-        console.log("nametest: " + Data.data.fName)
+        console.log("emailTest: " + Data.data.email)
       }
     }, (err) => {
       console.log("err getting info: ", err);

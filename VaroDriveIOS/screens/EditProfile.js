@@ -11,7 +11,7 @@ import FastImage from 'react-native-fast-image'
 import ImagePicker from 'react-native-image-picker'
 import axios from 'axios';
 
-import { setFName, setLName, setPic } from '../redux/store2';
+import { setFName, setLName, setPic, setEmail } from '../redux/store2';
 import colors from '../config/styles/colors'
 import ImageButton from '../components/imageButton.js';
 
@@ -24,7 +24,8 @@ const mapStateToProps = (state) => {
     userId: state.userId,
     fName: state.fName,
     lName: state.lName,
-    profilePic: state.profilePic
+    profilePic: state.profilePic,
+    email: state.email
   };
 }
 
@@ -33,7 +34,8 @@ const mapDispatchToProps = (dispatch) => {
     setFName: (text) => { dispatch(setFName(text)) },
     setLName: (text) => { dispatch(setLName(text)) },
     setPic: (pic) => { dispatch(setPic(pic)) },
-    LOG_OUT: () => {dispatch(LOG_OUT())}
+    LOG_OUT: () => {dispatch(LOG_OUT())},
+    setEmail: (text) => {dispatch(setEmail(text))}
   };
 }
 
@@ -55,6 +57,24 @@ class EditProfile extends React.Component{
       //headerTransparent: true,
     }
   };
+
+  submitChanges = () => {
+    var url = 'http://' + constants.ip + ':3210/data/users/name';
+    var fName = this.state["First Name"] == undefined ? this.props.fName : this.state["First Name"]
+    var lName = this.state["Last Name"] == undefined ? this.props.lName : this.state["Last Name"]
+    var email = this.state["Email"] == undefined ? this.props.email : this.state["Email"]
+    axios.put(url, {
+      id: this.props.userId,
+      fName: fName,
+      lName: lName,
+      email: email
+    }).then((res) => {
+      this.props.setFName(fName)
+      this.props.setLName(lName)
+      this.props.setEmail(email)
+    })
+    this.props.navigation.navigate("Profile")
+  }
 
   openCamera = () => {
     console.log("camera opening");
@@ -166,13 +186,6 @@ class EditProfile extends React.Component{
         </View>
         <Image source={this.right} style={styles.indicator} />
         <View style={[styles.resultContainer, { padding: 10, borderColor: this.state[p.title] ? 'green' : colors.PRIMARY_BACKGROUND}]}>
-          {/* <TextInput
-            style={styles.tInput}
-            placeholder={this.state[p.title]}
-            placeholderTextColor={"white"}
-            underlineColorAndroid="transparent"
-            editable={false}
-          /> */}
           <Text numberOfLines={1} style={{color: 'white', textAlign: "left"}}>{this.state[p.title] || p.old}</Text>
         </View>
       </View>
@@ -185,22 +198,23 @@ class EditProfile extends React.Component{
   render(){
     return(
       <View style={styles.container}>
-        <ScrollView style={{flex: 3}}>
+        <ScrollView>
           <Image source={this.background} style={styles.background} />
           <View style={styles.main}>
             <this.pic />
             <this.field title="First Name"/>
             <this.field title="Last Name"/>
             <this.field title="Email"/>
-            <this.field title="Password" />
+            <Text style={styles.confirm}>Change Password?</Text>
+            <this.field title="New Password" />
             <this.field title="Confirm Password" />
-              <Text style={styles.confirm}>Confirm Changes</Text>
+            <Text style={styles.confirm}>Confirm Changes</Text>
             <this.showChanges title="First Name" old={this.props.fName} />
             <this.showChanges title="Last Name" old={this.props.lName} />
             <this.showChanges title="Email" old={this.props.email} />
           </View>
           <View style={[styles.buttonsContainer, { margin: 10 }]}>
-            <TouchableOpacity style={styles.button} onPress={() => { this.handleSubmit() }}>
+            <TouchableOpacity style={styles.button} onPress={() => { this.submitChanges() }}>
               <Text style={{ fontSize: 18, color: 'white' }}>Submit</Text>
             </TouchableOpacity>
           </View>
@@ -214,7 +228,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: '100%',
-    height: '100%',
+    height: '100%'
   },
   background: {
     position: 'absolute',
@@ -227,7 +241,7 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 10,
     justifyContent: 'space-around',
-    alignItems: 'flex-start'
+    alignItems: 'center'
   },
   field: {
     flex: .5,
@@ -238,7 +252,7 @@ const styles = StyleSheet.create({
     flex: .5,
     margin: 5,
     width: '40%',
-    height: 70,
+    //height: 70,
     marginHorizontal: 10,
     borderWidth: 3,
     borderColor: colors.PRIMARY_BACKGROUND,
@@ -256,7 +270,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   tInput: {
-    height: 60,
+    height: 50,
     color: 'white'
   },
   indicator: {
