@@ -10,6 +10,9 @@ const initialState = {
   password: "",
   fName: "",
   lName: "",
+  city: "",
+  state: "",
+  address: "",
   profilePic: "",
   isLoggedIn: false,
   userId: '',
@@ -31,6 +34,12 @@ const reducer = (state = initialState, action) => {
       return { ...state, fName: action.value };  
     case "setLName":
       return { ...state, lName: action.value };  
+    case "setCity":
+      return { ...state, city: action.value };  
+    case "setState":
+      return { ...state, state: action.value };  
+    case "setAddress":
+      return { ...state, address: action.value };  
     case "setPic":
       return { ...state, profilePic: action.value };
     case "setEmail":
@@ -85,6 +94,24 @@ const setLName = (name) => {
     value: name,
   };
 }
+const setCity = (city) => {
+  return {
+    type: 'setCity',
+    value: city
+  }
+}
+const setState = (state) => {
+  return {
+    type: 'setState',
+    value: state
+  }
+}
+const setAddress = (address) => {
+  return {
+    type: 'setAddress',
+    value: address
+  }
+}
 const setPic = (pic) => {
   return {
     type: "setPic",
@@ -128,4 +155,12 @@ const setID = (id) => {
   };
 }
 
-export { setVerified, LOG_OUT, setPassword, setFName, setLName, setEmail, isLoggedIn, setID, setOnClock, setLocation, setPic };
+export { 
+  setVerified, LOG_OUT, 
+  setPassword, setFName, 
+  setLName, setEmail, 
+  isLoggedIn, setID, 
+  setOnClock, setLocation, 
+  setPic, setCity, setState,
+  setAddress 
+};

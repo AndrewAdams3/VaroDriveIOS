@@ -384,7 +384,8 @@ showAlert = () => {
       style={{flex: 1, width: '100%', height: '100%'}} 
       size='large'/>
       :
-      <ScrollView style={{ flex: 3 }}>
+      <ScrollView>
+        <Image source={this.bg} style={styles.background} />
         <TouchableOpacity style={{ marginHorizontal: '30%', marginVertical: '10%' }} onPress={() => this.openCamera()}>
             <Image source={this.state.avatar || require('../config/images/plus.png')} style={this.state.avatar ? { alignSelf: 'center', height: 70, width: 70} : { alignSelf: 'center', height: 40, width: 40 }} />
           <Text style={{ marginTop: 20, alignSelf: 'center', fontSize: 20, color: 'white' }}>{this.state.avatar ? "Change Image" : "Add Image"}</Text>
@@ -407,7 +408,6 @@ showAlert = () => {
   render() {
     return (
       <View style={styles.container}>
-        <Image source={this.bg} style={styles.background}/>
         {this.MainView()}
       </View>
     );
@@ -419,16 +419,16 @@ export default connect(mapStateToProps, mapDispatchToProps)(NewDBScreen);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'space-around',
     width: '100%',
     height: '100%',
     marginTop: 80
   },
   background: {
     position: 'absolute',
-    height: HEIGHT,
-    width: WIDTH,
+    /* height: HEIGHT,
+    width: WIDTH, */
+    height: '100%',
+    width: '100%',
     opacity: .9,
     overlayColor: 'grey'
   },
