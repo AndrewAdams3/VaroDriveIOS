@@ -193,10 +193,11 @@ class ProfileScreen extends React.Component {
           {this.showPic()}
         </Modal>
         <Image source={this.background} style={styles.background} />
-        {Platform.OS == "ios" && 
+        {(Platform.OS === "ios") ?
           <View style={{width: "100%", height: 80, backgroundColor: colors.PRIMARY_BACKGROUND}}></View>
+          :null
         }
-        {Platform.OS == "android" && 
+        {(Platform.OS === "android") ? 
         <View style={{width: '100%', height: 80, padding: 10, flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', backgroundColor: colors.PRIMARY_BACKGROUND}}>
           <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Sort By: </Text>
           <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{this.state.sort}</Text>
@@ -221,7 +222,7 @@ class ProfileScreen extends React.Component {
             <Picker.Item label="Default (Date)" value="Default" />
             <Picker.Item label="Date" value="Date" />
             <Picker.Item label="Type" value="Type" />
-          </Picker>}
+          </Picker>
           <View style={{flex: .5}} />
           <Text style={{ color: 'white', textAlign: 'right', fontSize: 18 }}>Show: </Text>
           <Picker
@@ -239,7 +240,9 @@ class ProfileScreen extends React.Component {
             <Picker.Item label="10" value={10} />
             <Picker.Item label="20" value={20} />
           </Picker>
-        </View>}
+        </View>
+        : null
+        }
         <View style={{flex: 3, alignContent: 'center', justifyContent: 'space-around'}}>
           <FlatList 
             data={this.state.data}
