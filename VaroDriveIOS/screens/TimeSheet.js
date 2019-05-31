@@ -144,7 +144,7 @@ class TimeSheet extends React.Component {
 
   showCalendar = () =>{
     return(
-    <View style={{flex: 1}}>
+    <View style={{flex: 1, paddingTop: 30}}>
       <CalendarPicker
         startFromMonday={true}
         allowRangeSelection={true}

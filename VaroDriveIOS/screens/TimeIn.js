@@ -308,7 +308,7 @@ class TimeInScreen extends React.Component {
         <View style={{ height: '5%' }} />
         <View style={[styles.container, {paddingLeft: 10, paddingRight: 10}]}>
           <View style={[styles.locationView, {paddingTop: isIphoneX() ? 80 : 0}]} >
-            <Text numberOfLines = {2} style={{ flex: 1, height: 100, borderWidth: 1, borderColor: 'white', flexWrap: 'wrap', color: this.props.location ? 'white' : 'transparent', fontSize: 24, textAlign: 'center' }}>
+            <Text numberOfLines = {2} style={{ flex: 1, height: 100, flexWrap: 'wrap', color: this.props.location ? 'white' : 'transparent', fontSize: 24, textAlign: 'center' }}>
               {this.props.location || "\n\n"}
             </Text>
           </View>
