@@ -16,6 +16,7 @@ import TimeSheet from "../screens/TimeSheet.js"
 import NewDBScreen from '../screens/NewDB.js'
 import ProfileScreen from "../screens/Profile.js";
 import NotVerifiedScreen from '../screens/NotVerified.js';
+import EditProfile from '../screens/EditProfile.js';
 import { colors } from './styles';
 
 // Auth Screen Navigation Setup
@@ -43,7 +44,8 @@ const AppNav = createStackNavigator({
     TimeSheet: TimeSheet,
     Home: HomeScreen,
     NewDB: NewDBScreen,
-    Profile: ProfileScreen
+    Profile: ProfileScreen,
+    Edit: EditProfile
 },{ 
     initialRouteName: 'Home',
     defaultNavigationOptions: {

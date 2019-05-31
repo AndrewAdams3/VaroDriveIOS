@@ -322,7 +322,7 @@ class ProfileScreen extends React.Component {
             <TouchableOpacity style={styles.bottomButtons} onPress={this.openModal}>
               <Text style={{ color: 'white', fontSize: 20 }}>View Properties</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.bottomButtons} onPress={() => {this.setState({profileEditor: true})}}>
+            <TouchableOpacity style={styles.bottomButtons} onPress={() => this.props.navigation.navigate("Edit")}>
               <Text style={{ color: 'white', fontSize: 20 }}>Edit Profile</Text> 
             </TouchableOpacity>
           </View>

@@ -1,0 +1,307 @@
+import React from 'react';
+import {
+  View, Text,
+  Dimensions,
+  StyleSheet, Image,
+  ScrollView, TextInput,
+  TouchableOpacity
+} from 'react-native';
+import { connect } from 'react-redux';
+import FastImage from 'react-native-fast-image'
+import ImagePicker from 'react-native-image-picker'
+import axios from 'axios';
+
+import { setFName, setLName, setPic } from '../redux/store2';
+import colors from '../config/styles/colors'
+import ImageButton from '../components/imageButton.js';
+
+
+const HEIGHT = Dimensions.get('screen').height;
+const WIDTH = Dimensions.get('screen').width;
+
+const mapStateToProps = (state) => {
+  return {
+    userId: state.userId,
+    fName: state.fName,
+    lName: state.lName,
+    profilePic: state.profilePic
+  };
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setFName: (text) => { dispatch(setFName(text)) },
+    setLName: (text) => { dispatch(setLName(text)) },
+    setPic: (pic) => { dispatch(setPic(pic)) },
+    LOG_OUT: () => {dispatch(LOG_OUT())}
+  };
+}
+
+class EditProfile extends React.Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      fn: ""
+    }
+    this.background = require('../config/images/background.png')
+    this.right = require('../config/images/trighticon.png')
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    return {
+      headerTitle: (
+        "Edit Profile"
+      ),
+      //headerTransparent: true,
+    }
+  };
+
+  openCamera = () => {
+    console.log("camera opening");
+    ImagePicker.launchImageLibrary({}, async (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+        return
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+        return
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+      } else {
+        //const source = { uri: response.uri };
+        // You can also display the image using data:
+        const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+        const data = new FormData();
+        data.append('name', 'avatar');
+        data.append('image', {
+          uri: response.uri,
+          type: response.type,
+          name: response.fileName
+        });
+
+        if (source != "") {
+          this.setState({
+            post: data
+          });
+          this.submitPic()
+        }
+      }
+    });
+  }
+
+  submitPic = async () => {
+    var url = 'http://' + constants.ip + ':3210/data/users/profilePic';
+
+    const type = "profilePic"
+    const post = this.state.post
+    post.append('type', type);
+
+    const config = {
+      method: 'POST',
+      headers: {
+        'content-type': 'multipart/form-data'
+      },
+      body: post,
+    };
+
+    await axios.post(url, post, config).then(async (res) => {
+      console.log("message: " + res.data.path);
+      if (res.data.response == 0) {
+        console.log("sending rest of data...");
+        url = 'http://' + constants.ip + ':3210/data/users/profilePic';
+        await axios.put(url, {
+          value: res.data.path,
+          id: this.props.userId
+        }).then((res2) => {
+          if (res2.data.success) {
+            var p = res.data.path.split('/');
+            p = p.join('/');
+            this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + p })
+            this.props.setPic(p)
+            console.log("success");
+          }
+        }).catch((err) => console.log(err))
+      }
+    }, (err) => {
+      console.log(err);
+    })
+  }
+
+  pic = () => {
+    console.log("pic", this.props.profilePic);
+    return(
+      <ImageButton onPress={this.openCamera} style={{ flex: 1, margin: 15, justifyContent: 'space-around', alignItems: 'center', alignSelf: 'center' }}>
+        <FastImage
+          onError={(e) => { console.log("err", e)}}
+          style={styles.profilePic}
+          source={{ uri: ('http://' + constants.ip + ':3210/' + this.props.profilePic)}}
+        />
+      </ImageButton>
+    )
+  }
+
+  field = (p) => {
+    return (
+      <View style={[styles.inputContainer, {width: '80%'}]}>
+        <TextInput
+          style={styles.tInput}
+          placeholder={p.title + "..."}
+          returnKeyType={"done"}
+          placeholderTextColor={"white"}
+          underlineColorAndroid="transparent"
+          onChangeText={(text) => this.setState({ [p.title]: text })}
+        />
+      </View>
+    )
+  }
+
+  showChanges = (p) => {
+    return(
+      <View style={styles.field}>
+        <View style={styles.resultContainer}>
+          <Text numberOfLines={1} style={{ color: 'white', textAlign: "left" }}>{p.old || (p.title + "...")}</Text>
+        </View>
+        <Image source={this.right} style={styles.indicator} />
+        <View style={[styles.resultContainer, { padding: 10, borderColor: this.state[p.title] ? 'green' : colors.PRIMARY_BACKGROUND}]}>
+          {/* <TextInput
+            style={styles.tInput}
+            placeholder={this.state[p.title]}
+            placeholderTextColor={"white"}
+            underlineColorAndroid="transparent"
+            editable={false}
+          /> */}
+          <Text numberOfLines={1} style={{color: 'white', textAlign: "left"}}>{this.state[p.title] || p.old}</Text>
+        </View>
+      </View>
+    )
+  }
+
+  handleSubmit = () => {
+
+  }
+  render(){
+    return(
+      <View style={styles.container}>
+        <ScrollView style={{flex: 3}}>
+          <Image source={this.background} style={styles.background} />
+          <View style={styles.main}>
+            <this.pic />
+            <this.field title="First Name"/>
+            <this.field title="Last Name"/>
+            <this.field title="Email"/>
+            <this.field title="Password" />
+            <this.field title="Confirm Password" />
+              <Text style={styles.confirm}>Confirm Changes</Text>
+            <this.showChanges title="First Name" old={this.props.fName} />
+            <this.showChanges title="Last Name" old={this.props.lName} />
+            <this.showChanges title="Email" old={this.props.email} />
+          </View>
+          <View style={[styles.buttonsContainer, { margin: 10 }]}>
+            <TouchableOpacity style={styles.button} onPress={() => { this.handleSubmit() }}>
+              <Text style={{ fontSize: 18, color: 'white' }}>Submit</Text>
+            </TouchableOpacity>
+          </View>
+        </ScrollView>
+      </View>
+    )
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+  },
+  background: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    opacity: .9,
+    overlayColor: 'grey'
+  },
+  main: {
+    flex: 1,
+    padding: 10,
+    justifyContent: 'space-around',
+    alignItems: 'flex-start'
+  },
+  field: {
+    flex: .5,
+    flexDirection: 'row',
+    justifyContent: 'space-around'
+  },
+  inputContainer: {
+    flex: .5,
+    margin: 5,
+    width: '40%',
+    height: 70,
+    marginHorizontal: 10,
+    borderWidth: 3,
+    borderColor: colors.PRIMARY_BACKGROUND,
+    borderRadius: 5
+  },
+  resultContainer: {
+    flex: .5,
+    margin: 5,
+    width: '40%',
+    marginHorizontal: 10,
+    borderWidth: 3,
+    borderColor: colors.PRIMARY_BACKGROUND,
+    borderRadius: 5,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  tInput: {
+    height: 60,
+    color: 'white'
+  },
+  indicator: {
+    height: 30,
+    width: 30,
+    tintColor: 'white',
+    alignSelf: 'center',
+  },
+  confirm: {
+    color: 'white',
+    fontSize: 20,
+    alignSelf: 'center',
+    padding: 15
+  },
+  buttonsContainer: {
+    width: '100%',
+    paddingRight: 30,
+    paddingLeft: 30,
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    marginTop: 10,
+  },
+  button: {
+    height: 50,
+    width: '50%',
+    borderRadius: 40,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: colors.SECONDARY_BACKGROUND,
+    backgroundColor: colors.PRIMARY_BACKGROUND,
+    opacity: .9,
+    marginVertical: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  profilePic: {
+    height: 160,
+    width: 160,
+    borderRadius: 80,
+    borderWidth: 3,
+    borderColor: colors.PRIMARY_BACKGROUND,
+    alignSelf: 'center'
+  },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfile);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity } from "react-native";
 export default class ImageButton extends Component{
   constructor(props){
     super(props);
