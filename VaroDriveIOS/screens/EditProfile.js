@@ -270,6 +270,7 @@ const styles = StyleSheet.create({
   inputContainer: {
     flex: .5,
     margin: 5,
+    padding: 10,
     width: '40%',
     //height: 70,
     marginHorizontal: 10,
