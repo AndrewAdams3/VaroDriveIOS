@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, Alert, Image, TouchableOpacity, PermissionsAndroid, Platform } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { colors, vars } from '../config/styles'
-import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
+import { isIphoneX } from 'react-native-iphone-x-helper'
 import constants from '../config/constants'
 import {setOnClock, setLocation} from '../redux/store2'
 
@@ -229,27 +229,17 @@ class TimeInScreen extends React.Component {
   }
 
   handleOnShift = () => {
-    if(this.props.location == ""){
-      this.getCurrentLocation().then( (res) => {
-        const date = new Date()
-        this.setState({ onTime: date, hasClocked: true });
-        this.setState({ offTime: -1 });
-        this.createNewTimeClock(date);
-        this.props.setOnClock(true); //sets onclock prop global
-        this.setUserOnClock(true); //set user to onclock in db
-      }).catch( (err) => {
-        console.log(err);
-
-      });
-    }
-    else{
+    this.getCurrentLocation().then( (res) => {
       const date = new Date()
       this.setState({ onTime: date, hasClocked: true });
       this.setState({ offTime: -1 });
       this.createNewTimeClock(date);
       this.props.setOnClock(true); //sets onclock prop global
       this.setUserOnClock(true); //set user to onclock in db
-    }
+    }).catch( (err) => {
+      console.log(err);
+
+    });
   }
   handleOffShift = (onC) => {
     this.setState({offTime: new Date()});
@@ -349,6 +339,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    marginTop: isIphoneX() ? 0 : 40
   },
   background: {
     position: 'absolute',
