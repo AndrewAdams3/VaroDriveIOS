@@ -241,7 +241,7 @@ class NewDBScreen extends React.Component {
           county: responseJson.results[0].address_components[3].short_name,
           state: responseJson.results[0].address_components[4].short_name,
           city: responseJson.results[0].address_components[2].short_name,
-          postal: responseJson.results[0].address_components[7].short_name
+          postal: responseJson.results[0].address_components[6].short_name
         })
         console.log("test::", this.state.county, "\n", this.state.state, "\n", this.state.city);
         this.props.setLocation(address);
@@ -355,6 +355,7 @@ showAlert = () => {
           console.log("sending rest of data...");
           url = 'http://' + constants.ip + ':3210/data/DriveBys/newDB';
           console.log("coord: ", this.state.lat, this.state.lon);
+          console.log("vals:" , this.state.state, this.state.county, this.state.city);
           await axios.post(url,{
             path: res.data.path,
             finder: this.props.userId,

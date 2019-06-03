@@ -63,7 +63,7 @@ class ProfileScreen extends React.Component {
       refresh: false,
       sort: "Default",
       showing: "",
-      number: 20,
+      number: 50,
       profilePic: 'http://' + constants.ip + ':3210/' + path,
       profileEditor: false
     }
@@ -235,10 +235,12 @@ class ProfileScreen extends React.Component {
               }
             }
           >
-            <Picker.Item label="Default (20)" value={10} />
+            <Picker.Item label="Default (50)" value={50} />
             <Picker.Item label="5" value={5} />
             <Picker.Item label="10" value={10} />
             <Picker.Item label="20" value={20} />
+            <Picker.Item label="50" value={50} />
+            <Picker.Item label="100" value={100} />
           </Picker>
         </View>
         : null
