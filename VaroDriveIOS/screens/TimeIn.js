@@ -177,7 +177,7 @@ class TimeInScreen extends React.Component {
     this.props.onClock ? 
     Alert.alert(
       'End Shift?',
-      'My Alert Msg',
+      '',
       [
         {
           text: 'No',
@@ -191,7 +191,7 @@ class TimeInScreen extends React.Component {
     :
     Alert.alert(
       'Start Shift?',
-      'My Alert Msg',
+      '',
       [
         {
           text: 'No',

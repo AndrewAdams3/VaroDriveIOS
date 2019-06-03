@@ -32,6 +32,9 @@ class NewDBScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      city: "",
+      state: "",
+      county: "",
       fields: [
         address = {
           name: "address",
@@ -226,13 +229,19 @@ class NewDBScreen extends React.Component {
     )
   }
   getAddress = () => {
-    console.log('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY);
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY)
+    console.log('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY);
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY)
       .then((response) => response.json())
       .then((responseJson) => {
         console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson.results[0].formatted_address));
         var address = JSON.stringify(responseJson.results[0].formatted_address).replace("\"", "");
         address = address.substr(0, address.length - 1);
+        this.setState({
+          county: responseJson.results[0].address_components[3].short_name,
+          state: responseJson.results[0].address_components[4].short_name,
+          city: responseJson.results[0].address_components[2].short_name
+        })
+        console.log("test::", this.state.county, "\n", this.state.state, "\n", this.state.city);
         this.props.setLocation(address);
         var nf = this.state.fields;
         nf[0].value = address;
@@ -272,9 +281,7 @@ class NewDBScreen extends React.Component {
   }
   openCamera = () => {
      const options = {
-      storageOptions: {
-        skipBackup: true,
-      },
+
     };
     ImagePicker.launchCamera( options, async (response) => {
       //console.log('Response = ', response);
@@ -356,7 +363,10 @@ showAlert = () => {
             burned: this.state.fields[4].value,
             boarded: this.state.fields[5].value,
             lat: this.state.lat,
-            lon: this.state.lon
+            lon: this.state.lon,
+            city: this.state.city,
+            state: this.state.state,
+            county: this.state.county
           }).then( (res2) => {
             if(res2.data.response == 0){
               console.log("success");

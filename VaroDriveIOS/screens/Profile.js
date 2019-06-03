@@ -319,7 +319,7 @@ class ProfileScreen extends React.Component {
               source={{ uri: this.state.profilePic }}
             />
           </View>
-          <View style={{flex: 1, marginBottom: 10, width: '100%', borderColor: 'white', borderWidth: 1, alignItems: 'center', justifyContent: 'space-around'}}>
+          <View style={{flex: 1, marginBottom: 10, width: '100%', alignItems: 'center', justifyContent: 'space-around'}}>
             <Text style={{color: 'white'}}>
               Possible Usage Statistics Section
             </Text>
