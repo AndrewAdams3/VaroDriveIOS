@@ -35,6 +35,7 @@ class NewDBScreen extends React.Component {
       city: "",
       state: "",
       county: "",
+      postal: "",
       fields: [
         address = {
           name: "address",
@@ -239,7 +240,8 @@ class NewDBScreen extends React.Component {
         this.setState({
           county: responseJson.results[0].address_components[3].short_name,
           state: responseJson.results[0].address_components[4].short_name,
-          city: responseJson.results[0].address_components[2].short_name
+          city: responseJson.results[0].address_components[2].short_name,
+          postal: responseJson.results[0].address_components[7].short_name
         })
         console.log("test::", this.state.county, "\n", this.state.state, "\n", this.state.city);
         this.props.setLocation(address);
@@ -366,7 +368,8 @@ showAlert = () => {
             lon: this.state.lon,
             city: this.state.city,
             state: this.state.state,
-            county: this.state.county
+            county: this.state.county,
+            post: this.state.postal
           }).then( (res2) => {
             if(res2.data.response == 0){
               console.log("success");
