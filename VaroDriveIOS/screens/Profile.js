@@ -158,7 +158,7 @@ class ProfileScreen extends React.Component {
     })
     data = data.slice(0,this.state.number);
     this.setState({data: data, refresh: !this.state.refresh});
-    console.log(data);
+    //console.log(data);
   }
   typeSort = () => {
     var data = this.state.originalData;
@@ -264,7 +264,7 @@ class ProfileScreen extends React.Component {
   }
 
   getDriveBys = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/DriveBys/byUserId';
+    var url = 'http://' + constants.ip + ':3210/data/drivebys/byUserId';
     this.setState({loading: true});
     if(this.props.userId){
       await axios.post(url, {
@@ -317,6 +317,11 @@ class ProfileScreen extends React.Component {
         <View style={{flex: 3, width: '100%', alignContent: 'space-around', justifyContent: 'space-around', alignItems: 'center' }}>
           <View style={{ flex: 2, alignContent: 'space-around', justifyContent: 'space-around' }}>
             <FastImage
+              onError={() => {
+                this.setState({
+                  profilePic: 'http://' + constants.ip + ':3210/' + "file/uploads/profilePics/default.jpg"
+                })
+              }}
               style={styles.profilePic}
               source={{ uri: this.state.profilePic }}
             />

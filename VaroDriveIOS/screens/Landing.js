@@ -103,7 +103,7 @@ class LandingScreen extends React.Component {
         console.log("add", Data.data.address)
         this.props.setID(Data.data.userId);
         this.props.isLoggedIn(returner);
-        this.props.setPic(Data.data.pic)
+        this.props.setPic(Data.data.pic.replace(/\\/g, "/"));
         this.props.setEmail(Data.data.email);
         this.props.setCity(Data.data.city);
         this.props.setState(Data.data.state);

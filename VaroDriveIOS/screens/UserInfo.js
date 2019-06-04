@@ -69,7 +69,7 @@ class UserInfoScreen extends React.Component {
   }
 
   postChanges = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/name';
+    var url = 'http://' + constants.ip + ':3210/data/users/update';
     console.log("URL: ", url)
     console.log("params: ", this.state.temp1, this.state.temp2, this.state.temp3);
     axios.put(url, {

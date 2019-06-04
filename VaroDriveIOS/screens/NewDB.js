@@ -155,7 +155,6 @@ class NewDBScreen extends React.Component {
       placeholder = ""
       break;
    }
-   console.log("statecheck: " + this.state.fields[num].value)
   return (
     <View style={{ flex: 1, width: '100%', borderBottomWidth: 1, borderBottomColor: colors.PRIMARY_BACKGROUND, padding: 10 }}>
       <Text style={{ fontSize: 20, color: 'white' }}>{" - " + this.state.fields[num].prompt}</Text>
@@ -337,7 +336,7 @@ showAlert = () => {
 
 }
   handleSubmit = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/DriveBys/upload';
+    var url = 'http://' + constants.ip + ':3210/data/drivebys/upload';
   
     const post = this.state.post
 
@@ -353,7 +352,7 @@ showAlert = () => {
         console.log("message: " + res.data.path);
         if (res.data.response == 0){
           console.log("sending rest of data...");
-          url = 'http://' + constants.ip + ':3210/data/DriveBys/newDB';
+          url = 'http://' + constants.ip + ':3210/data/drivebys/newDB';
           console.log("coord: ", this.state.lat, this.state.lon);
           console.log("vals:" , this.state.state, this.state.county, this.state.city);
           await axios.post(url,{

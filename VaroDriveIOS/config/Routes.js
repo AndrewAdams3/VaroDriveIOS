@@ -21,12 +21,11 @@ import { colors } from './styles';
 
 // Auth Screen Navigation Setup
 const AuthStack = createStackNavigator({
-  //Login: LoginScreen,
   SignUp: SignUpScreen,
   Auth: AuthScreen,
   NotVerified: NotVerifiedScreen
 },{ 
-    initialRouteName: 'SignUp',
+    initialRouteName: 'Auth',
     headerMode: 'none',
     cardStyle: { shadowColor: 'transparent' },
 })

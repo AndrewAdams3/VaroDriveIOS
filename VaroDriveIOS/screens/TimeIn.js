@@ -166,7 +166,7 @@ class TimeInScreen extends React.Component {
     return hours + ":" + minutes + ":" + seconds;
   } */
   setUserOnClock = (on) => {
-    var url = 'http://' + constants.ip + ':3210/data/users';
+    var url = 'http://' + constants.ip + ':3210/data/users/onclock';
     axios.put(url, {
       id: this.props.userId,
       value: on

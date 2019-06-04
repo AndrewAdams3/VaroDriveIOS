@@ -43,7 +43,7 @@ class ShowEditor extends React.Component{
   }
 
   submitChanges = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/name';
+    var url = 'http://' + constants.ip + ':3210/data/users/update';
     var fName = this.state.temp1 == undefined ? this.props.fName : this.state.temp1
     var lName = this.state.temp2 == undefined ? this.props.lname : this.state.temp2
     axios.put(url, {

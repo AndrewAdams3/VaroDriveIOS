@@ -49,7 +49,8 @@ class EditProfile extends React.Component{
   constructor(props){
     super(props);
     this.state = {
-      fn: ""
+      fn: "",
+      profilePic: this.props.profilePic
     }
     this.background = require('../config/images/background.png')
     this.right = require('../config/images/trighticon.png')
@@ -65,7 +66,7 @@ class EditProfile extends React.Component{
   };
 
   submitChanges = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/name';
+    var url = 'http://' + constants.ip + ':3210/data/users/update';
     var fName = this.state["First Name"] == undefined ? this.props.fName : this.state["First Name"]
     var lName = this.state["Last Name"] == undefined ? this.props.lName : this.state["Last Name"]
     var email = this.state["Email"] == undefined ? this.props.email : this.state["Email"]
@@ -153,10 +154,9 @@ class EditProfile extends React.Component{
           id: this.props.userId
         }).then((res2) => {
           if (res2.data.success) {
-            var p = res.data.path.split('/');
-            p = p.join('/');
+            var p = res.data.path.replace(/\\/g, "/");
             this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + p })
-            this.props.setPic(p)
+            this.props.setPic(p);
             console.log("success");
           }
         }).catch((err) => console.log(err))
@@ -171,9 +171,13 @@ class EditProfile extends React.Component{
     return(
       <ImageButton onPress={this.openCamera} style={{ flex: 1, margin: 15, justifyContent: 'space-around', alignItems: 'center', alignSelf: 'center' }}>
         <FastImage
-          onError={(e) => { console.log("err", e)}}
+          onError={() => {
+            this.setState({
+              profilePic: "file/uploads/profilePics/default.jpg"
+            })
+          }}
           style={styles.profilePic}
-          source={{ uri: ('http://' + constants.ip + ':3210/' + this.props.profilePic)}}
+          source={{uri:('http://' + constants.ip + ':3210/' + this.state.profilePic)}}
         />
       </ImageButton>
     )
@@ -213,7 +217,7 @@ class EditProfile extends React.Component{
       <View style={styles.container}>
         <ScrollView>
           <Image source={this.background} style={styles.background} />
-          <View style={styles.main}>
+           <View style={styles.main}>
             <this.pic />
             <this.field title="First Name"/>
             <this.field title="Last Name"/>
