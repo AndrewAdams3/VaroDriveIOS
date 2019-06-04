@@ -155,7 +155,7 @@ class EditProfile extends React.Component{
         }).then((res2) => {
           if (res2.data.success) {
             var p = res.data.path.replace(/\\/g, "/");
-            this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + p })
+            this.setState({ profilePic: p })
             this.props.setPic(p);
             console.log("success");
           }
