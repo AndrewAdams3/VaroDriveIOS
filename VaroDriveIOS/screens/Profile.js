@@ -96,7 +96,7 @@ class ProfileScreen extends React.Component {
 
   showPic = () => {
     if(this.state.modal2Visible == true){
-      var pic = "https://s3-us-west-1.amazonaws.com/varodrive/" + this.state.showing;
+      var pic = this.state.showing;
       console.log("URLTEST: ", pic);
       return (
         <TouchableOpacity style={{flex: 1, width: WIDTH, height: HEIGHT, justifyContent: 'space-around', alignContent: 'space-around', marginTop: 0}} onPress={() => this.setState({modal2Visible: false})}>
@@ -110,17 +110,16 @@ class ProfileScreen extends React.Component {
   listItem = ({item}) => {
     const d = new Date(item.date)
     console.log("path: " + item.picturePath);
-    //var url = 'http://' + constants.ip + ':3210/pictures/' + item.picturePath;
     return(
       <View style={{ flex: 1, borderBottomColor: 'white', borderBottomWidth: 1, width: WIDTH}}>
         <View style={{flex: 1, flexDirection: 'row', margin: 5}}>
           <TouchableOpacity 
           style={{flex: 1, marginTop: 10, justifyContent: 'space-around', alignItems: 'center', borderWidth: 3, borderRadius: 10, borderColor: colors.SECONDARY_BACKGROUND}}
-          onPress={() => { this.setState({ showing: item.picturePath }); this.setState({modal2Visible: true})}}>
-            {/* <LoadImage 
-              style={{marginLeft: 10, marginTop: 10, flex: 1, height: 110, width: 110, alignSelf: 'center', resizeMode: 'cover'}}
-              source={{uri: url}}
-            /> */}
+          onPress={() => { 
+            this.setState({ showing: item.picturePath }); 
+            this.setState({modal2Visible: true})
+            }
+          }>
             <Text style={{textAlign: 'center', color: 'white'}}>Press to See Picture</Text>
           </TouchableOpacity>
           <View style={{flex: .5}}/>
@@ -271,7 +270,6 @@ class ProfileScreen extends React.Component {
         id: this.props.userId,
       }).then((Data) => {
         if(Data.data.response == 0){
-          console.log("checking");
           this.setState({
             data: Data.data.docs,
             originalData: Data.data.docs,

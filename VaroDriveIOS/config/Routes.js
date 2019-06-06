@@ -17,13 +17,15 @@ import NewDBScreen from '../screens/NewDB.js'
 import ProfileScreen from "../screens/Profile.js";
 import NotVerifiedScreen from '../screens/NotVerified.js';
 import EditProfile from '../screens/EditProfile.js';
+import UserInfoScreen from '../screens/UserInfo.js';
 import { colors } from './styles';
 
 // Auth Screen Navigation Setup
 const AuthStack = createStackNavigator({
   SignUp: SignUpScreen,
   Auth: AuthScreen,
-  NotVerified: NotVerifiedScreen
+  NotVerified: NotVerifiedScreen,
+  UserInfo: UserInfoScreen
 },{ 
     initialRouteName: 'Auth',
     headerMode: 'none',

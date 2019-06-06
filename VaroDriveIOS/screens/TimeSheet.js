@@ -164,7 +164,6 @@ class TimeSheet extends React.Component {
     )
   }
   sortDates = () => {
-    console.log("getting times");
     var url = 'http://' + constants.ip + ':3210/data/times/byId';
     this.setState({times: []});
     axios.post(url, 

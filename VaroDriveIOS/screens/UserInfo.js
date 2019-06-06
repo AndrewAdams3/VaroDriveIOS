@@ -232,6 +232,7 @@ class UserInfoScreen extends React.Component {
                 onSubmitEditing={() => this.validateAndSet("fname")}
                 onBlur={() => this.validateAndSet("fname")}
                 returnKeyType={"next"}
+                autoCorrect={false}
               />
             </View>
             <View style={[styles.inputContainer, { borderColor: (!this.state.lname && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND }]}>
@@ -246,6 +247,7 @@ class UserInfoScreen extends React.Component {
                 onSubmitEditing={() => this.validateAndSet("lname")}
                 onBlur={() => this.validateAndSet("lname")}
                 returnKeyType={"next"}
+                autoCorrect={false}
               />
             </View>
             <View style={{flexDirection: 'row'}}>
@@ -261,6 +263,7 @@ class UserInfoScreen extends React.Component {
                   onSubmitEditing={() => this.validateAndSet("city")}
                   onBlur={() => this.validateAndSet("city")}
                   returnKeyType={"next"}
+                  autoCorrect={false}
                 />
               </View>
               <View style={[styles.inputContainer, { width: '30%', paddingHorizontal: 10, borderColor: (!this.state.state && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND}]}>
@@ -275,6 +278,7 @@ class UserInfoScreen extends React.Component {
                   onSubmitEditing={() => this.validateAndSet("state")}
                   onBlur={() => this.validateAndSet("state")}
                   returnKeyType={"next"}
+                  autoCorrect={false}
                 />
               </View>
             </View>
@@ -288,6 +292,7 @@ class UserInfoScreen extends React.Component {
                 onChangeText={(text) => this.setState({ temp5: text })}
                 onSubmitEditing={() => this.validateAndSet("address")}
                 onBlur={() => this.validateAndSet("address")}
+                autoCorrect={false}
               />
             </View>
           </View>
