@@ -3,7 +3,7 @@ import { View, Text, Platform, StyleSheet, Image, Modal, TouchableOpacity, Keybo
 import axios from 'axios'
 import { connect } from 'react-redux';
 import colors from '../config/styles/colors'
-import { setLName, setFName } from '../redux/store2'
+import { setLName, setFName, setAddress, setCity, setState } from '../redux/store2'
 
 const mapStateToProps = (state) => {
   return {
@@ -15,6 +15,9 @@ const mapDispatchToProps = (dispatch) => {
     setFName: (text) => { dispatch(setFName(text)) },
     setLName: (text) => { dispatch(setLName(text)) },
     setID: (id) => { dispatch(setID(id)) },
+    setCity: (city) => {dispatch(setCity(city))},
+    setState: (state) => {dispatch(setState(state))},
+    setAddress: (add) => {dispatch(setAddress(add))}
   };
 }
 
@@ -82,6 +85,10 @@ class UserInfoScreen extends React.Component {
     }).then((res) => {
       this.props.setFName(this.state.temp1)
       this.props.setLName(this.state.temp2)
+      this.props.setCity(this.state.temp3);
+      this.props.setState(this.state.temp4);
+      this.props.setAddress(this.state.temp5);
+
       this.props.navigation.navigate('Home');
     })
   }
