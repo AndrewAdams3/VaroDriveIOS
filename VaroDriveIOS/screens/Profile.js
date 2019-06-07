@@ -54,7 +54,7 @@ class ProfileScreen extends React.Component {
       path = path.join('/')
     }
     else
-      path = 'file/uploads/profilePics/default.png'
+      path = 'file/uploads/profilePics/default.jpg'
     this.state = {
       modalVisible: false,
       modal2Visible: false,
@@ -63,7 +63,7 @@ class ProfileScreen extends React.Component {
       refresh: false,
       sort: "Default",
       showing: "",
-      number: 50,
+      number: 30,
       profilePic: 'http://' + constants.ip + ':3210/' + path,
       profileEditor: false
     }
@@ -97,7 +97,6 @@ class ProfileScreen extends React.Component {
   showPic = () => {
     if(this.state.modal2Visible == true){
       var pic = this.state.showing;
-      console.log("URLTEST: ", pic);
       return (
         <TouchableOpacity style={{flex: 1, width: WIDTH, height: HEIGHT, justifyContent: 'space-around', alignContent: 'space-around', marginTop: 0}} onPress={() => this.setState({modal2Visible: false})}>
           <View style={[styles.container, {marginTop: 0, alignContent: 'space-around', alignItems: 'center'}]}>
@@ -109,7 +108,6 @@ class ProfileScreen extends React.Component {
   }
   listItem = ({item}) => {
     const d = new Date(item.date)
-    console.log("path: " + item.picturePath);
     return(
       <View style={{ flex: 1, borderBottomColor: 'white', borderBottomWidth: 1, width: WIDTH}}>
         <View style={{flex: 1, flexDirection: 'row', margin: 5}}>
@@ -234,12 +232,12 @@ class ProfileScreen extends React.Component {
               }
             }
           >
-            <Picker.Item label="Default (50)" value={50} />
+            <Picker.Item label="Default (30)" value={30} />
             <Picker.Item label="5" value={5} />
             <Picker.Item label="10" value={10} />
             <Picker.Item label="20" value={20} />
+            <Picker.Item label="30" value={30} />
             <Picker.Item label="50" value={50} />
-            <Picker.Item label="100" value={100} />
           </Picker>
         </View>
         : null
@@ -251,6 +249,9 @@ class ProfileScreen extends React.Component {
             renderItem={this.listItem}
             keyExtractor={(item, index) => { return item ? item._id : index.toString() }}
             showsVerticalScrollIndicator={false}
+            windowSize={31}
+            removeClippedSubviews={true}
+            initialNumToRender={this.state.number / 2}
           />
         </View>
         <View style={{flex: .4, width: '100%', justifyContent: 'space-around', alignItems: 'center'}}>

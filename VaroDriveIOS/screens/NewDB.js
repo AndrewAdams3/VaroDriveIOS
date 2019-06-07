@@ -357,7 +357,7 @@ showAlert = () => {
           console.log("vals:" , this.state.state, this.state.county, this.state.city);
           await axios.post(url,{
             path: res.data.path,
-            finder: this.props.userId,
+            id: this.props.userId,
             address: this.state.fields[0].value,
             date: this.state.fields[1].value,
             type: this.state.fields[2].value,
