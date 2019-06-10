@@ -359,7 +359,7 @@ showAlert = () => {
             path: res.data.path,
             id: this.props.userId,
             address: this.state.fields[0].value,
-            date: this.state.fields[1].value,
+            date: this.state.fields[1].value.getTime(),
             type: this.state.fields[2].value,
             vacant: this.state.fields[3].value,
             burned: this.state.fields[4].value,

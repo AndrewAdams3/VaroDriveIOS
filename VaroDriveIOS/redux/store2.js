@@ -160,7 +160,7 @@ export {
   setPassword, setFName, 
   setLName, setEmail, 
   isLoggedIn, setID, 
-  setOnClock, setLocation, 
+  setOnClock, setLocation,
   setPic, setCity, setState,
   setAddress 
 };
