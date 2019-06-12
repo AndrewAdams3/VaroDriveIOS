@@ -9,7 +9,7 @@ import {setOnClock, setLocation} from '../redux/store2'
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const GOOGLE_API_KEY = 'AIzaSyB-_ttHRMq1Qslv1TLRZOxRbXlkMJc5YWM'
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
 
 const mapStateToProps = (state) => {
   return {
@@ -211,8 +211,8 @@ class TimeInScreen extends React.Component {
       id: this.props.userId,
       sLocation: this.props.location,
       sTime: time.getTime()
-    }).then(() => {
-
+    }).then((res) => {
+      console.log("newTime res", res);
     })
   }
 

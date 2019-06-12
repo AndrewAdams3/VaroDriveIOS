@@ -9,7 +9,7 @@ import constants from '../config/constants'
 import { setLocation } from '../redux/store2'
 
 
-const GOOGLE_API_KEY = 'AIzaSyD5djt8oRYbzXGEQjrhL1gxEXso2pbTEuY'
+const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
 import Geolocation from 'react-native-geolocation-service';
 
 const HEIGHT = Dimensions.get("screen").height;
@@ -360,6 +360,7 @@ showAlert = () => {
             id: this.props.userId,
             address: this.state.fields[0].value,
             date: this.state.fields[1].value.getTime(),
+            offset: this.state.fields[1].value.getTimezoneOffset(),
             type: this.state.fields[2].value,
             vacant: this.state.fields[3].value,
             burned: this.state.fields[4].value,
