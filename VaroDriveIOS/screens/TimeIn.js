@@ -62,28 +62,13 @@ class TimeInScreen extends React.Component {
     clearInterval(this.timer);
   }
 
-  getAddress = () => { 
-    console.log('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY);
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson.results[0].formatted_address));
-        var address = JSON.stringify(responseJson.results[0].formatted_address).replace("\"", "");
-        address = address.substr(0,address.length-1);
-        this.props.setLocation(address);
-        this.setState({ searching: false });
-    })
-  }
-
   getCurrentLocation = async () => {
-    this.setState({searching: true});
-    if (Platform.OS === 'android') { 
-      const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION); 
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
       if (!granted) {
-        this.setState({ searching: false });
-        console.log("permission problemo"); 
-        return; 
-      } 
+        console.log("permission problemo");
+        return;
+      }
     }
     Geolocation.getCurrentPosition(
       (position) => {
@@ -91,22 +76,32 @@ class TimeInScreen extends React.Component {
       },
       (error) => {
         // See error code charts below.
-        this.setState({ searching: false });
         console.log(error.code, error.message);
       },
       { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
     );
   }
-
   geoSuccess = (position) => {
     console.log("success");
-    this.setState({lat: position.coords.latitude});
-    this.setState({lon: position.coords.longitude});
-    this.getAddress();
+    this.setState({ lat: position.coords.latitude });
+    this.setState({ lon: position.coords.longitude });
+
+    axios.get('http://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
+      .then((res) => {
+        this.setState({
+          county: res.data.county,
+          state: res.data.state,
+          city: res.data.city,
+          postal: res.data.postal
+        })
+        this.props.setLocation(res.data.address);
+        var nf = this.state.fields;
+        nf[0].value = res.data.address;
+        this.setState({ hasPic: true, fields: nf });
+      })
   }
 
   geoError = () => {
-    this.setState({ searching: false });
     console.log("geo problemo");
   }
 

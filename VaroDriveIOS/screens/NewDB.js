@@ -228,27 +228,6 @@ class NewDBScreen extends React.Component {
       </View>
     )
   }
-  getAddress = () => {
-    console.log('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY);
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?latlng=' + this.state.lat.toString() + ',' + this.state.lon.toString() + '&key=' + GOOGLE_API_KEY)
-      .then((response) => response.json())
-      .then((responseJson) => {
-        console.log('ADDRESS GEOCODE is BACK!! => ' + JSON.stringify(responseJson.results[0].formatted_address));
-        var address = JSON.stringify(responseJson.results[0].formatted_address).replace("\"", "");
-        address = address.substr(0, address.length - 1);
-        this.setState({
-          county: responseJson.results[0].address_components[3].short_name,
-          state: responseJson.results[0].address_components[4].short_name,
-          city: responseJson.results[0].address_components[2].short_name,
-          postal: responseJson.results[0].address_components[6].short_name
-        })
-        console.log("test::", this.state.county, "\n", this.state.state, "\n", this.state.city);
-        this.props.setLocation(address);
-        var nf = this.state.fields;
-        nf[0].value = address;
-        this.setState({hasPic : true, fields: nf});
-      })
-  }
 
   getCurrentLocation = async () => {
     if (Platform.OS === 'android') {
@@ -269,17 +248,30 @@ class NewDBScreen extends React.Component {
       { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
     );
   }
-
-  geoSuccess = (position) => {
+    geoSuccess = (position) => {
     console.log("success");
     this.setState({ lat: position.coords.latitude });
     this.setState({ lon: position.coords.longitude });
-    this.getAddress();
+
+    axios.get('http://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
+      .then( (res) => {
+        this.setState({
+          county: res.data.county,
+          state: res.data.state,
+          city: res.data.city,
+          postal: res.data.postal
+        })
+        this.props.setLocation(res.data.address);
+        var nf = this.state.fields;
+        nf[0].value = res.data.address;
+        this.setState({ hasPic: true, fields: nf });
+      })
   }
 
   geoError = () => {
     console.log("geo problemo");
   }
+
   openCamera = () => {
      const options = {
 

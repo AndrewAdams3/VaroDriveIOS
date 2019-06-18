@@ -3,7 +3,6 @@ import RootStack from './config/Routes'
 import { Provider } from 'react-redux'
 import  { store }  from './redux/store2'
 import { View } from 'react-native'
-require('dotenv').config({path: '.env'});
 
 export default class App extends React.Component {
 
