@@ -48,21 +48,18 @@ class AuthScreen extends React.Component {
       await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
       this.getToken();
     } catch (error) {
-      console.log("Something went wrong");
     }
   }
   async getToken() {
     try {
       let token = await AsyncStorage.getItem(ACCESS_TOKEN);
-      //console.log("token: " + token);
+      //;
     } catch (error) {
-      console.log("Something went wrong");
     }
   }
 
   async klikPost() {
     var url = 'http://' + constants.ip + ':3210/data/users/login';
-    console.log("url: " + url);
     var loggedIn = false;
     var seshId;
     var userId;
@@ -74,7 +71,6 @@ class AuthScreen extends React.Component {
       })
         .then(function (response) {
           for (var i in response.data) {
-            console.log("\tresponse: " + i);
           }
           if (response.data.loggedIn == true) {
             loggedIn = true,
@@ -87,11 +83,8 @@ class AuthScreen extends React.Component {
           }
         })
         .catch(function (error) {
-          console.log("error: " + error);
         });
       this.setState({ loginSuccess: loggedIn });
-      console.log("loginSuccess: " + this.state.loginSuccess);
-      console.log("Access_token: " + seshId);
       if (this.state.loginSuccess == true && seshId && verified) {
         this.storeToken(seshId);
         this.props.isLoggedIn(true);

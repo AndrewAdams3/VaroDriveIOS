@@ -45,7 +45,6 @@ class TimeSheet extends React.Component {
   };
 
   componentDidMount(){
-    console.log("getting times");
     var url = 'http://' + constants.ip + ':3210/data/times/byId';
     axios.post(url, {id: this.props.userId}).then((Data) => {
       this.setState({times: Data.data.times});
@@ -69,8 +68,7 @@ class TimeSheet extends React.Component {
       var minutes = parseInt((duration / (1000 * 60)) % 60),
         hours = parseInt((duration / (1000 * 60 * 60)) % 24);
       hours = (hours < 10) ? "0" + hours : hours;
-      hours = (hours > 12) ? hours - 12 : hours;
-      if (!running) hours = hours == 0 ? 12 : hours;
+     // hours = (hours > 12) ? hours - 12 : hours;
       minutes = (minutes < 10) ? "0" + minutes : minutes;
       return hours + ":" + minutes;
     }
@@ -101,11 +99,11 @@ class TimeSheet extends React.Component {
   }
   getStart = (item) => {
     var temp = new Date(item.startTime);
-    return item.startTime != -1 ? (this.msToTime(item.startTime) + (temp.getHours() > 12 ? "\nPM" : "\nAM")) : "In Progress"
+    return item.startTime != -1 ? (this.msToTime(item.startTime, false) + (temp.getHours() > 12 ? "\nPM" : "\nAM")) : "In Progress"
   }
   getEnd = (item) => {
     var temp = new Date(item.endTime);
-    return item.endTime != -1 ? (this.msToTime(item.endTime) + (temp.getHours() > 12 ? "\nPM" : "\nAM")) : "In Progress"
+    return item.endTime != -1 ? (this.msToTime(item.endTime, false) + (temp.getHours() > 12 ? "\nPM" : "\nAM")) : "In Progress"
   }
   getTotal = (item) => {
     return item.totalTime > 0 ? this.msToTime(item.totalTime, true) : "- - : - -"
@@ -129,7 +127,6 @@ class TimeSheet extends React.Component {
   } */
 
   onDateChange = (date, type) => {
-//    console.log("checking date: " + new Date(date + 1000));
     if (type === 'END_DATE') {
       this.setState({
         selectedEndDate: new Date(date),
@@ -190,10 +187,23 @@ class TimeSheet extends React.Component {
   getTotalTime = () => {
     var total = 0;
     this.state.times.forEach( (time) => {
-      if(time)
+      if(time){
         total += time.totalTime
+      }
     })
-    return this.msToTime(total, true);
+    var day, hour, minute, seconds;
+    seconds = Math.floor(total / 1000);
+    minute = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    return `${hour}:${minute}:${seconds}`
+    return {
+      day: day,
+      hour: hour,
+      minute: minute,
+      seconds: seconds
+    };
   }
 
   render(){

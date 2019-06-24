@@ -66,7 +66,6 @@ class TimeInScreen extends React.Component {
     if (Platform.OS === 'android') {
       const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
       if (!granted) {
-        console.log("permission problemo");
         return;
       }
     }
@@ -76,33 +75,21 @@ class TimeInScreen extends React.Component {
       },
       (error) => {
         // See error code charts below.
-        console.log(error.code, error.message);
       },
       { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
     );
   }
   geoSuccess = (position) => {
-    console.log("success");
     this.setState({ lat: position.coords.latitude });
     this.setState({ lon: position.coords.longitude });
 
     axios.get('http://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
       .then((res) => {
-        this.setState({
-          county: res.data.county,
-          state: res.data.state,
-          city: res.data.city,
-          postal: res.data.postal
-        })
         this.props.setLocation(res.data.address);
-        var nf = this.state.fields;
-        nf[0].value = res.data.address;
-        this.setState({ hasPic: true, fields: nf });
       })
   }
 
   geoError = () => {
-    console.log("geo problemo");
   }
 
   getCurrentTime = () => {
@@ -157,7 +144,7 @@ class TimeInScreen extends React.Component {
     if(!running) hours = hours == 0 ? 12 : hours;
     minutes = (minutes < 10) ? "0" + minutes : minutes;
     seconds = (seconds < 10) ? "0" + seconds : seconds;
-    console.log("HRS: ", hours + "time: ", new Date(duration).getHours());
+    .getHours());
     return hours + ":" + minutes + ":" + seconds;
   } */
   setUserOnClock = (on) => {
@@ -176,7 +163,7 @@ class TimeInScreen extends React.Component {
       [
         {
           text: 'No',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         { text: 'Yes', onPress: () => this.handleOffShift(false) },
@@ -190,7 +177,7 @@ class TimeInScreen extends React.Component {
       [
         {
           text: 'No',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {},
           style: 'cancel',
         },
         { text: 'Yes', onPress: () => this.handleOnShift() },
@@ -201,13 +188,12 @@ class TimeInScreen extends React.Component {
 
   createNewTimeClock = async (time) => {
     var url = 'http://' + constants.ip + ':3210/data/times/newTime';
-    console.log("newtime: " + this.state.onTime.getTime());
     await axios.post(url, {
       id: this.props.userId,
       sLocation: this.props.location,
       sTime: time.getTime()
     }).then((res) => {
-      console.log("newTime res", res);
+//      ;
     })
   }
 
@@ -232,7 +218,6 @@ class TimeInScreen extends React.Component {
       this.props.setOnClock(true); //sets onclock prop global
       this.setUserOnClock(true); //set user to onclock in db
     }).catch( (err) => {
-      console.log(err);
 
     });
   }
@@ -250,7 +235,7 @@ class TimeInScreen extends React.Component {
         [
           {
             text: 'ok',
-            onPress: () => console.log('Cancel Pressed'),
+            onPress: () => {},
             style: 'cancel',
           },
           {
@@ -278,7 +263,6 @@ class TimeInScreen extends React.Component {
         this.setState({onTime: new Date(res.data.sTime)})
         this.props.setOnClock(true)
         this.setState({ hasClocked: true });
-        console.log("onclock? ", res.data.found, res.data.sTime);
       }
       else{
         this.props.setOnClock(false);

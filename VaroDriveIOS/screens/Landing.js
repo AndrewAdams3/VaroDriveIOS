@@ -86,9 +86,7 @@ class LandingScreen extends React.Component {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log('You can use the camera');
       } else {
-        console.log('Camera permission denied');
       }
     } catch (err) {
       console.warn(err);
@@ -96,11 +94,16 @@ class LandingScreen extends React.Component {
   }
 
    getUser = async (token, returner) => {
-     console.log("getting user");
     var url = 'http://' + constants.ip + ':3210/data/users/id';
+     var complete = false;
      await axios.post(url, { seshId: token }).then((Data) => {
       if(Data.data.ok == 1){
-        console.log("add", Data.data.address)
+        if(!Data.data.userId) return true;
+        if(Data.data.infoComplete === false){
+          complete = false;
+        } else{
+          complete = true;
+        }
         this.props.setID(Data.data.userId);
         this.props.isLoggedIn(returner);
         this.props.setPic(Data.data.pic.replace(/\\/g, "/"));
@@ -114,12 +117,13 @@ class LandingScreen extends React.Component {
           this.props.setVerified(true)
           this.isVerified = true;
         };
-        console.log("test auth: " + Data.data.userId);
-        console.log("emailTest: " + Data.data.email)
+      }
+      else{
+        return true;
       }
     }, (err) => {
-      console.log("err getting info: ", err);
     })
+    return complete;
   }
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
@@ -127,16 +131,18 @@ class LandingScreen extends React.Component {
 
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    console.log("sesh token: " + userToken);
     const returner = userToken ? true : false;
     if(returner){
-      await this.getUser(userToken, returner);
-      if (this.props.userId == "") {
+      let complete = await this.getUser(userToken, returner);
+      if (this.props.userId === "") {
         this.props.navigation.navigate('Auth');
         return;
       }
-      this.isVerified?
-        this.props.navigation.navigate('App') : this.props.navigation.navigate('NotVerified'); //isVerified
+      if(!complete) {
+        this.props.navigation.navigate("Setup");
+        return;
+      }
+      this.props.navigation.navigate("App");
     }else{
       this.props.navigation.navigate('Auth');
     }

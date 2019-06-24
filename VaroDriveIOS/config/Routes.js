@@ -20,12 +20,19 @@ import EditProfile from '../screens/EditProfile.js';
 import UserInfoScreen from '../screens/UserInfo.js';
 import { colors } from './styles';
 
+
+const SetupStack = createStackNavigator({
+  NotVerified: NotVerifiedScreen,
+  UserInfo: UserInfoScreen
+},{
+  initialRouteName: "NotVerified",
+  headerMode: 'none',
+  cardStyle: { shadowColor: 'transparent' },
+})
 // Auth Screen Navigation Setup
 const AuthStack = createStackNavigator({
   SignUp: SignUpScreen,
   Auth: AuthScreen,
-  NotVerified: NotVerifiedScreen,
-  UserInfo: UserInfoScreen
 },{ 
     initialRouteName: 'Auth',
     headerMode: 'none',
@@ -90,7 +97,8 @@ class AppStack extends React.Component {
 export default SwitchNav = createAppContainer(createSwitchNavigator({
     App: AppNav,
     Auth: AuthStack,
-    Landing: LandingStack
+    Landing: LandingStack,
+    Setup: SetupStack
 },{
     initialRouteName: 'Landing',
 }))

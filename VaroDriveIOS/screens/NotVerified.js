@@ -29,16 +29,13 @@ class NotVerifiedScreen extends React.Component{
     var url = 'http://' + constants.ip + ':3210/data/users/signup/isVerified/' + this.props.userId;
     axios.get(url)
       .then( (res) => {
-        console.log("validated: ? ", res.data.ok)
         if(res.data.ok == true) {
           this.props.navigation.navigate('UserInfo');
         }
         else{
-          console.log("not verified")
           this.setState({verified: false});
         }
       }, (err) => {
-        console.log("error checking verification: ", err);
       })
   }
 

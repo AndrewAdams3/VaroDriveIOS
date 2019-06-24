@@ -73,15 +73,14 @@ class UserInfoScreen extends React.Component {
 
   postChanges = () => {
     var url = 'http://' + constants.ip + ':3210/data/users/update';
-    console.log("URL: ", url)
-    console.log("params: ", this.state.temp1, this.state.temp2, this.state.temp3);
     axios.put(url, {
       id: this.props.userId,
       fName: this.state.temp1,
       lName: this.state.temp2,
       city: this.state.temp3,
       state: this.state.temp4,
-      address: this.state.temp5
+      address: this.state.temp5,
+      complete: true
     }).then((res) => {
       this.props.setFName(this.state.temp1)
       this.props.setLName(this.state.temp2)
@@ -94,7 +93,6 @@ class UserInfoScreen extends React.Component {
   }
   tryFormComplete = async () => {
     this.setState({formComplete: this.state.fname && this.state.lname && this.state.city && this.state.state && this.state.address});
-    console.log("complete ? ", this.state.formComplete);
   }
 
   validateAndSet = async (id) => {
@@ -109,7 +107,6 @@ class UserInfoScreen extends React.Component {
             this.setState({fname: true});
             await this.tryFormComplete();
             this.focusTheField(1)
-            console.log("testing fname: ", twocharRegex.test(this.state.temp1))
           }
         }
         else {
@@ -122,7 +119,6 @@ class UserInfoScreen extends React.Component {
             this.setState({ lname: true });
             await this.tryFormComplete();
             this.focusTheField(2)
-            console.log("testing fname: ", twocharRegex.test(this.state.temp2))
           }
         }
         else this.setState({ lname: false });
@@ -133,7 +129,6 @@ class UserInfoScreen extends React.Component {
             this.setState({ city: true });
             await this.tryFormComplete();
             this.focusTheField(3)
-            console.log("testing fname: ", this.state.city);
           }
         }
         else this.setState({ city: false });
@@ -144,7 +139,6 @@ class UserInfoScreen extends React.Component {
             this.setState({ state: true });
             await this.tryFormComplete();
             this.focusTheField(4)
-            console.log("testing fname: ", twocharRegex.test(this.state.temp4))
           }
         }
         else this.setState({ state: false });
@@ -154,7 +148,6 @@ class UserInfoScreen extends React.Component {
           if (addressRegex.test(this.state.temp5) === true){
             this.setState({ address: true });
             await this.tryFormComplete();
-            console.log("testing address: ", addressRegex.test(this.state.temp5))
           }
         }
         else this.setState({ address: false });
@@ -215,18 +208,20 @@ class UserInfoScreen extends React.Component {
           {this.confirmInfo()}
         </Modal>
         <ScrollView 
-            contentContainerStyle={{ justifyContent: 'flex-start', alignItems: 'center', opacity: this.state.modalVisible ? 0 : 1 }}
+            scrollEnabled={true}
+            contentContainerStyle={{ opacity: this.state.modalVisible ? 0 : 1 }}
             ref={(ref) => this.myScroll = ref}
         >
-          <View style={{flex: .07, height: HEIGHT * .25, justifyContent: "space-around", alignItems: 'center'}}>  
+          <View style={{flex: .3}}>
             <Image source={this.logo} style={styles.logo}/>
           </View>
-          <View style={{flex: .1, alignItems: 'center', justifyContent: 'flex-start'}}>
+          <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
             <Text style={{ fontSize: 16, color: this.state.incomplete && !allDone ? 'red' : 'white'}}>
               {this.state.incomplete && !allDone ? "Please fill in all forms" : "Please fill in your information below"}
             </Text>
           </View>
           <View style={styles.inputs}>
+            <Text style={{ fontSize: 16, color: 'white' }}>First Name</Text>
             <View style={[styles.inputContainer, { borderColor: (!this.state.fname && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND}]}>
               <TextInput
                 ref={input => { this.inputs[0] = input }}
@@ -242,6 +237,7 @@ class UserInfoScreen extends React.Component {
                 autoCorrect={false}
               />
             </View>
+            <Text style={{ fontSize: 16, color: 'white' }}>Last Name</Text>
             <View style={[styles.inputContainer, { borderColor: (!this.state.lname && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND }]}>
               <TextInput
                 ref={input => { this.inputs[1] = input }}
@@ -257,38 +253,39 @@ class UserInfoScreen extends React.Component {
                 autoCorrect={false}
               />
             </View>
-            <View style={{flexDirection: 'row'}}>
-              <View style={[styles.inputContainer, { width: '30%', paddingHorizontal: 10, borderColor: (!this.state.city && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND }]}>
-                <TextInput
-                  ref={input => { this.inputs[2] = input }}
-                  style={{ color: 'white', paddingLeft: 10, height: HEIGHT * .08 }}
-                  placeholder={"city"}
-                  returnKeyType={"next"}
-                  placeholderTextColor={"white"}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(text) => this.setState({ temp3: text })}
-                  onSubmitEditing={() => this.validateAndSet("city")}
-                  onBlur={() => this.validateAndSet("city")}
-                  returnKeyType={"next"}
-                  autoCorrect={false}
-                />
-              </View>
-              <View style={[styles.inputContainer, { width: '30%', paddingHorizontal: 10, borderColor: (!this.state.state && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND}]}>
-                <TextInput
-                  ref={input => { this.inputs[3] = input }}
-                  style={{ color: 'white', paddingLeft: 10, height: HEIGHT * .08 }}
-                  placeholder={"state"}
-                  returnKeyType={"next"}
-                  placeholderTextColor={"white"}
-                  underlineColorAndroid="transparent"
-                  onChangeText={(text) => this.setState({ temp4: text })}
-                  onSubmitEditing={() => this.validateAndSet("state")}
-                  onBlur={() => this.validateAndSet("state")}
-                  returnKeyType={"next"}
-                  autoCorrect={false}
-                />
-              </View>
+            <Text style={{ fontSize: 16, color: 'white' }}>City</Text>
+            <View style={[styles.inputContainer, { paddingHorizontal: 10, borderColor: (!this.state.city && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND }]}>
+              <TextInput
+                ref={input => { this.inputs[2] = input }}
+                style={{ color: 'white', paddingLeft: 10, height: HEIGHT * .08 }}
+                placeholder={"city"}
+                returnKeyType={"next"}
+                placeholderTextColor={"white"}
+                underlineColorAndroid="transparent"
+                onChangeText={(text) => this.setState({ temp3: text })}
+                onSubmitEditing={() => this.validateAndSet("city")}
+                onBlur={() => this.validateAndSet("city")}
+                returnKeyType={"next"}
+                autoCorrect={false}
+              />
             </View>
+            <Text style={{ fontSize: 16, color: 'white' }}>State (2 Letter Abbreviation)</Text>
+            <View style={[styles.inputContainer, { paddingHorizontal: 10, borderColor: (!this.state.state && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND}]}>
+              <TextInput
+                ref={input => { this.inputs[3] = input }}
+                style={{ color: 'white', paddingLeft: 10, height: HEIGHT * .08 }}
+                placeholder={"state"}
+                returnKeyType={"next"}
+                placeholderTextColor={"white"}
+                underlineColorAndroid="transparent"
+                onChangeText={(text) => this.setState({ temp4: text })}
+                onSubmitEditing={() => this.validateAndSet("state")}
+                onBlur={() => this.validateAndSet("state")}
+                returnKeyType={"next"}
+                autoCorrect={false}
+              />
+            </View>
+            <Text style={{ fontSize: 16, color: 'white' }}>Address (e.g. 123 N Fake St.)</Text>
             <View style={[styles.inputContainer, { borderColor: (!this.state.address && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND }]}>
               <TextInput
                 ref={input => { this.inputs[4] = input }}
@@ -321,8 +318,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-around',
-    width: '100%',
-    height: '100%',
+    height: HEIGHT
   },
   background: {
     position: 'absolute',
@@ -332,12 +328,13 @@ const styles = StyleSheet.create({
     overlayColor: 'grey'
   },
   logo: {
+    height: HEIGHT * .2,
     width: WIDTH * .4,
     opacity: 1,
     resizeMode: 'contain',
     justifyContent: 'center',
     alignSelf: 'center',
-    tintColor: 'white'
+    tintColor: 'white',
   },
   inputContainer: {
     margin: 10,
@@ -347,35 +344,39 @@ const styles = StyleSheet.create({
     borderRadius: 5
   },
   inputs: {
+    flex: 1,
     width: WIDTH,
-    height: HEIGHT * .45,
+//    height: HEIGHT * .45,
     justifyContent: 'flex-start',
     alignItems: 'center',
     marginBottom: 15
   },
   buttonsContainer: {
+    height: HEIGHT * .1,
+    width: "100%",
     marginTop: 5,
     display: 'flex',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 10
   },
   button: {
-    width: WIDTH * .8,
-    height: HEIGHT * .08,
+    width: "60%",
+    height: "100%",
     borderRadius: 40,
     backgroundColor: colors.SECONDARY_BACKGROUND,
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   modalButton: {
-    width: '50%',
-    height: 100,
     backgroundColor: colors.PRIMARY_BACKGROUND,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 1,
     borderColor: colors.SECONDARY_BACKGROUND,
     opacity: .9,
-    borderRadius: 10
+    borderRadius: 10,
+    paddingBottom: 30
   },
   buttonText: {
     color: colors.TEXT_COLOR,

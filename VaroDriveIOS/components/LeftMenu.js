@@ -10,13 +10,9 @@ export default class SideMenu extends React.Component {
   }
   async logOut() {
     try {
-      console.log("token: " + await AsyncStorage.getItem(ACCESS_TOKEN));
       AsyncStorage.setItem(ACCESS_TOKEN, "");
-      console.log("token removed");
-      console.log("token: " + await AsyncStorage.getItem(ACCESS_TOKEN));
       this.props.navigation.navigate('Login');
     } catch (error) {
-      console.log("Something went wrong");
     }
   }
   render() {

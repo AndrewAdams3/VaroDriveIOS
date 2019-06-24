@@ -49,15 +49,12 @@ class SignUpScreen extends React.Component {
       await AsyncStorage.setItem(ACCESS_TOKEN, accessToken);
       this.getToken();
     } catch (error) {
-      console.log("Something went wrong");
     }
   }
   async getToken() {
     try {
       let token = await AsyncStorage.getItem(ACCESS_TOKEN);
-      console.log("token: " + token);
     } catch (error) {
-      console.log("Something went wrong");
     }
   }
 
@@ -68,10 +65,10 @@ class SignUpScreen extends React.Component {
       [
         {
           text: 'Cancel',
-          onPress: () => console.log('Cancel Pressed'),
+          onPress: () => {} ,
           style: 'cancel',
         },
-        { text: 'OK', onPress: () => console.log('OK Pressed') },
+        { text: 'OK', onPress: () => {} },
       ],
       { cancelable: false },
     );
@@ -96,25 +93,20 @@ class SignUpScreen extends React.Component {
 
   continue = () => {
     var url = 'http://' + constants.ip + ':3210/data/users/signup/isVerified/' + this.state.userId;
-    console.log("userid testing: " + url);
     isV = false;
     axios.get(url)
       .then( function (res) {
-        console.log('entry');
         if(res.data.ok == true){
           isV = true;
         }
       }, (err) => {
-        console.log("err: ", err);
       });
       if(isV){
-        console.log("verified")
         this.props.setID(this.state.userId);
         this.storeToken(this.state.seshId);
         this.props.navigation.navigate('Home'); //to waiting page for confirmation
         this.props.isLoggedIn(true);
       } else {
-        console.log("notv")
         this.props.setID(this.state.userId);
         this.storeToken(this.state.seshId);
         this.props.isLoggedIn(true);
@@ -131,7 +123,6 @@ class SignUpScreen extends React.Component {
       const expression = /\S+@\S+/
       const valid = expression.test(String(this.props.email).toLowerCase())
       if(!valid){
-        console.log("invalid email");
         this.showAlert();
         return;
       }
@@ -150,7 +141,6 @@ class SignUpScreen extends React.Component {
             }
           })
           .catch(function (error) {
-            console.log("error: " + error);
           });
       this.setState({ loginSuccess: signup });
       if(this.state.loginSuccess){
@@ -244,7 +234,6 @@ class SignUpScreen extends React.Component {
               <View>
                 <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center', padding: 20}} onPress = {
                   () =>{
-                    console.log("tesitng nav")
                     this.props.navigation.navigate('Auth')
                   }}>
                   <Text style = {[styles.buttonText, {fontSize : 16}]}>Already have an account? Login here</Text>

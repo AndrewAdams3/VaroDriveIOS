@@ -36,8 +36,6 @@ class ShowEditor extends React.Component{
     this.state={
       profilePic: this.props.pic
     }
-    console.log("IDTEST: ", this.props.userId);
-    console.log("pic:", this.props.profilePic)
     this.bg = require('../config/images/background.png')
     this.edit = require('../config/images/edit.png');
   }
@@ -58,18 +56,13 @@ class ShowEditor extends React.Component{
   }
 
   openCamera = () => {
-    console.log("camera opening");
     ImagePicker.launchImageLibrary({}, async (response) => {
-      console.log('Response = ', response);
 
       if (response.didCancel) {
-        console.log('User cancelled image picker');
         return
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
         return
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
         //const source = { uri: response.uri };
         // You can also display the image using data:
@@ -109,9 +102,7 @@ class ShowEditor extends React.Component{
     };
 
     await axios.post(url, post, config).then(async (res) => {
-      console.log("message: " + res.data.path);
       if (res.data.response == 0) {
-        console.log("sending rest of data...");
         url = 'http://' + constants.ip + ':3210/data/users/profilePic';
         await axios.put(url, {
           value: res.data.path,
@@ -123,12 +114,10 @@ class ShowEditor extends React.Component{
             this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + p})
             this.props.setPic(p)
             this.props.changePic(p);
-            console.log("success");
           }
-        }).catch((err) => console.log(err))
+        }).catch((err) => {})
       }
     }, (err) => {
-      console.log(err);
     })
   }
 

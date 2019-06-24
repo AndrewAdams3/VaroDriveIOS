@@ -81,16 +81,12 @@ class ProfileScreen extends React.Component {
   };
   removeToken = async () => {
     try {
-      console.log("token: " + await AsyncStorage.getItem(ACCESS_TOKEN));
       AsyncStorage.setItem(ACCESS_TOKEN, "");
-      console.log("token removed");
-      console.log("token: " + await AsyncStorage.getItem(ACCESS_TOKEN));
       var url = 'http://' + constants.ip + ':3210/data/users/logout';
       axios.put(url, {id: this.props.userId, value: ""} )
       this.props.LOG_OUT();
       this.props.navigation.navigate("Auth")
     } catch (error) {
-      console.log("Something went wrong");
     }
   }
 
@@ -155,12 +151,11 @@ class ProfileScreen extends React.Component {
     })
     data = data.slice(0,this.state.number);
     this.setState({data: data, refresh: !this.state.refresh});
-    //console.log(data);
+    //;
   }
   typeSort = () => {
     var data = this.state.originalData;
     data.sort( (prop1, prop2) => {
-      console.log(prop1 + prop1.type)
       if(prop1.type < prop2.type){
         return -1
       }
@@ -202,7 +197,6 @@ class ProfileScreen extends React.Component {
             selectedValue={this.state.sort}
             style={{height: 50, width: 50}}
             onValueChange={(item, index) => {
-              console.log("check")
               this.setState({sort: item})
               switch(item){
                 case "Date":
@@ -226,9 +220,7 @@ class ProfileScreen extends React.Component {
             selectedValue={this.state.number}
             style={{ height: 50, width: 50 }}
             onValueChange={(item, index) => {
-              console.log("check", item)
               this.setState({ number: item, data: this.state.originalData.slice(0, item), refresh: !this.state.refresh })
-              console.log(this.state.data);
               }
             }
           >

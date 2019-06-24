@@ -73,7 +73,6 @@ class EditProfile extends React.Component{
     var city = this.state["City"] == undefined ? this.props.city : this.state["City"]
     var state = this.state["State"] == undefined ? this.props.state : this.state["State"]
     var address = this.state["Mailing Address"] == undefined ? this.props.address : this.state["Mailing Address"]
-    console.log("cit", city);
     axios.put(url, {
       id: this.props.userId,
       fName: fName,
@@ -94,18 +93,13 @@ class EditProfile extends React.Component{
   }
 
   openCamera = () => {
-    console.log("camera opening");
     ImagePicker.launchImageLibrary({}, async (response) => {
-      console.log('Response = ', response);
 
       if (response.didCancel) {
-        console.log('User cancelled image picker');
         return
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
         return
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
         //const source = { uri: response.uri };
         // You can also display the image using data:
@@ -145,9 +139,7 @@ class EditProfile extends React.Component{
     };
 
     await axios.post(url, post, config).then(async (res) => {
-      console.log("message: " + res.data.path);
       if (res.data.response == 0) {
-        console.log("sending rest of data...");
         url = 'http://' + constants.ip + ':3210/data/users/profilePic';
         await axios.put(url, {
           value: res.data.path,
@@ -157,17 +149,16 @@ class EditProfile extends React.Component{
             var p = res.data.path.replace(/\\/g, "/");
             this.setState({ profilePic: p })
             this.props.setPic(p);
-            console.log("success");
           }
-        }).catch((err) => console.log(err))
+        }).catch((err) => {
+          
+        })
       }
     }, (err) => {
-      console.log(err);
     })
   }
 
   pic = () => {
-    console.log("pic", this.props.profilePic);
     return(
       <ImageButton onPress={this.openCamera} style={{ flex: 1, margin: 15, justifyContent: 'space-around', alignItems: 'center', alignSelf: 'center' }}>
         <FastImage

@@ -115,14 +115,12 @@ class NewDBScreen extends React.Component {
      });
   };
   handleBoolPress = (val, name) => {
-    console.log("checking funct" + val + " " + name);
     let type = this.state.enum[name]
     let newfields = this.state.fields
     newfields[type].value = val;
     newfields[type].opacityl = val ? 1 : 0;
     newfields[type].opacityr = val ? 0 : 1;
 
-    console.log("ops l/r: " + newfields[type].opacityl + " " + newfields[type].opacityr )
     this.setState({
       fields: newfields,
     })
@@ -233,7 +231,6 @@ class NewDBScreen extends React.Component {
     if (Platform.OS === 'android') {
       const granted = await PermissionsAndroid.check(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
       if (!granted) {
-        console.log("permission problemo");
         return;
       }
     }
@@ -243,13 +240,11 @@ class NewDBScreen extends React.Component {
       },
       (error) => {
         // See error code charts below.
-        console.log(error.code, error.message);
       },
       { enableHighAccuracy: false, timeout: 15000, maximumAge: 10000 }
     );
   }
     geoSuccess = (position) => {
-    console.log("success");
     this.setState({ lat: position.coords.latitude });
     this.setState({ lon: position.coords.longitude });
 
@@ -269,7 +264,6 @@ class NewDBScreen extends React.Component {
   }
 
   geoError = () => {
-    console.log("geo problemo");
   }
 
   openCamera = () => {
@@ -277,16 +271,13 @@ class NewDBScreen extends React.Component {
 
     };
     ImagePicker.launchCamera( options, async (response) => {
-      //console.log('Response = ', response);
+      //;
 
       if (response.didCancel) {
-        console.log('User cancelled image picker');
         return
       } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
         return
       } else if (response.customButton) {
-        console.log('User tapped custom button: ', response.customButton);
       } else {
         //const source = { uri: response.uri };
         // You can also display the image using data:
@@ -318,15 +309,31 @@ showAlert = () => {
     [
       {
         text: 'Cancel',
-        onPress: () => console.log('Cancel Pressed'),
+        onPress: () => {},
         style: 'cancel',
       },
-      { text: 'OK', onPress: () => console.log('OK Pressed') },
+      { text: 'OK', onPress: () => {}},
     ],
       { cancelable: false },
   );
 
 }
+  showAlreadyAlert = () => {
+    Alert.alert(
+      'Driveby you entered is already in our system',
+      'Finder\'s bonus can only be given to the original finder of a property',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => this.props.navigation.navigate("Home"),
+          style: 'cancel',
+        },
+        { text: 'OK', onPress: () => this.props.navigation.navigate("Home") },
+      ],
+      { cancelable: false },
+    );
+
+  }
   handleSubmit = async () => {
     var url = 'http://' + constants.ip + ':3210/data/drivebys/upload';
   
@@ -341,12 +348,8 @@ showAlert = () => {
     };
       this.setState({sending: true});
       await axios.post(url, post, config ).then( async (res) => {
-        console.log("message: " + res.data.path);
         if (res.data.response == 0){
-          console.log("sending rest of data...");
           url = 'http://' + constants.ip + ':3210/data/drivebys/newDB';
-          console.log("coord: ", this.state.lat, this.state.lon);
-          console.log("vals:" , this.state.state, this.state.county, this.state.city);
           await axios.post(url,{
             path: res.data.path,
             id: this.props.userId,
@@ -365,13 +368,16 @@ showAlert = () => {
             post: this.state.postal
           }).then( (res2) => {
             if(res2.data.response == 0){
-              console.log("success");
-              this.props.navigation.navigate('Home');
+              if(res2.data.already){
+                this.showAlreadyAlert();
+              }
+              else 
+                this.props.navigation.navigate('Home');
             }
             else{
               this.showAlert();
             }
-          }).catch((err) => { console.log(err)})
+          }).catch((err) => { })
         }
         else{
           this.showAlert();

@@ -29,7 +29,6 @@ class UserInput extends React.Component {
   }
 
   onSubmit = () => {
-    console.log(this.props.placeholder)
     switch (this.props.placeholder) {
       case "email":
         this.props.setEmail(this.state.text);
