@@ -4,6 +4,7 @@ import axios from 'axios'
 import { connect } from 'react-redux';
 import colors from '../config/styles/colors'
 import { setLName, setFName, setAddress, setCity, setState } from '../redux/store2'
+import {isIphoneX} from 'react-native-iphone-x-helper';
 
 const mapStateToProps = (state) => {
   return {
@@ -305,6 +306,7 @@ class UserInfoScreen extends React.Component {
               <Text style={{ fontSize: 18, color: 'white' }}>Submit</Text>
             </TouchableOpacity>
           </View>
+          <View style={{marginBottom: isIphoneX() ? 25 : 0}}/>
         </ScrollView>
       </View>
     )

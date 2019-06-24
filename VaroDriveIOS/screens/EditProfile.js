@@ -14,6 +14,7 @@ import axios from 'axios';
 import { setFName, setLName, setPic, setEmail, setCity, setState, setAddress } from '../redux/store2';
 import colors from '../config/styles/colors'
 import ImageButton from '../components/imageButton.js';
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 
 const HEIGHT = Dimensions.get('screen').height;
@@ -227,11 +228,12 @@ class EditProfile extends React.Component{
             <this.showChanges title="State" old={this.props.state} />
             <this.showChanges title="Mailing Address" old={this.props.address} />
           </View>
-          <View style={[styles.buttonsContainer, { margin: 10 }]}>
+          <View style={[styles.buttonsContainer, { margin: 0 }]}>
             <TouchableOpacity style={styles.button} onPress={() => { this.submitChanges() }}>
               <Text style={{ fontSize: 18, color: 'white' }}>Submit</Text>
             </TouchableOpacity>
           </View>
+          <View style={{marginBottom: isIphoneX() ? 25 : 0}}/>
         </ScrollView>
       </View>
     )

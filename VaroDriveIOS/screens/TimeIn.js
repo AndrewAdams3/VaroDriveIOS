@@ -308,6 +308,7 @@ class TimeInScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+        <View style={{marginBottom: isIphoneX() ? 25 : 0}}/>
       </View>
     );
   }

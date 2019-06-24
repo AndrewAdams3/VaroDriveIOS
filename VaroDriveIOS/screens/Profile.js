@@ -251,6 +251,7 @@ class ProfileScreen extends React.Component {
             <Text style={styles.buttonText}>Return</Text>
           </TouchableOpacity>
         </View>
+        <View style={{marginBottom: isIphoneX() ? 25 : 0}}/>
       </View>
     )
   }
@@ -305,7 +306,7 @@ class ProfileScreen extends React.Component {
           <ShowEditor props={this.props} changePic={(pic) => this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + pic})} close={() => this.setState({ profileEditor: false })} pic={this.state.profilePic}/>
         </Modal>
         
-        <View style={{flex: 3, width: '100%', alignContent: 'space-around', justifyContent: 'space-around', alignItems: 'center' }}>
+        <View style={styles.mainView}>
           <View style={{ flex: 2, alignContent: 'space-around', justifyContent: 'space-around' }}>
             <FastImage
               onError={() => {
@@ -338,6 +339,7 @@ class ProfileScreen extends React.Component {
             </TouchableOpacity>
           </View>
         </View>
+        <View style={{marginBottom: isIphoneX() ? 25 : 0}}/>
       </View>
     );
   }
@@ -361,6 +363,12 @@ const styles = StyleSheet.create({
     width: '100%', 
     opacity: .9, 
     overlayColor: 'grey'
+  },
+  mainView: {
+    flex: 3, width: '100%', 
+    alignContent: 'space-around', 
+    justifyContent: 'space-around', 
+    alignItems: 'center',
   },
   TextContainer: {
     position: 'absolute',

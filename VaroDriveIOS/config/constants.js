@@ -1,5 +1,5 @@
 export default constants = {
-  ip: '10.1.10.245'
+  ip: '134.209.62.80'
 };
 
 //varo office 10.1.10.245

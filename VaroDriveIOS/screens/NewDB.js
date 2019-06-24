@@ -7,6 +7,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import constants from '../config/constants'
 import { setLocation } from '../redux/store2'
+import {isIphoneX} from 'react-native-iphone-x-helper'
 
 
 const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
@@ -156,9 +157,9 @@ class NewDBScreen extends React.Component {
   return (
     <View style={{ flex: 1, width: '100%', borderBottomWidth: 1, borderBottomColor: colors.PRIMARY_BACKGROUND, padding: 10 }}>
       <Text style={{ fontSize: 20, color: 'white' }}>{" - " + this.state.fields[num].prompt}</Text>
-      <View style={{ marginHorizontal: 10, borderWidth: 1, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
+      <View style={{ marginHorizontal: 10, borderWidth: isIphoneX() ? 3 : 1, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
         <TextInput
-          style={{color: 'white'}}
+          style={[{color: 'white'}, isIphoneX() ? {height:35} : {}] }
           editable={(placeholder == "Address will load after image is taken..." || num == 1 ) ? false : true}
           ref={input => { this.inputs[this.state.enum[this.state.fields[num].name]] = input }}
           returnKeyType={"next"}
@@ -408,11 +409,12 @@ showAlert = () => {
         {this.boolItem(3)}
         {this.boolItem(4)}
         {this.boolItem(5)}
-        <View style={[styles.buttonsContainer, { margin: 10 }]}>
+        <View style={[styles.buttonsContainer]}>
           <TouchableOpacity style={styles.button} onPress={() => { this.handleSubmit() }}>
             <Text style={{ fontSize: 18, color: 'white' }}>Submit</Text>
           </TouchableOpacity>
         </View>
+        <View style={{marginBottom: isIphoneX() ? 25 : 0}}/>
       </ScrollView>
     )
   }
