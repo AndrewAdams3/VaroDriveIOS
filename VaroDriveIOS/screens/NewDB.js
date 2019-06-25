@@ -9,8 +9,6 @@ import constants from '../config/constants'
 import { setLocation } from '../redux/store2'
 import {isIphoneX} from 'react-native-iphone-x-helper'
 
-
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY
 import Geolocation from 'react-native-geolocation-service';
 
 const HEIGHT = Dimensions.get("screen").height;

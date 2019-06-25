@@ -9,8 +9,6 @@ import {setOnClock, setLocation} from '../redux/store2'
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-const GOOGLE_API_KEY = process.env.GOOGLE_API_KEY;
-
 const mapStateToProps = (state) => {
   return {
     onClock: state.onClock,
