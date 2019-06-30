@@ -29,7 +29,6 @@ const mapStateToProps = (state) => {
     email: state.email,
     city: state.city,
     state: state.state,
-    address: state.address
   };
 }
 
@@ -42,7 +41,6 @@ const mapDispatchToProps = (dispatch) => {
     setEmail: (text) => { dispatch(setEmail(text)) },
     setCity: (text) => { dispatch(setCity(text)) },
     setState: (text) => { dispatch(setState(text)) },
-    setAddress: (text) => { dispatch(setAddress(text)) }
   };
 }
 
@@ -73,7 +71,6 @@ class EditProfile extends React.Component{
     var email = this.state["Email"] == undefined ? this.props.email : this.state["Email"]
     var city = this.state["City"] == undefined ? this.props.city : this.state["City"]
     var state = this.state["State"] == undefined ? this.props.state : this.state["State"]
-    var address = this.state["Mailing Address"] == undefined ? this.props.address : this.state["Mailing Address"]
     axios.put(url, {
       id: this.props.userId,
       fName: fName,
@@ -81,14 +78,12 @@ class EditProfile extends React.Component{
       email: email,
       city: city,
       state: state,
-      address: address
     }).then((res) => {
       this.props.setFName(fName)
       this.props.setLName(lName)
       this.props.setEmail(email)
       this.props.setCity(city)
       this.props.setState(state)
-      this.props.setAddress(address)
     })
     this.props.navigation.navigate("Profile")
   }
@@ -216,7 +211,6 @@ class EditProfile extends React.Component{
             <this.field title="Email" />
             <this.field title="City" />
             <this.field title="State" />
-            <this.field title="Mailing Address" />
             <Text style={styles.confirm}>Change Password?</Text>
             <this.field title="New Password" />
             <this.field title="Confirm Password" />
@@ -226,7 +220,6 @@ class EditProfile extends React.Component{
             <this.showChanges title="Email" old={this.props.email} />
             <this.showChanges title="City" old={this.props.city} />
             <this.showChanges title="State" old={this.props.state} />
-            <this.showChanges title="Mailing Address" old={this.props.address} />
           </View>
           <View style={[styles.buttonsContainer, { margin: 0 }]}>
             <TouchableOpacity style={styles.button} onPress={() => { this.submitChanges() }}>

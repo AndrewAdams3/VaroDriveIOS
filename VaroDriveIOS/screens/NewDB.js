@@ -11,9 +11,6 @@ import {isIphoneX} from 'react-native-iphone-x-helper'
 
 import Geolocation from 'react-native-geolocation-service';
 
-const HEIGHT = Dimensions.get("screen").height;
-const WIDTH = Dimensions.get("screen").width
-
 const mapStateToProps = (state) => {
   return {
     location: state.location,
@@ -324,10 +321,10 @@ showAlert = () => {
       [
         {
           text: 'Cancel',
-          onPress: () => this.props.navigation.navigate("Home"),
+          //onPress: () => this.props.navigation.navigate("Home"),
           style: 'cancel',
         },
-        { text: 'OK', onPress: () => this.props.navigation.navigate("Home") },
+        { text: 'OK'} //onPress: () => this.props.navigation.navigate("Home") },
       ],
       { cancelable: false },
     );

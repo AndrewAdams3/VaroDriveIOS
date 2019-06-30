@@ -39,24 +39,24 @@ export default class HomeScreen extends React.Component {
             <Image source={this.background} style={styles.background} />
             <View style={styles.container}>
               <TouchableOpacity style={[styles.buttonsContainer, {borderTopWidth: 0}]} onPress={() => {this.handlePress(0, 'Profile')}}>
-              <Image style={[styles.image, { transform: [{ scaleX: .7 }, { scaleY: .7 }]}]} source={this.profile} />
+                <Image style={[styles.image, { transform: [{ scaleX: .7 }, { scaleY: .7 }]}]} source={this.profile} />
                 <Text style={styles.buttonText}>Profile</Text>
                 <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('TimeIn')}>
+              <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('TimeIn')}>
                 <Image style={styles.image} source={this.newTime} />
                 <Text style={styles.buttonText}>Time Clock</Text>
-              <Image style={styles.imageR} source={this.arrow} />
-              </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('NewDB')}>
+                <Image style={styles.imageR} source={this.arrow} />
+                </TouchableOpacity>
+              <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('NewDB')}>
                 <Image style={[styles.image, {transform: [{scaleX:-1}] }]} source={this.DriveBy} />
                 <Text style={styles.buttonText}>Drive By</Text>
-              <Image style={styles.imageR} source={this.arrow} />
+                <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('TimeSheet')}>
+              <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('TimeSheet')}>
                 <Image style={styles.image} source={this.timeSheet} />
                 <Text style={styles.buttonText}>Time Sheet</Text>
-              <Image style={styles.imageR} source={this.arrow} />
+                <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
             </View>
           </View>

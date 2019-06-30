@@ -54,6 +54,23 @@ class TimeSheet extends React.Component {
   componentWillUnmount(){
     this.setState({modalVisible: false});
   }
+
+  pad = (size, num) => {
+    var sign = Math.sign(num) === -1 ? '-' : '';
+    return sign + new Array(size).concat([Math.abs(num)]).join('0').slice(-size);
+  }
+
+  getTotal = (ms) => {
+    var total = ms;
+    if(ms <= 0) return "-- : --";
+    var hour, minute, seconds;
+    seconds = Math.floor(total / 1000);
+    minute = Math.floor(seconds / 60);
+    seconds = seconds % 60;
+    hour = Math.floor(minute / 60);
+    minute = minute % 60;
+    return this.pad(2, hour) + ":" + this.pad(2, minute);
+  }
   msToTime = (duration, running) => {
     if (!running) {
       var d = new Date(duration);
@@ -88,7 +105,7 @@ class TimeSheet extends React.Component {
             {this.getEnd(item)}
           </Text>
           <Text style={[styles.listText, {flex: .8}]}>
-            {this.getTotal(item)}
+            {this.getTotal(item.totalTime)}
           </Text>
         </View>
       )
@@ -105,9 +122,9 @@ class TimeSheet extends React.Component {
     var temp = new Date(item.endTime);
     return item.endTime != -1 ? (this.msToTime(item.endTime, false) + (temp.getHours() > 12 ? "\nPM" : "\nAM")) : "In Progress"
   }
-  getTotal = (item) => {
+/*   getTotal = (item) => {
     return item.totalTime > 0 ? this.msToTime(item.totalTime, true) : "- - : - -"
-  }
+  } */
 
   timeWorked = () => {
     this.state.times.map((time) => {
@@ -198,12 +215,6 @@ class TimeSheet extends React.Component {
     hour = Math.floor(minute / 60);
     minute = minute % 60;
     return `${hour}:${minute}:${seconds}`
-    return {
-      day: day,
-      hour: hour,
-      minute: minute,
-      seconds: seconds
-    };
   }
 
   render(){

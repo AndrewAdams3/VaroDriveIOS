@@ -3,7 +3,7 @@ import { View, Text, Platform, StyleSheet, Image, Modal, TouchableOpacity, Keybo
 import axios from 'axios'
 import { connect } from 'react-redux';
 import colors from '../config/styles/colors'
-import { setLName, setFName, setAddress, setCity, setState } from '../redux/store2'
+import { setLName, setFName, setCity, setState } from '../redux/store2'
 import {isIphoneX} from 'react-native-iphone-x-helper';
 
 const mapStateToProps = (state) => {
@@ -17,8 +17,7 @@ const mapDispatchToProps = (dispatch) => {
     setLName: (text) => { dispatch(setLName(text)) },
     setID: (id) => { dispatch(setID(id)) },
     setCity: (city) => {dispatch(setCity(city))},
-    setState: (state) => {dispatch(setState(state))},
-    setAddress: (add) => {dispatch(setAddress(add))}
+    setState: (state) => {dispatch(setState(state))}
   };
 }
 
@@ -34,7 +33,6 @@ class UserInfoScreen extends React.Component {
       lname: false,
       city: false,
       state: false,
-      address: false,
       formComplete: false,
       incomplete: false,
       modalVisible: false
@@ -42,7 +40,7 @@ class UserInfoScreen extends React.Component {
     this.userId = this.props.navigation.getParam('userId');
     this.bg = require('../config/images/background.png');
     this.logo = require("../config/images/VaroLogo.png");
-    this.formComplete = this.state.fname && this.state.lname && this.state.city && this.state.state && this.state.address;
+    this.formComplete = this.state.fname && this.state.lname && this.state.city && this.state.state;
   }
 
   componentWillMount() {
@@ -80,26 +78,23 @@ class UserInfoScreen extends React.Component {
       lName: this.state.temp2,
       city: this.state.temp3,
       state: this.state.temp4,
-      address: this.state.temp5,
       complete: true
     }).then((res) => {
       this.props.setFName(this.state.temp1)
       this.props.setLName(this.state.temp2)
       this.props.setCity(this.state.temp3);
       this.props.setState(this.state.temp4);
-      this.props.setAddress(this.state.temp5);
 
       this.props.navigation.navigate('Home');
     })
   }
   tryFormComplete = async () => {
-    this.setState({formComplete: this.state.fname && this.state.lname && this.state.city && this.state.state && this.state.address});
+    this.setState({formComplete: this.state.fname && this.state.lname && this.state.city && this.state.state});
   }
 
   validateAndSet = async (id) => {
     // Ideally these should be declared in constants.js file
     //const postcodeRegex = /([Gg][Ii][Rr] 0[Aa]{2})|((([A-Za-z][0-9]{1,2})|(([A-Za-z][A-Ha-hJ-Yj-y][0-9]{1,2})|(([A-Za-z][0-9][A-Za-z])|([A-Za-z][A-Ha-hJ-Yj-y][0-9]?[A-Za-z]))))\s?[0-9][A-Za-z]{2})/;
-    const addressRegex = /(\d{1,5})(\s\w{0,2}\s{0,1})(\b\w*\b\s){1,2}(\w*)/;
     const twocharRegex = /^(\w[A-Za-z ]{1,57})/;
     switch (id) {
       case "fname":
@@ -144,15 +139,6 @@ class UserInfoScreen extends React.Component {
         }
         else this.setState({ state: false });
         break;
-      case "address":
-        if (this.state.temp5 != undefined && this.state.temp5 != ""){
-          if (addressRegex.test(this.state.temp5) === true){
-            this.setState({ address: true });
-            await this.tryFormComplete();
-          }
-        }
-        else this.setState({ address: false });
-        break;
       default:
         break;
     }
@@ -166,7 +152,7 @@ class UserInfoScreen extends React.Component {
         </View>
         <View style={{justifyContent: 'center', alignItems: 'center', flex: 3}}>
           <Text style={{ color: 'white', fontSize: 18 }}>{"Name: " + this.state.temp1 + " " + this.state.temp2}</Text>
-          <Text style={{ color: 'white', fontSize: 18 }}>{"Address: " + this.state.temp5 + " " + this.state.temp3 + ", " + this.state.temp4}</Text>
+          <Text style={{ color: 'white', fontSize: 18 }}>{"Location: " + this.state.temp3 + ", " + this.state.temp4}</Text>
         </View>
         <View style={{flexDirection: 'row', flex: 3}}>
           <View style={{ flex: .4, width: '100%', justifyContent: 'space-around', alignItems: 'center' }}>
@@ -195,8 +181,8 @@ class UserInfoScreen extends React.Component {
   }
 
   render() {
-    var {fname, lname, city, state, address} = this.state;
-    var allDone = fname && lname  && city && state && address;
+    var {fname, lname, city, state} = this.state;
+    var allDone = fname && lname  && city && state;
     return (
       <View style={styles.container}>
         <Image source={this.bg} style={styles.background} />
@@ -283,20 +269,6 @@ class UserInfoScreen extends React.Component {
                 onSubmitEditing={() => this.validateAndSet("state")}
                 onBlur={() => this.validateAndSet("state")}
                 returnKeyType={"next"}
-                autoCorrect={false}
-              />
-            </View>
-            <Text style={{ fontSize: 16, color: 'white' }}>Address (e.g. 123 N Fake St.)</Text>
-            <View style={[styles.inputContainer, { borderColor: (!this.state.address && this.state.incomplete) ? 'red' : colors.PRIMARY_BACKGROUND }]}>
-              <TextInput
-                ref={input => { this.inputs[4] = input }}
-                style={{ color: 'white', paddingLeft: 10, height : HEIGHT * .08 }}
-                placeholder={"123 n fake st."}
-                placeholderTextColor={"white"}
-                underlineColorAndroid="transparent"
-                onChangeText={(text) => this.setState({ temp5: text })}
-                onSubmitEditing={() => this.validateAndSet("address")}
-                onBlur={() => this.validateAndSet("address")}
                 autoCorrect={false}
               />
             </View>
