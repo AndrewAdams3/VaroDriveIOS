@@ -1,5 +1,5 @@
 // Library Imports
-import { createSwitchNavigator, createStackNavigator, createAppContainer } from 'react-navigation'
+import { createSwitchNavigator, createStackNavigator, createAppContainer, createMaterialTopTabNavigator} from 'react-navigation'
 import React from 'react';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
@@ -18,6 +18,7 @@ import ProfileScreen from "../screens/Profile.js";
 import NotVerifiedScreen from '../screens/NotVerified.js';
 import EditProfile from '../screens/EditProfile.js';
 import UserInfoScreen from '../screens/UserInfo.js';
+import AssignmentDBScreen from '../screens/AssignmentDB';
 import { colors } from './styles';
 
 
@@ -40,21 +41,39 @@ const AuthStack = createStackNavigator({
 })
 const LandingStack = createStackNavigator({
   Landing: LandingScreen
-}, {
+},{
     initialRouteName: 'Landing',
     headerMode: 'none',
     cardStyle: { shadowColor: 'transparent' },
-  })
+})
 
 // Main App Navigation
 const AppNav = createStackNavigator({
     TimeIn: TimeInScreen,
     TimeSheet: TimeSheet,
     Home: HomeScreen,
-    NewDB: NewDBScreen,
     Profile: ProfileScreen,
-    Edit: EditProfile
-},{ 
+    Edit: EditProfile,
+    NewDB: {
+      screen: createMaterialTopTabNavigator({
+        Natural: NewDBScreen,
+        Assignment: AssignmentDBScreen
+      }, {
+          initialRouteName: "Natural",
+          tabBarOptions: {
+            style: {
+              backgroundColor: colors.SECONDARY_BACKGROUND,
+            },
+            indicatorStyle: {
+              backgroundColor: "white"
+            }
+          }
+        }),
+      navigationOptions: {
+        title: 'New Drive By',
+      }
+    }
+  },{ 
     initialRouteName: 'Home',
     defaultNavigationOptions: {
       headerStyle: {
@@ -98,9 +117,10 @@ export default SwitchNav = createAppContainer(createSwitchNavigator({
     App: AppNav,
     Auth: AuthStack,
     Landing: LandingStack,
-    Setup: SetupStack
+    Setup: SetupStack,
+   // NewDB: NewDBStack
 },{
     initialRouteName: 'Landing',
-}))
+}, ))
 
 

@@ -48,7 +48,7 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.buttonText}>Time Clock</Text>
                 <Image style={styles.imageR} source={this.arrow} />
                 </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('NewDB')}>
+            <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('NewDB')}>
                 <Image style={[styles.image, {transform: [{scaleX:-1}] }]} source={this.DriveBy} />
                 <Text style={styles.buttonText}>Drive By</Text>
                 <Image style={styles.imageR} source={this.arrow} />
