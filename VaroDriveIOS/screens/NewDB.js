@@ -150,16 +150,16 @@ class NewDBScreen extends React.Component {
       break;
    }
   return (
-    <View style={{ flex: 1, width: '100%', borderBottomWidth: 1, borderBottomColor: colors.PRIMARY_BACKGROUND, padding: 10 }}>
+    <View style={{ flex: 1, width: '100%', borderBottomWidth: 2, borderBottomColor: colors.PRIMARY_BACKGROUND, padding: 10 }}>
       <Text style={{ fontSize: 20, color: 'white' }}>{" - " + this.state.fields[num].prompt}</Text>
-      <View style={{ marginHorizontal: 10, borderWidth: isIphoneX() ? 3 : 1, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
+      <View style={{ marginHorizontal: 10, borderWidth: 3, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
         <TextInput
           style={[{color: 'white'}, isIphoneX() ? {height:35} : {}] }
           editable={(placeholder == "Address will load after image is taken..." || num == 1 ) ? false : true}
           ref={input => { this.inputs[this.state.enum[this.state.fields[num].name]] = input }}
           returnKeyType={"next"}
-          placeholder={this.state.fields[num].value == "" ? placeholder : num == 1 ? this.state.fields[num].value.toDateString() + " " + this.state.fields[num].value.toTimeString() : this.state.fields[num].value}
-          value={this.state.fields[num].value == "" ? placeholder : num == 1 ? this.state.fields[num].value.toDateString() + " " + this.state.fields[num].value.toTimeString() : this.state.fields[num].value}
+          placeholder={this.state.fields[num].value == "" ? placeholder : num == 1 ? this.state.fields[num].value.toDateString() : this.state.fields[num].value}
+          value={this.state.fields[num].value == "" ? placeholder : num == 1 ? this.state.fields[num].value.toDateString() : this.state.fields[num].value}
           placeholderTextColor={"white"}
           underlineColorAndroid="transparent"
           onBlur={this.onSubmit}
@@ -200,25 +200,17 @@ class NewDBScreen extends React.Component {
         <View style={{ paddingTop: 5, alignItems: 'flex-start', justifyContent: 'flex-start', flexDirection: 'column', marginHorizontal: 10, borderRadius: 5 }}>
           <TouchableOpacity onPress={() => { this.handleTypePress(0) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
             <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 0 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }}/>
-            <Text style={styles.formText}>NOD</Text>
+            <Text style={styles.formText}>Lot</Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { this.handleTypePress(1) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
             <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 1 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND}} />
-            <Text style={styles.formText}>HHS</Text>
-          </TouchableOpacity>          
+            <Text style={styles.formText}>Single Family Home</Text>
+          </TouchableOpacity>  
           <TouchableOpacity onPress={() => { this.handleTypePress(2) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
-            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 2 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
-            <Text style={styles.formText}>DB</Text>
+            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 1 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
+            <Text style={styles.formText}>Multi-Unit Building</Text>
           </TouchableOpacity>          
-          <TouchableOpacity onPress={() => { this.handleTypePress(3) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
-            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 3 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
-            <Text style={styles.formText}>Tax Auction</Text>
-          </TouchableOpacity>          
-          <TouchableOpacity onPress={() => { this.handleTypePress(4) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
-            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 4 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
-            <Text style={styles.formText}>Lot</Text>
-          </TouchableOpacity>
-        </View>
+         </View>
       </View>
     )
   }

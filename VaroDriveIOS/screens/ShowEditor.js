@@ -1,5 +1,5 @@
 import React from 'react'
-import {View, ScrollView, Dimensions, Image, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import {View, Dimensions, Image, TextInput, TouchableOpacity, Text, StyleSheet } from 'react-native';
 import colors from '../config/styles/colors'
 import axios from 'axios'
 

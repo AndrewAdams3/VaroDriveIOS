@@ -320,7 +320,7 @@ class ProfileScreen extends React.Component {
           </View>
           <View style={{flex: 1, marginBottom: 10, width: '100%', alignItems: 'center', justifyContent: 'space-around'}}>
             <Text style={{color: 'white'}}>
-              Possible Usage Statistics Section
+              Button to View Assignments
             </Text>
           </View>
         </View>
