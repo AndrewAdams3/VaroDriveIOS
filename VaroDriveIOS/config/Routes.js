@@ -19,6 +19,7 @@ import NotVerifiedScreen from '../screens/NotVerified.js';
 import EditProfile from '../screens/EditProfile.js';
 import UserInfoScreen from '../screens/UserInfo.js';
 import AssignmentDBScreen from '../screens/AssignmentDB';
+import AllAssignmentsScreen from '../screens/AllAssignments';
 import { colors } from './styles';
 
 
@@ -54,6 +55,7 @@ const AppNav = createStackNavigator({
     Home: HomeScreen,
     Profile: ProfileScreen,
     Edit: EditProfile,
+    AllAssignments: AllAssignmentsScreen,
     NewDB: {
       screen: createMaterialTopTabNavigator({
         Natural: NewDBScreen,
@@ -74,7 +76,7 @@ const AppNav = createStackNavigator({
       }
     }
   },{ 
-    initialRouteName: 'Home',
+    initialRouteName: 'AllAssignments',
     defaultNavigationOptions: {
       headerStyle: {
         backgroundColor: colors.PRIMARY_BACKGROUND,

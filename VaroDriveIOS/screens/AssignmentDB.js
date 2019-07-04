@@ -291,9 +291,9 @@ showAlert = () => {
           }).then(() => {
             url = 'http://' + constants.ip + ':3210/data/assignments/complete/one/' + this.props.userId;
             axios.put(url, {
-              id: this.state.selectedId,
-              address: this.state.selected
-            })
+              address: this.state.selected,
+              id: this.state.selectedId
+            }).catch((err) => console.log(err))
           })
         }
         else {
@@ -306,11 +306,10 @@ showAlert = () => {
     this.setState({ sending: false });
   }
   renderItem = ({item, section}) => {
-    console.log(item)
     const {address} = item;
     const id = section.ass._id;
     return (
-      <View style={{flex: 1, borderBottomColor: "white", borderBottomWidth: 1}}>
+      <View style={{flex: 1}}>
         <TouchableOpacity onPress={() => {this.setState({selected: address, selectedId: id})}}style={{flex: 1, flexDirection: "row", marginVertical: 7, padding: 5, borderRadius: 10, backgroundColor: this.state.selected === address ? "green" : colors.PRIMARY_BACKGROUND}}>
            <Text style={{color: "white", fontSize: 18, textAlign: "center", marginLeft: 20}}>{address}</Text>
         </TouchableOpacity>
