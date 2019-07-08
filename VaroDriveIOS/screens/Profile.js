@@ -290,22 +290,7 @@ class ProfileScreen extends React.Component {
         <Image source={this.background} style={styles.background}/>
         <View style={{flex: .5, width: '100%', alignContent: 'center', justifyContent: 'center' }}>
           <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>{(this.props.fName == "") ? ("Welcome!") : ("Hi " + capitalize(this.props.fName) + "!")}</Text>
-        </View>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.modalVisible}
-          onRequestClose={() => { () => this.setState({ modalVisible: false }) }}>
-          {this.showProps()}
-        </Modal>
-        <Modal
-          animationType="slide"
-          transparent={false}
-          visible={this.state.profileEditor}
-          onRequestClose={() => { () => this.setState({ profileEditor: false }) }}>
-          <ShowEditor props={this.props} changePic={(pic) => this.setState({ profilePic: 'http://' + constants.ip + ':3210/' + pic})} close={() => this.setState({ profileEditor: false })} pic={this.state.profilePic}/>
-        </Modal>
-        
+        </View>      
         <View style={styles.mainView}>
           <View style={{ flex: 2, alignContent: 'space-around', justifyContent: 'space-around' }}>
             <FastImage
@@ -318,15 +303,15 @@ class ProfileScreen extends React.Component {
               source={{ uri: this.state.profilePic }}
             />
           </View>
-          <View style={{flex: 1, marginBottom: 10, width: '100%', alignItems: 'center', justifyContent: 'space-around'}}>
-            <Text style={{color: 'white'}}>
-              Button to View Assignments
+          <TouchableOpacity style={{flex: .7, marginBottom: 10, width: '90%', alignItems: 'center', justifyContent: 'space-around', backgroundColor: colors.PRIMARY_BACKGROUND, borderRadius: 20}} onPress={() => {this.props.navigation.navigate("AllAssignments")}}>
+           <Text style={{color: 'white', fontSize: 20}}>
+              View Assignments
             </Text>
-          </View>
+          </TouchableOpacity>
         </View>
         <View style={{flex: 1, width: '100%'}}>
           <View style={{ flex: .75, marginHorizontal: 5, backgroundColor: 'transparent', flexDirection: 'row'}}>
-            <TouchableOpacity style={styles.bottomButtons} onPress={this.openModal}>
+            <TouchableOpacity style={styles.bottomButtons} onPress={() => this.props.navigation.navigate("ShowDBs")}>
               <Text style={{ color: 'white', fontSize: 20 }}>View Properties</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.bottomButtons} onPress={() => this.props.navigation.navigate("Edit")}>

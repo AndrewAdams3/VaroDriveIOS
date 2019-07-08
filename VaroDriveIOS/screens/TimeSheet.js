@@ -45,9 +45,9 @@ class TimeSheet extends React.Component {
   };
 
   componentDidMount(){
-    var url = 'http://' + constants.ip + ':3210/data/times/byId';
-    axios.post(url, {id: this.props.userId}).then((Data) => {
-      this.setState({times: Data.data.times});
+    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId;
+    axios.get(url).then(({data}) => {
+      this.setState({times: data});
     })
   }
 
@@ -60,16 +60,16 @@ class TimeSheet extends React.Component {
     return sign + new Array(size).concat([Math.abs(num)]).join('0').slice(-size);
   }
 
-  getTotal = (ms) => {
-    var total = ms;
-    if(ms <= 0) return "-- : --";
+  getTotal = (total) => {
     var hour, minute, seconds;
     seconds = Math.floor(total / 1000);
     minute = Math.floor(seconds / 60);
     seconds = seconds % 60;
     hour = Math.floor(minute / 60);
     minute = minute % 60;
-    return this.pad(2, hour) + ":" + this.pad(2, minute);
+    //return `${hour}:${minute}:${seconds}`
+
+    return this.pad(hour > 99 ? 3 : 2, hour) + ":" + this.pad(2, minute);
   }
   msToTime = (duration, running) => {
     if (!running) {
@@ -122,9 +122,6 @@ class TimeSheet extends React.Component {
     var temp = new Date(item.endTime);
     return item.endTime != -1 ? (this.msToTime(item.endTime, false) + (temp.getHours() > 12 ? "\nPM" : "\nAM")) : "In Progress"
   }
-/*   getTotal = (item) => {
-    return item.totalTime > 0 ? this.msToTime(item.totalTime, true) : "- - : - -"
-  } */
 
   timeWorked = () => {
     this.state.times.map((time) => {
@@ -178,22 +175,14 @@ class TimeSheet extends React.Component {
     )
   }
   sortDates = () => {
-    var url = 'http://' + constants.ip + ':3210/data/times/byId';
-    this.setState({times: []});
-    axios.post(url, 
-      { 
-        id: this.props.userId, 
-        sDate: this.state.selectedStartDate,
-        eDate: this.state.selectedEndDate
-      }).then((Data) => {
-          this.setState({ 
-            times: Data.data.times
-          });
-          this.setState({
-            refresh: !this.state.refresh
-          });
-      })
-    }
+    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + this.state.selectedStartDate.getTime() + "/" + this.state.selectedEndDate.getTime();
+    axios.get(url).then(({data}) => {
+        this.setState({times: data});
+        this.setState({
+          refresh: !this.state.refresh
+        });
+    })
+  }
 
   modalClose = () => {
     this.setState({ modalVisible: false });
@@ -203,18 +192,22 @@ class TimeSheet extends React.Component {
 
   getTotalTime = () => {
     var total = 0;
-    this.state.times.forEach( (time) => {
-      if(time){
-        total += time.totalTime
-      }
-    })
-    var day, hour, minute, seconds;
-    seconds = Math.floor(total / 1000);
-    minute = Math.floor(seconds / 60);
-    seconds = seconds % 60;
-    hour = Math.floor(minute / 60);
-    minute = minute % 60;
-    return `${hour}:${minute}:${seconds}`
+    if(this.state.times.length){
+      this.state.times.forEach((time) => {
+        if (time) {
+          total += time.totalTime
+        }
+      })
+      var hour, minute, seconds;
+      seconds = Math.floor(total / 1000);
+      minute = Math.floor(seconds / 60);
+      seconds = seconds % 60;
+      hour = Math.floor(minute / 60);
+      minute = minute % 60;
+      return `${hour}:${minute}`
+    } else {
+      return "00:00"
+    }
   }
 
   render(){

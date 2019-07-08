@@ -17,6 +17,7 @@
     "react-native-awesome-viewpager": "^1.0.9",
     "react-native-calendar-picker": "^6.0.0",
     "react-native-clean-project": "^3.2.1",
+    "react-native-collapsible": "^1.4.0",
     "react-native-fast-image": "^6.0.1",
     "react-native-geolocation-service": "^1.1.0",
     "react-native-gesture-handler": "^1.1.0",
