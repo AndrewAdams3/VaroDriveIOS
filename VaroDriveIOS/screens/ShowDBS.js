@@ -144,31 +144,10 @@ class ShowDBsScreen extends React.Component {
   }
 
   dateSort = () => {
-    var data = this.state.originalData;
-    data.sort( (prop1, prop2) => {
-      const p1 = new Date(prop1.date)
-      const p2 = new Date(prop2.date)
-      if(p1 > p2) return -1
-      else if(p1 < p2) return 1
-      else return 0
-    })
-    data = data.slice(0,this.state.number);
-    this.setState({data: data, refresh: !this.state.refresh});
-    //;
+    
   }
   typeSort = () => {
-    var data = this.state.originalData;
-    data.sort( (prop1, prop2) => {
-      if(prop1.type < prop2.type){
-        return -1
-      }
-      else if (prop1.type > prop2.type){
-        return 1
-      }
-      return 0
-    })
-    data = data.slice(0, this.state.number);
-    this.setState({ data: data, refresh: !this.state.refresh })
+    
   }
 
   render(){

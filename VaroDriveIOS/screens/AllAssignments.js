@@ -12,6 +12,7 @@ import { colors } from '../config/styles'
 import Axios from 'axios';
 import { connect } from 'react-redux';
 import constants from '../config/constants'
+import { isIphoneX } from 'react-native-iphone-x-helper';
 
 const mapStateToProps = (state) => {
   return {
@@ -122,7 +123,7 @@ class AllAssignmentsScreen extends Component {
     return (
       <View style={styles.container}>
         <Image source={this.bg} style={styles.background} />
-        <View style={{padding: 5, paddingTop: 80}}>
+        <View style={{padding: 5, paddingTop: isIphoneX() ? 100 : 80}}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity style={styles.button} onPress={this.openAll}>
               <Text style={{ textAlign: "center", color: "white" }}>Open All</Text>
