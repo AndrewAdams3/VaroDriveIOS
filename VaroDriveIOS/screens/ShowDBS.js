@@ -6,8 +6,7 @@ import {
   Dimensions,
   TouchableOpacity, StatusBar,
   StyleSheet, Image,
-  ActivityIndicator,
-  AsyncStorage, Modal,
+  ActivityIndicator, Modal,
   FlatList, Platform
 } from 'react-native';
 import { colors } from '../config/styles'
@@ -17,16 +16,12 @@ import { connect } from 'react-redux';
 
 import constants from '../config/constants'
 
-import { setLName, setFName, setPic, LOG_OUT } from '../redux/store2'
-import FastImage from 'react-native-fast-image'
+import { setID} from '../redux/store2'
 import LoadImage from '../components/LoadImage';
-import ShowEditor from './ShowEditor'
-import capitalize from '../helpers';
 import { isIphoneX } from 'react-native-iphone-x-helper';
 
 const WIDTH = Dimensions.get('screen').width;
 const HEIGHT = Dimensions.get('screen').height;
-const ACCESS_TOKEN = 'access_token';
 
 const mapStateToProps = (state) => {
   return {
@@ -39,7 +34,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-
+    setID: (text) => { dispatch(setID(text)) },
   };
 }
 
@@ -47,18 +42,55 @@ class ShowDBsScreen extends React.Component {
   constructor(props) {
     super(props)
     this.state={
-      loading: false
+      loading: false,
+      data: [],
+      originalData: [],
+      refresh: false,
+      sort: "Default",
+      showing: "",
+      number: 30,
+      modal2Visible: false
     }
+    this.background = require('../config/images/background.png')
+
   }
 
   static navigationOptions = ({ navigation }) => {
     return {
       headerTitle: (
-        "View Drivebys"
+        "Drivebys"
       ),
       headerTransparent: true,
     }
   };
+
+  componentDidMount = () => {
+    this.getDriveBys();
+  }
+
+  getDriveBys = async () => {
+    var url = 'http://' + constants.ip + ':3210/data/drivebys/byUserId';
+    this.setState({loading: true});
+    if(this.props.userId){
+      await axios.post(url, {
+        id: this.props.userId,
+      }).then((Data) => {
+        console.log(Data.data);
+        if(Data.data.response == 0){
+          this.setState({
+            data: Data.data.docs,
+            originalData: Data.data.docs,
+            refresh: !this.state.refresh,
+            loading: false
+          })
+        }
+      }).then( () => {
+        this.setState({loading: false});
+        this.dateSort();
+        }
+      )
+    }
+  }
 
   showPic = () => {
     if (this.state.modal2Visible == true) {
@@ -73,6 +105,7 @@ class ShowDBsScreen extends React.Component {
     }
   }
   listItem = ({ item }) => {
+    console.log("iteming")
     const d = new Date(item.date)
     return (
       <View style={{ flex: 1, borderBottomColor: 'white', borderBottomWidth: 1, width: WIDTH }}>

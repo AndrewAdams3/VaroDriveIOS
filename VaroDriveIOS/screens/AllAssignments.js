@@ -5,7 +5,6 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Dimensions,
   Image
 } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';

@@ -96,7 +96,6 @@ const AppNav = createStackNavigator({
         alignSelf: 'center',
       },
     },
-//    cardStyle: { shadowColor: 'transparent' },
 })
 
 // Renders the Main App navigator with the SlideMenu wrapped around it

@@ -175,7 +175,7 @@ class TimeSheet extends React.Component {
     )
   }
   sortDates = () => {
-    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + this.state.selectedStartDate.getTime() + "/" + this.state.selectedEndDate.getTime();
+    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + this.state.selectedStartDate + "/" + this.state.selectedEndDate;
     axios.get(url).then(({data}) => {
         this.setState({times: data});
         this.setState({
