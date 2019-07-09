@@ -292,8 +292,11 @@ showAlert = () => {
             url = 'http://' + constants.ip + ':3210/data/assignments/complete/one/' + this.props.userId;
             axios.put(url, {
               address: this.state.selected,
-              id: this.state.selectedId
-            }).catch((err) => console.log(err))
+            }).then(()=> {
+              url = 'http://' + constants.ip + ':3210/data/assignments/complete/byId/' + this.state.selectedId;
+              axios.put(url);
+            })
+            .catch((err) => console.log(err))
           })
         }
         else {

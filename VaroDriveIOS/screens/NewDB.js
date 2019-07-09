@@ -207,7 +207,7 @@ class NewDBScreen extends React.Component {
             <Text style={styles.formText}>Single Family Home</Text>
           </TouchableOpacity>  
           <TouchableOpacity onPress={() => { this.handleTypePress(2) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
-            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 1 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
+            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 2 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
             <Text style={styles.formText}>Multi-Unit Building</Text>
           </TouchableOpacity>          
          </View>
