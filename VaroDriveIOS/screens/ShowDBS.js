@@ -91,7 +91,7 @@ class ShowDBsScreen extends React.Component {
     if(this.props.userId){ 
       axios.post(url, {
         id: this.props.userId,
-        limit: this.state.number,
+        limit: Number(this.state.number),
         sort: this.state.sort
       }).then(({data}) => {
         if(data.response == 0){
