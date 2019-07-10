@@ -61,7 +61,6 @@ class ProfileScreen extends React.Component {
       profileEditor: false
     }
     this.background = require('../config/images/background.png')
-    this.prof = require('../config/images/myprof.jpg')
   }
 
   static navigationOptions = ({ navigation }) => {
