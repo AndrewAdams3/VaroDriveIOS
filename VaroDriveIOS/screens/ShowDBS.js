@@ -46,7 +46,7 @@ class ShowDBsScreen extends React.Component {
       refresh: false,
       loading: true,
       sort: "-date",
-      sortType: "Default",
+      sortType: "Date",
       showing: "",
       number: 20,
       modal2Visible: false
@@ -172,7 +172,6 @@ class ShowDBsScreen extends React.Component {
               }
             }}
           >
-            <Picker.Item label="Default (Date)" value="Default" />
             <Picker.Item label="Date" value="Date" />
             <Picker.Item label="Type" value="Type" />
           </Picker>
@@ -185,7 +184,6 @@ class ShowDBsScreen extends React.Component {
               this.setState({ number: item }, this.getDriveBys);
             }}
           >
-            <Picker.Item label="Default (30)" value={30} />
             <Picker.Item label="10" value={10} />
             <Picker.Item label="20" value={20} />
             <Picker.Item label="30" value={30} />

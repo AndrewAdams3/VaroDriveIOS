@@ -48,21 +48,21 @@ class NewDBScreen extends React.Component {
         vacant = {
           name: "vacant",
           prompt: "Was it Visibly Vacant?",
-          value: false,
+          value: null,
           opacityl: 0,
           opacityr: 0
         },
         burned = {
           name: "burned",
           prompt: "Was it Burned?",
-          value: false,
+          value: null,
           opacityl: 0,
           opacityr: 0
         }, 
         boarded = {
           name: "boarded",
           prompt: "Was it Boarded?",
-          value: false,
+          value: null,
           opacityl: 0,
           opacityr: 0
         },
@@ -244,22 +244,19 @@ showAlert = () => {
       { text: 'OK', onPress: () => {}},
     ],
       { cancelable: false },
-  );
-
-}
+  );}
   
   handleSubmit = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/drivebys/upload';
-  
-    const post = this.state.post
-
-    const config = {
-      method: 'POST',
-      headers: {
-        'content-type': 'multipart/form-data'
-      },
-      body: post,
-    };
+    if(this.state.address && this.state.selected){
+      var url = 'http://' + constants.ip + ':3210/data/drivebys/upload';
+      const post = this.state.post
+      const config = {
+        method: 'POST',
+        headers: {
+          'content-type': 'multipart/form-data'
+        },
+        body: post,
+      };
       this.setState({sending: true});
       await axios.post(url, post, config ).then( async (res) => {
         if (res.data.response == 0){
@@ -282,21 +279,26 @@ showAlert = () => {
             county: this.state.county,
             post: this.state.postal
           }).then( (res2) => {
-            if (res2.data.response == 0) {
-              this.props.navigation.navigate('Home');
-            }
-            else {
+            if (res2.data.response !== 0) {
               this.showAlert();
             }
-          }).then(() => {
-            url = 'http://' + constants.ip + ':3210/data/assignments/complete/one/' + this.props.userId;
-            axios.put(url, {
-              address: this.state.selected,
-            }).then(()=> {
-              url = 'http://' + constants.ip + ':3210/data/assignments/complete/byId/' + this.state.selectedId;
-              axios.put(url);
-            })
-            .catch((err) => console.log(err))
+            else{
+              url = 'http://' + constants.ip + ':3210/data/assignments/complete/one/' + this.props.userId;
+              axios.put(url, {
+                address: this.state.selected,
+              }).then(({ data }) => {
+                if (data.ok === -1) {
+                  this.showAlert()
+                } else {
+                  url = 'http://' + constants.ip + ':3210/data/assignments/complete/byId/' + this.state.selectedId;
+                  axios.put(url).then(({ data }) => {
+                    if (data.ok === 1)
+                      this.props.navigation.navigate("Home");
+                    else this.showAlert();
+                  });
+                }
+              })
+            }
           })
         }
         else {
@@ -307,7 +309,11 @@ showAlert = () => {
           this.showAlert();
       })
     this.setState({ sending: false });
+    } else{
+      this.showAlert();
+    }
   }
+  
   renderItem = ({item, section}) => {
     const {address} = item;
     const id = section.ass._id;
