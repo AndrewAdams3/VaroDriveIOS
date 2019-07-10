@@ -51,21 +51,21 @@ class NewDBScreen extends React.Component {
         vacant = {
           name: "vacant",
           prompt: "Was it Visibly Vacant?",
-          value: false,
+          value: null,
           opacityl: 0,
           opacityr: 0
         },
         burned = {
           name: "burned",
           prompt: "Was it Burned?",
-          value: false,
+          value: null,
           opacityl: 0,
           opacityr: 0
         }, 
         boarded = {
           name: "boarded",
           prompt: "Was it Boarded?",
-          value: false,
+          value: null,
           opacityl: 0,
           opacityr: 0
         },
