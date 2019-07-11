@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'react-native';
 import { colors, vars } from '../../config/styles'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
+import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 import { images } from '../../config/images'
 
 const ACCESS_TOKEN = 'access_token';
@@ -11,8 +11,7 @@ export default class HomeScreen extends React.Component {
         super(props)
         this.state = {   
         }
-      show= 'flex'
-      this.background = require('../../config/images/background.png');
+      this.background = require('../../config/images/psbackground.png');
       this.newTime = require('../../config/images/TimeIn.png');
       this.DriveBy = require('../../config/images/DriveBy.png');
       this.timeSheet = require('../../config/images/TimeSheet.jpg');
@@ -29,35 +28,36 @@ export default class HomeScreen extends React.Component {
     }
   };
 
-  handlePress = (num, nav) => {
+  handlePress = (nav) => {
     this.props.navigation.navigate(nav)
   }
   render() {
 
       return (
-          <View style={[styles.container, {display: this.show}]}>
+          <View style={[styles.container]}>
             <Image source={this.background} style={styles.background} />
-            <View style={styles.container}>
-              <TouchableOpacity style={[styles.buttonsContainer, {borderTopWidth: 0}]} onPress={() => {this.handlePress(0, 'Profile')}}>
+            <View style={[styles.container, {marginTop: 0, paddingHorizontal: 20, paddingVertical: 10}]}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .9)"}]} onPress={() => {this.handlePress('Profile')}}>
                 <Image style={[styles.image, { transform: [{ scaleX: .7 }, { scaleY: .7 }]}]} source={this.profile} />
                 <Text style={styles.buttonText}>Profile</Text>
                 <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('TimeIn')}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .8)"}]} onPress={() => {this.handlePress('TimeIn')}}>
                 <Image style={styles.image} source={this.newTime} />
                 <Text style={styles.buttonText}>Time Clock</Text>
                 <Image style={styles.imageR} source={this.arrow} />
                 </TouchableOpacity>
-            <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('NewDB')}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .7)"}]} onPress={() => {this.handlePress('NewDB')}}>
                 <Image style={[styles.image, {transform: [{scaleX:-1}] }]} source={this.DriveBy} />
                 <Text style={styles.buttonText}>Drive By</Text>
                 <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
-              <TouchableOpacity style={styles.buttonsContainer} onPress={() => this.props.navigation.navigate('TimeSheet')}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .6)"}]} onPress={() => {this.handlePress('TimeSheet')}}>
                 <Image style={styles.image} source={this.timeSheet} />
                 <Text style={styles.buttonText}>Time Sheet</Text>
                 <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
+              <View style={{height: isIphoneX() ? 20 : 0}}/>
             </View>
           </View>
       );
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '100%',
         height: '100%',
-        marginTop: 40
+        marginTop: isIphoneX() ? 100 : 80,
     },
     background: {
       position: 'absolute',
@@ -93,7 +93,6 @@ const styles = StyleSheet.create({
         textAlign: 'center'
     },
     buttonsContainer: {
-//        backgroundColor: 'white',
         width: '100%',
         height: '25%',
         justifyContent: 'space-around',
@@ -101,18 +100,10 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         padding: 10,
         flex: 1,
-        borderColor: 'white',
-        //borderWidth: 1,
-        borderTopWidth: 0,
-        borderBottomWidth: 0
-    },
-    button: {
-        width: '45%',
-        height: 45,
-        borderRadius: 50,
-        backgroundColor: colors.SECONDARY_BACKGROUND,
-        justifyContent: 'center',
-        alignItems: 'center',
+        borderWidth: 3,
+        borderRadius: 10,
+        borderColor: colors.PRIMARY_BACKGROUND,
+        marginVertical: 3
     },
     buttonText: {
       color: 'white', 

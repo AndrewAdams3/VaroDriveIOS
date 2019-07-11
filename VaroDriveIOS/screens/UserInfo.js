@@ -38,7 +38,7 @@ class UserInfoScreen extends React.Component {
       modalVisible: false
     }
     this.userId = this.props.navigation.getParam('userId');
-    this.bg = require('../config/images/background.png');
+    this.bg = require('../config/images/psbackground.png');
     this.logo = require("../config/images/VaroLogo.png");
     this.formComplete = this.state.fname && this.state.lname && this.state.city && this.state.state;
   }

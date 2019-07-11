@@ -36,7 +36,7 @@ class AllAssignmentsScreen extends Component {
       assignments: [],
       count: 0
     };
-    this.bg = require('../config/images/background.png');
+    this.bg = require('../config/images/psbackground.png');
   }
 
   static navigationOptions = ({ navigation }) => {

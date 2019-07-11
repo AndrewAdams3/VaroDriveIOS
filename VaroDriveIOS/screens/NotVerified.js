@@ -21,7 +21,7 @@ class NotVerifiedScreen extends React.Component{
       verified: true
     }
     this.userId = this.props.navigation.getParam('userId');
-    this.bg = require('../config/images/background.png');
+    this.bg = require('../config/images/psbackground.png');
     this.logo = require("../config/images/VaroLogo.png");
   }
 

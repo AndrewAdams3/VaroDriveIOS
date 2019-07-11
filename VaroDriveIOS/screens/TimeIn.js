@@ -40,7 +40,7 @@ class TimeInScreen extends React.Component {
     }
     this.getOnTime();
     this.newTime = require('../config/images/TimeIn.png');
-    this.background = require('../config/images/background.png');
+    this.background = require('../config/images/psbackground.png');
   }
 
   static navigationOptions = ({ navigation }) => {

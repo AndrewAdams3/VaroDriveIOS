@@ -32,7 +32,7 @@ class TimeSheet extends React.Component {
       selectedEndDate: null,
       selectedStartDate: null
     }
-    this.background = require('../config/images/background.png');
+    this.background = require('../config/images/psbackground.png');
   }
 
   static navigationOptions = ({ navigation }) => {

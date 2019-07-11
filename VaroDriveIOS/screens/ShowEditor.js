@@ -36,7 +36,7 @@ class ShowEditor extends React.Component{
     this.state={
       profilePic: this.props.pic
     }
-    this.bg = require('../config/images/background.png')
+    this.bg = require('../config/images/psbackground.png')
     this.edit = require('../config/images/edit.png');
   }
 

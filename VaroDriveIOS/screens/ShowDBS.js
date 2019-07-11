@@ -44,12 +44,12 @@ const SORTS = [
   "type",
 ];
 SORTNames = [
-  "",
+  "Cancel",
   "Date",
   "Type"
 ]
 const LIMIT = [
-  "cancel",
+  "Cancel",
   "10",
   "20",
   "30",
@@ -69,7 +69,7 @@ class ShowDBsScreen extends React.Component {
       number: 20,
       modal2Visible: false
     }
-    this.background = require('../config/images/background.png')
+    this.background = require('../config/images/psbackground.png')
   }
 
   static navigationOptions = ({ navigation }) => {
@@ -86,7 +86,6 @@ class ShowDBsScreen extends React.Component {
   }
 
   getDriveBys = () => {
-    //this.setState({loading: true});
     var url = 'http://' + constants.ip + ':3210/data/drivebys/byUserId';
     if(this.props.userId){ 
       axios.post(url, {

@@ -51,7 +51,7 @@ class EditProfile extends React.Component{
       fn: "",
       profilePic: this.props.profilePic
     }
-    this.background = require('../config/images/background.png')
+    this.background = require('../config/images/psbackground.png')
     this.right = require('../config/images/trighticon.png')
   }
 

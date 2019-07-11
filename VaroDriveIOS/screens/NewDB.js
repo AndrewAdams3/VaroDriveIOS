@@ -88,7 +88,7 @@ class NewDBScreen extends React.Component {
       sending: false
     }
     this.circle = require('../config/images/circle.png');
-    this.bg = require('../config/images/background.png');
+    this.bg = require('../config/images/psbackground.png');
     show = 'flex'
   }
 

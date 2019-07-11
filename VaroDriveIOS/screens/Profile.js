@@ -60,7 +60,7 @@ class ProfileScreen extends React.Component {
       profilePic: 'http://' + constants.ip + ':3210/' + path,
       profileEditor: false
     }
-    this.background = require('../config/images/background.png')
+    this.background = require('../config/images/psbackground.png')
   }
 
   static navigationOptions = ({ navigation }) => {
