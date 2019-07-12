@@ -45,7 +45,7 @@ class TimeSheet extends React.Component {
   };
 
   componentDidMount(){
-    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId;
+    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + "30";
     axios.get(url).then(({data}) => {
       this.setState({times: data});
     })

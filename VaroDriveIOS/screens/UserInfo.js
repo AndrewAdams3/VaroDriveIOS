@@ -134,7 +134,6 @@ class UserInfoScreen extends React.Component {
           if (twocharRegex.test(this.state.temp4)){
             this.setState({ state: true });
             await this.tryFormComplete();
-            this.focusTheField(4)
           }
         }
         else this.setState({ state: false });
@@ -175,9 +174,7 @@ class UserInfoScreen extends React.Component {
 
   // function to focus the field
   focusTheField = (id) => {
-
     this.inputs[id].focus();
-
   }
 
   render() {
@@ -220,7 +217,6 @@ class UserInfoScreen extends React.Component {
                 onChangeText={(text) => this.setState({ temp1: text })}
                 onSubmitEditing={() => this.validateAndSet("fname")}
                 onBlur={() => this.validateAndSet("fname")}
-                returnKeyType={"next"}
                 autoCorrect={false}
               />
             </View>
@@ -236,7 +232,6 @@ class UserInfoScreen extends React.Component {
                 onChangeText={(text) => this.setState({ temp2: text })}
                 onSubmitEditing={() => this.validateAndSet("lname")}
                 onBlur={() => this.validateAndSet("lname")}
-                returnKeyType={"next"}
                 autoCorrect={false}
               />
             </View>
@@ -252,7 +247,6 @@ class UserInfoScreen extends React.Component {
                 onChangeText={(text) => this.setState({ temp3: text })}
                 onSubmitEditing={() => this.validateAndSet("city")}
                 onBlur={() => this.validateAndSet("city")}
-                returnKeyType={"next"}
                 autoCorrect={false}
               />
             </View>
@@ -268,7 +262,6 @@ class UserInfoScreen extends React.Component {
                 onChangeText={(text) => this.setState({ temp4: text })}
                 onSubmitEditing={() => this.validateAndSet("state")}
                 onBlur={() => this.validateAndSet("state")}
-                returnKeyType={"next"}
                 autoCorrect={false}
               />
             </View>

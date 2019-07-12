@@ -180,6 +180,7 @@ class EditProfile extends React.Component{
           placeholderTextColor={"white"}
           underlineColorAndroid="transparent"
           onChangeText={(text) => this.setState({ [p.title]: text })}
+          maxLength={p.title === "State" ? 2 : null}
         />
       </View>
     )
@@ -281,7 +282,8 @@ const styles = StyleSheet.create({
   },
   tInput: {
     height: 50,
-    color: 'white'
+    color: 'white',
+    width: "100%"
   },
   indicator: {
     height: 30,

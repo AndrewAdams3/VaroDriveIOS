@@ -42,6 +42,7 @@ class SignUpScreen extends React.Component {
       invalidEmail: false
     }
     this.logo = require("../../config/images/VaroLogo.png");
+    this.bg = require('../../config/images/psbackground.png')
   }
 
   async storeToken(accessToken) {
@@ -191,7 +192,7 @@ class SignUpScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Image style={{ width: DEVICE_WIDTH, height: DEVICE_HEIGHT, position: 'absolute' }} source={{ uri: images.background }}></Image>
+        <Image style={styles.background} source={this.bg}></Image>
         <View style={{ flex: 1, paddingBottom: 10 }}>
           <View style={{ height: 20 }} />
           <View style={{ flex: 1, justifyContent: 'center' }}>
@@ -251,7 +252,13 @@ class SignUpScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: colors.PRIMARY_BACKGROUND,
+  },
+  background: {
+    position: 'absolute',
+    height: '100%',
+    width: '100%',
+    opacity: .9,
+    overlayColor: 'grey'
   },
   TextContainer: {
     flex: 1,
