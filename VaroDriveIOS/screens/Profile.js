@@ -86,11 +86,11 @@ class ProfileScreen extends React.Component {
     return (
       <View style={styles.container}>
         <Image source={this.background} style={styles.background}/>
-        <View style={{flex: .5, width: '100%', alignContent: 'center', justifyContent: 'center' }}>
-          <Text style={{ color: 'white', fontSize: 20, textAlign: 'center' }}>{(this.props.fName == "") ? ("Welcome!") : ("Hi " + capitalize(this.props.fName) + "!")}</Text>
+        <View style={{flex: isIphoneX() ? .8 : .5, width: '100%', alignContent: 'center', justifyContent: 'center'}}>          
+          <Text style={{ color: 'white', fontSize: 30, textAlign: 'center' }}>{(this.props.fName == "") ? ("Welcome!") : ("Hi " + capitalize(this.props.fName) + "!")}</Text>
         </View>      
         <View style={styles.mainView}>
-          <View style={{ flex: 2, alignContent: 'space-around', justifyContent: 'space-around' }}>
+          <View style={{ flex: 2, alignContent: 'flex-start', justifyContent: 'flex-start' }}>
             <FastImage
               onError={() => {
                 this.setState({
@@ -107,7 +107,7 @@ class ProfileScreen extends React.Component {
             </Text>
           </TouchableOpacity>
         </View>
-        <View style={{flex: 1, width: '100%'}}>
+        <View style={{flex: .5, width: '100%'}}>
           <View style={{ flex: .75, marginHorizontal: 5, backgroundColor: 'transparent', flexDirection: 'row'}}>
             <TouchableOpacity style={styles.bottomButtons} onPress={() => this.props.navigation.navigate("ShowDBs")}>
               <Text style={{ color: 'white', fontSize: 20 }}>View Properties</Text>
@@ -148,7 +148,7 @@ const styles = StyleSheet.create({
     overlayColor: 'grey'
   },
   mainView: {
-    flex: 3, width: '100%', 
+    flex: 1.5, width: '100%', 
     alignContent: 'space-around', 
     justifyContent: 'space-around', 
     alignItems: 'center',
@@ -181,7 +181,7 @@ const styles = StyleSheet.create({
     width: 195, 
     borderRadius: 101, 
     borderWidth: 3, 
-    borderColor: colors.PRIMARY_BACKGROUND
+    borderColor: colors.PRIMARY_BACKGROUND,
   },
   logoutButton: { 
     flex: 1, 

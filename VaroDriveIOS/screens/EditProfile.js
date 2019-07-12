@@ -258,15 +258,15 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around'
   },
   inputContainer: {
-    flex: .5,
     margin: 5,
     padding: 10,
-    width: '40%',
-    //height: 70,
+    height: 50,
     marginHorizontal: 10,
     borderWidth: 3,
     borderColor: colors.PRIMARY_BACKGROUND,
-    borderRadius: 5
+    borderRadius: 20,
+    justifyContent: "center",
+    alignItems: "flex-start"
   },
   resultContainer: {
     flex: .5,
