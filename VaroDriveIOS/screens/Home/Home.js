@@ -42,17 +42,17 @@ export default class HomeScreen extends React.Component {
                 <Text style={styles.buttonText}>Profile</Text>
                 <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .8)"}]} onPress={() => {this.handlePress('TimeIn')}}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .9)"}]} onPress={() => {this.handlePress('TimeIn')}}>
                 <Image style={styles.image} source={this.newTime} />
                 <Text style={styles.buttonText}>Time Clock</Text>
                 <Image style={styles.imageR} source={this.arrow} />
                 </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .7)"}]} onPress={() => {this.handlePress('NewDB')}}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .9)"}]} onPress={() => {this.handlePress('NewDB')}}>
                 <Image style={[styles.image, {transform: [{scaleX:-1}] }]} source={this.DriveBy} />
                 <Text style={styles.buttonText}>Drive By</Text>
                 <Image style={styles.imageR} source={this.arrow} />
               </TouchableOpacity>
-              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .6)"}]} onPress={() => {this.handlePress('TimeSheet')}}>
+              <TouchableOpacity style={[styles.buttonsContainer, {backgroundColor: "rgba(53, 65, 78, .9)"}]} onPress={() => {this.handlePress('TimeSheet')}}>
                 <Image style={styles.image} source={this.timeSheet} />
                 <Text style={styles.buttonText}>Time Sheet</Text>
                 <Image style={styles.imageR} source={this.arrow} />
