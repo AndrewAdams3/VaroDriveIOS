@@ -209,6 +209,10 @@ class NewDBScreen extends React.Component {
           <TouchableOpacity onPress={() => { this.handleTypePress(2) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
             <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 2 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
             <Text style={styles.formText}>Multi-Unit Building</Text>
+          </TouchableOpacity> 
+          <TouchableOpacity onPress={() => { this.handleTypePress(3) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
+            <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 3 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
+            <Text style={styles.formText}>Commercial</Text>
           </TouchableOpacity>          
          </View>
       </View>
@@ -242,7 +246,8 @@ class NewDBScreen extends React.Component {
           county: res.data.county,
           state: res.data.state,
           city: res.data.city,
-          postal: res.data.postal
+          postal: res.data.postal,
+          street: res.data.street
         })
         this.props.setLocation(res.data.address);
         var nf = this.state.fields;
@@ -308,7 +313,7 @@ showAlert = () => {
 }
   showAlreadyAlert = () => {
     Alert.alert(
-      'Driveby you entered is already in our system',
+      'Driveby you entered may already be in our system',
       'Finder\'s bonus can only be given to the original finder of a property',
       [
         {
@@ -342,6 +347,7 @@ showAlert = () => {
             path: res.data.path,
             id: this.props.userId,
             address: this.state.fields[0].value,
+            street: this.state.street,
             date: this.state.fields[1].value.getTime(),
             offset: this.state.fields[1].value.getTimezoneOffset(),
             type: this.state.fields[2].value,

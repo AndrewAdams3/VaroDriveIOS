@@ -131,20 +131,6 @@ class TimeInScreen extends React.Component {
     }
   }
 
-  /* msToTime = (duration, running) => {
-    var milliseconds = parseInt((duration % 1000) / 100),
-    seconds = parseInt((duration / 1000) % 60),
-    minutes = parseInt((duration / (1000 * 60)) % 60),
-    hours = parseInt((duration / (1000 * 60 * 60)) % 24);
-    seconds = milliseconds > 5 ? (seconds+1) : seconds;
-    hours = (hours < 10) ? "0" + hours : hours;
-    hours = (hours > 12) ? hours - 12 : hours;
-    if(!running) hours = hours == 0 ? 12 : hours;
-    minutes = (minutes < 10) ? "0" + minutes : minutes;
-    seconds = (seconds < 10) ? "0" + seconds : seconds;
-    .getHours());
-    return hours + ":" + minutes + ":" + seconds;
-  } */
   setUserOnClock = (on) => {
     var url = 'http://' + constants.ip + ':3210/data/users/onclock';
     axios.put(url, {
@@ -191,7 +177,6 @@ class TimeInScreen extends React.Component {
       sLocation: this.props.location,
       sTime: time.getTime()
     }).then((res) => {
-//      ;
     })
   }
 
@@ -298,11 +283,10 @@ class TimeInScreen extends React.Component {
             </View>
           </View>
           <View style={[styles.buttonsContainer, { position: 'absolute' }]}>
-            <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('Home')}>
-              <Text style={styles.buttonText}>Edit Shift</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.button} onPress={() => this.props.navigation.navigate('TimeSheet')}>
-              <Text style={styles.buttonText}>Timesheet</Text>
+            <TouchableOpacity style={{ flex: 1, marginBottom: 10, height: 80, alignItems: 'center', justifyContent: 'space-around', backgroundColor: colors.PRIMARY_BACKGROUND, borderRadius: 20 }} onPress={() => { this.props.navigation.navigate("TimeSheet") }}>
+              <Text style={{ color: 'white', fontSize: 20 }}>
+                Timesheet
+              </Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -364,12 +348,10 @@ const styles = StyleSheet.create({
     marginTop: 10,
   }, 
   buttonsContainer: {
-    width: '100%',
-    display: 'flex',
     flexDirection: 'row',
     justifyContent: 'space-around',
-    marginTop: 30,
-    bottom: 0,
+    bottom: 30,
+    paddingHorizontal: 20
   },
   button: {
     width: '50%',

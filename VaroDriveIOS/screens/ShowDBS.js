@@ -194,13 +194,12 @@ class ShowDBsScreen extends React.Component {
     if(Platform.OS === "android"){
       return(
         <View style={{ width: '100%', height: 50, marginTop: 80, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', backgroundColor: colors.SECONDARY_BACKGROUND }}>
-          <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>Sort By: </Text>
+          <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{"Sort By: "}</Text>
           <Text style={{ color: 'white', textAlign: 'center', fontSize: 18 }}>{this.state.sortType}</Text>
           <Picker
             selectedValue={this.state.sort}
             style={{ height: 50, width: 50 }}
             onValueChange={(item, index) => {
-              this.setState({ sort: item })
               switch (item) {
                 case "Date":
                   this.dateSort()
@@ -213,11 +212,12 @@ class ShowDBsScreen extends React.Component {
               }
             }}
           >
+            <Picker.Item label="None" value="" />
             <Picker.Item label="Date" value="Date" />
             <Picker.Item label="Type" value="Type" />
           </Picker>
           <View style={{ flex: .5 }} />
-          <Text style={{ color: 'white', textAlign: 'right', fontSize: 18 }}>Show: </Text>
+          <Text style={{ color: 'white', textAlign: 'right', fontSize: 18 }}>{"Show: " + this.state.number}</Text>
           <Picker
             selectedValue={this.state.number}
             style={{ height: 50, width: 50 }}

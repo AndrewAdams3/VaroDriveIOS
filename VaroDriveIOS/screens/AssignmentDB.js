@@ -185,7 +185,8 @@ class NewDBScreen extends React.Component {
           county: res.data.county,
           state: res.data.state,
           city: res.data.city,
-          postal: res.data.postal
+          postal: res.data.postal,
+          street: res.data.street
         })
         this.props.setLocation(res.data.address);
         this.setState({ hasPic: true, address: res.data.address});
@@ -265,10 +266,11 @@ showAlert = () => {
             path: res.data.path,
             id: this.props.userId,
             address: this.state.selected,
+            street: this.state.street,
             assignment: true,
             date: this.state.fields[0].value.getTime(),
             offset: this.state.fields[0].value.getTimezoneOffset(),
-            type: 3,
+            type: null,
             vacant: this.state.fields[1].value,
             burned: this.state.fields[2].value,
             boarded: this.state.fields[3].value,
