@@ -110,7 +110,6 @@ class LandingScreen extends React.Component {
         this.props.setEmail(Data.data.email);
         this.props.setCity(Data.data.city);
         this.props.setState(Data.data.state);
-        this.props.setAddress(Data.data.address);
         if(Data.data.fName != "") this.props.setFName(Data.data.fName);
         if(Data.data.lName != "") this.props.setLName(Data.data.lName);
         if(Data.data.isVerified) {
