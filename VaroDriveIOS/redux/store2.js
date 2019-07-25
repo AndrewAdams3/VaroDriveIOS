@@ -12,7 +12,6 @@ const initialState = {
   lName: "",
   city: "",
   state: "",
-  address: "",
   profilePic: "",
   isLoggedIn: false,
   userId: '',
@@ -38,8 +37,6 @@ const reducer = (state = initialState, action) => {
       return { ...state, city: action.value };  
     case "setState":
       return { ...state, state: action.value };  
-    case "setAddress":
-      return { ...state, address: action.value };  
     case "setPic":
       return { ...state, profilePic: action.value };
     case "setEmail":
@@ -106,12 +103,6 @@ const setState = (state) => {
     value: state
   }
 }
-const setAddress = (address) => {
-  return {
-    type: 'setAddress',
-    value: address
-  }
-}
 const setPic = (pic) => {
   return {
     type: "setPic",
@@ -162,5 +153,4 @@ export {
   isLoggedIn, setID, 
   setOnClock, setLocation,
   setPic, setCity, setState,
-  setAddress 
 };

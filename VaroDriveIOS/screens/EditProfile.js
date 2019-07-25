@@ -11,7 +11,7 @@ import FastImage from 'react-native-fast-image'
 import ImagePicker from 'react-native-image-picker'
 import axios from 'axios';
 
-import { setFName, setLName, setPic, setEmail, setCity, setState, setAddress } from '../redux/store2';
+import { setFName, setLName, setPic, setEmail, setCity, setState } from '../redux/store2';
 import colors from '../config/styles/colors'
 import ImageButton from '../components/imageButton.js';
 import { isIphoneX } from 'react-native-iphone-x-helper';

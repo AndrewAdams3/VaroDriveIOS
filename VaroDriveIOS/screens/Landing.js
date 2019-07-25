@@ -16,7 +16,6 @@ import {
   setLName, isLoggedIn, setEmail, 
   setPassword, setOnClock, setID, 
   setPic, setCity, setState, 
-  setAddress
 } from '../redux/store2'
 import { colors } from '../config/styles';
 import constants from '../config/constants'
@@ -47,7 +46,6 @@ const mapDispatchToProps = (dispatch) => {
     setLName: (name) => { dispatch(setLName(name)) },
     setCity: (city) => { dispatch(setCity(city)) },
     setState: (state) => { dispatch(setState(state)) },
-    setAddress: (add) => { dispatch(setAddress(add)) },
     setVerified: (val) => {dispatch(setVerified(val))}
   };
 }
@@ -110,7 +108,6 @@ class LandingScreen extends React.Component {
         this.props.setEmail(Data.data.email);
         this.props.setCity(Data.data.city);
         this.props.setState(Data.data.state);
-        this.props.setAddress(Data.data.address);
         if(Data.data.fName != "") this.props.setFName(Data.data.fName);
         if(Data.data.lName != "") this.props.setLName(Data.data.lName);
         if(Data.data.isVerified) {
