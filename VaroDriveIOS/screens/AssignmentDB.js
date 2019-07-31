@@ -129,7 +129,7 @@ class NewDBScreen extends React.Component {
       <Text style={{ fontSize: 20, color: 'white' }}>{" - " + this.state.fields[num].prompt}</Text>
       <View style={{ marginHorizontal: 10, borderWidth: 3, borderColor: colors.PRIMARY_BACKGROUND, borderRadius: 5 }}>
         <TextInput
-          style={[{color: 'white'}, isIphoneX() ? {height:35} : {}]}
+          style={[{color: 'white', paddingHorizontal: 10}, isIphoneX() ? {height:35} : Platform.OS === "ios" ? {height: 30} : {}] }
           editable={false}
           returnKeyType={"next"}
           placeholder={this.state.fields[num].value.toDateString()}
