@@ -60,20 +60,22 @@ class AuthScreen extends React.Component {
     }
   }
 
-  async klikPost() {
+  klikPost = async () => {
     var url = 'http://' + constants.ip + ':3210/data/users/login';
     var loggedIn = false;
     var seshId;
     var userId;
     var verified;
+    console.log("testing2");
     if (this.props.email != '' && this.props.password != '') {
+      console.log("testing");
       await axios.post(url, {
         email: this.props.email,
         password: this.props.password
       })
         .then(function (response) {
           console.log("res", response);
-          if (response.data.loggedIn == true) {
+          if (response.data.loggedIn === true) {
             loggedIn = true,
             seshId = response.data.seshId
             userId = response.data.userId
@@ -86,16 +88,18 @@ class AuthScreen extends React.Component {
         .catch(function (error) {
         });
       this.setState({ loginSuccess: loggedIn });
-      if (this.state.loginSuccess == true && seshId && verified) {
+      if (this.state.loginSuccess === true && seshId && verified) {
         this.storeToken(seshId);
         this.props.isLoggedIn(true);
         this.props.setID(userId);
         this.props.navigation.navigate('Landing');
+      } else if(!verified){
+        this.props.navigation.navigate('NotVerified');
       }
     }
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.keyboardDidShowListener = Keyboard.addListener('keyboardDidShow', this._keyboardDidShow);
     this.keyboardDidHideListener = Keyboard.addListener('keyboardDidHide', this._keyboardDidHide);
   }
@@ -110,7 +114,8 @@ class AuthScreen extends React.Component {
       this.state.CURRENT_IMAGE,
       {
         toValue: this.state.IMAGE_HEIGHT_SMALL
-      }
+      },
+      useNativeDriver=true
     ).start();
     this.setState({ keyboardShowing: true });
   }
@@ -120,7 +125,8 @@ class AuthScreen extends React.Component {
       this.state.CURRENT_IMAGE,
       {
         toValue: this.state.IMAGE_HEIGHT
-      }
+      },
+      useNativeDriver = true
     ).start();
     this.setState({ keyboardShowing: false });
   }
@@ -168,7 +174,7 @@ class AuthScreen extends React.Component {
                 </View>
               </KeyboardAvoidingView>
               <View style={styles.buttonsContainer}>
-                <TouchableOpacity style={styles.button} onPress={this.klikPost.bind(this)}>
+                <TouchableOpacity style={styles.button} onPress={this.klikPost}>
                   <Text style={[styles.buttonText, { fontSize: 18 }]}>Log In</Text>
                 </TouchableOpacity>
               </View>

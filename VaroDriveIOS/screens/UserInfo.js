@@ -43,7 +43,7 @@ class UserInfoScreen extends React.Component {
     this.formComplete = this.state.fname && this.state.lname && this.state.city && this.state.state;
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.keyboardDidHideListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidShow' : 'keyboardWillShow', this._keyboardDidShow);
     this.keyboardDidShowListener = Keyboard.addListener(Platform.OS === 'android' ? 'keyboardDidHide' : 'keyboardWillHide', this._keyboardDidHide);
   }

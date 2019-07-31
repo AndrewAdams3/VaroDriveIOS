@@ -48,12 +48,15 @@ class NotVerifiedScreen extends React.Component{
             <Image source={this.logo} style={styles.logo} />
           </TouchableOpacity>
           <View style={[styles.container, {flex: .4}]}>
-            <View style={{flex: 1}}>
+            <View style={{flex: 1, alignItems: "center", justifyContent: "center"}}>
               <Text style={{ fontSize: 16, textAlign: 'center', color: this.state.verified ? 'transparent' : 'red' }}>
                 Account has not yet been verified
               </Text>
               <Text style={{ justifyContent: 'space-around', fontSize: 20, textAlign: 'center', color: 'white'}}>
                 Please check your email to finish registering your account
+              </Text>
+              <Text style={{ justifyContent: 'space-around', fontSize: 14, textAlign: 'center', color: 'white', paddingTop: 5, width: "60%" }}>
+                (or press the icon if you haven't filled out your personal information)
               </Text>
             </View>
             <View style={{flex: 1}}>
