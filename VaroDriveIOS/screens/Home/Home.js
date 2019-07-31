@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'react-native';
+import { View, Text, Platform, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'react-native';
 import { colors, vars } from '../../config/styles'
 import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
 import { images } from '../../config/images'
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-around',
         width: '100%',
         height: '100%',
-        marginTop: isIphoneX() ? 100 : 80,
+        marginTop: Platform.OS === "ios" ? 100 : 80,
     },
     background: {
       position: 'absolute',

@@ -5,7 +5,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image
+  Image,
+  Platform
 } from 'react-native';
 import Accordion from 'react-native-collapsible/Accordion';
 import { colors } from '../config/styles'
@@ -123,7 +124,7 @@ class AllAssignmentsScreen extends Component {
     return (
       <View style={styles.container}>
         <Image source={this.bg} style={styles.background} />
-        <View style={{padding: 5, paddingTop: isIphoneX() ? 100 : 80}}>
+        <View style={{padding: 5, paddingTop: Platform.OS === "ios" ? 100 : 80}}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity style={styles.button} onPress={this.openAll}>
               <Text style={{ textAlign: "center", color: "white" }}>Open All</Text>

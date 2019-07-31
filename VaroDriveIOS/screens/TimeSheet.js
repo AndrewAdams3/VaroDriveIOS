@@ -1,8 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Image, FlatList, Modal } from 'react-native';
+import { View, Text, Platform, TouchableOpacity, StyleSheet, Image, FlatList, Modal } from 'react-native';
 import { colors } from '../config/styles'
 import constants from '../config/constants'
-import { ifIphoneX } from 'react-native-iphone-x-helper'
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker'
 import { connect } from 'react-redux';
@@ -271,10 +270,7 @@ const styles = StyleSheet.create({
     //backgroundColor: colors.PRIMARY_BACKGROUND
   },
   iphoneXTop: {
-    height: 80,
-    ...ifIphoneX({
-      height: 100
-    })
+    height: Platform.OS === "ios" ? 100 : 80
   },
   background: {
     position: 'absolute',
