@@ -72,8 +72,7 @@ class AuthScreen extends React.Component {
         password: this.props.password
       })
         .then(function (response) {
-          for (var i in response.data) {
-          }
+          console.log("res", response);
           if (response.data.loggedIn == true) {
             loggedIn = true,
             seshId = response.data.seshId

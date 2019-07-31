@@ -120,6 +120,7 @@ class ShowDBsScreen extends React.Component {
     }
   }
   listItem = ({ item }) => {
+    console.log("path: ", item.picturePath)
     if(item){
       const d = new Date(item.date)
       return (

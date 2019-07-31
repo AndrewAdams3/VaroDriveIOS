@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Alert, Dimensions, ScrollView, ActivityIndicator, Platform, PermissionsAndroid, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
+import { View, Text, Alert, ScrollView, ActivityIndicator, Platform, PermissionsAndroid, TouchableOpacity, StyleSheet, Image, TextInput } from 'react-native';
 import { colors } from '../config/styles'
 import ImagePicker from 'react-native-image-picker'
 
@@ -7,6 +7,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import constants from '../config/constants'
 import { setLocation } from '../redux/store2'
+import {AlertPopup} from '../components/AlertPopup'
 import {isIphoneX} from 'react-native-iphone-x-helper'
 
 import Geolocation from 'react-native-geolocation-service';
@@ -369,16 +370,16 @@ showAlert = () => {
                 this.props.navigation.navigate('Home');
             }
             else{
-              this.showAlert();
+              AlertPopup("Error Submitting", "Please ensure all fields are filled out");
             }
           }).catch((err) => { })
         }
         else{
-          this.showAlert();
+          AlertPopup("Error Submitting", "Please ensure all fields are filled out");
         }
       }, (err) => {
         if(err.response.status == 500)
-          this.showAlert();
+          AlertPopup("Error Submitting", "Please ensure all fields are filled out");
       })
     this.setState({ sending: false });
   }
