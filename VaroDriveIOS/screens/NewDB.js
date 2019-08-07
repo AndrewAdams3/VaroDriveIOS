@@ -277,16 +277,22 @@ class NewDBScreen extends React.Component {
       } else {
         //const source = { uri: response.uri };
         // You can also display the image using data:
-        console.log("pic", response);
-        const source = { uri: Platform.OS === "ios" ? response.data : ('data:image/jpeg;base64,' + response.data) };
-        
+        this.setState({testRes: response});
+        const source = { uri: 'data:image/jpeg;base64,' + response.data }
+        console.log("source", source);
+        let imgName = response.fileName;
+        if(typeof imgName === "undefined"){
+          var getFileName = response.uri.split('/');
+          imgName = getFileName[getFileName.length - 1];
+        }
         const data = new FormData();
         data.append('name', 'avatar');
         data.append('image', {
           uri: response.uri,
           type: response.type,
-          name: response.fileName
+          name: imgName
         });
+        console.log("name", data);
 
         if(source != ""){
           this.getCurrentLocation();
@@ -345,7 +351,7 @@ showAlert = () => {
     };
       this.setState({sending: true});
       await axios.post(url, post, config ).then( async (res) => {
-        console.log("data: ", res);
+        console.log("data: ", res.data);
         if (res.data.response == 0){
           url = 'https://' + constants.ip + ':3210/data/drivebys/newDB';
           await axios.post(url,{
@@ -364,7 +370,7 @@ showAlert = () => {
             city: this.state.city,
             state: this.state.state,
             county: this.state.county,
-            post: this.state.postal
+            post: this.state.postal,
           }).then( (res2) => {
             if(res2.data.response == 0){
               if(res2.data.already){
@@ -381,7 +387,7 @@ showAlert = () => {
         else{
           AlertPopup("Error Submitting", "Please ensure all fields are filled out");
         }
-      }, (err) => {
+      }).catch((err) => {
         if(err.response.status == 500)
           AlertPopup("Error Submitting", "Please ensure all fields are filled out");
       })
