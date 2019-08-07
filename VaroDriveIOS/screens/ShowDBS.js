@@ -86,7 +86,7 @@ class ShowDBsScreen extends React.Component {
   }
 
   getDriveBys = () => {
-    var url = 'http://' + constants.ip + ':3210/data/drivebys/byUserId';
+    var url = 'https://' + constants.ip + ':3210/data/drivebys/byUserId';
     if(this.props.userId){ 
       axios.post(url, {
         id: this.props.userId,

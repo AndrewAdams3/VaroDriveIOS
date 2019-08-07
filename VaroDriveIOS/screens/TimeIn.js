@@ -81,7 +81,7 @@ class TimeInScreen extends React.Component {
     this.setState({ lat: position.coords.latitude });
     this.setState({ lon: position.coords.longitude });
 
-    axios.get('http://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
+    axios.get('https://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
       .then((res) => {
         this.props.setLocation(res.data.address);
       })
@@ -132,7 +132,7 @@ class TimeInScreen extends React.Component {
   }
 
   setUserOnClock = (on) => {
-    var url = 'http://' + constants.ip + ':3210/data/users/onclock';
+    var url = 'https://' + constants.ip + ':3210/data/users/onclock';
     axios.put(url, {
       id: this.props.userId,
       value: on
@@ -171,7 +171,7 @@ class TimeInScreen extends React.Component {
   }
 
   createNewTimeClock = async (time) => {
-    var url = 'http://' + constants.ip + ':3210/data/times/newTime';
+    var url = 'https://' + constants.ip + ':3210/data/times/newTime';
     await axios.post(url, {
       id: this.props.userId,
       sLocation: this.props.location,
@@ -181,7 +181,7 @@ class TimeInScreen extends React.Component {
   }
 
   finishTimeClock = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/times/endTime';
+    var url = 'https://' + constants.ip + ':3210/data/times/endTime';
     await this.getCurrentLocation().then(
       await axios.put(url, {
         eLocation: this.props.location,
@@ -238,7 +238,7 @@ class TimeInScreen extends React.Component {
   }
 
   getOnTime = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/times';
+    var url = 'https://' + constants.ip + ':3210/data/times';
     await axios.post(url, {
       id: this.props.userId
     }).then((res) => {

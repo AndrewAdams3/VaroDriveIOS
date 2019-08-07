@@ -241,7 +241,7 @@ class NewDBScreen extends React.Component {
     this.setState({ lat: position.coords.latitude });
     this.setState({ lon: position.coords.longitude });
 
-    axios.get('http://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
+    axios.get('https://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
       .then( (res) => {
         this.setState({
           county: res.data.county,
@@ -262,7 +262,9 @@ class NewDBScreen extends React.Component {
 
   openCamera = () => {
      const options = {
-
+      storageOptions: {
+        skipBackup: true
+      }
     };
     ImagePicker.launchCamera( options, async (response) => {
       //;
@@ -275,7 +277,8 @@ class NewDBScreen extends React.Component {
       } else {
         //const source = { uri: response.uri };
         // You can also display the image using data:
-        const source = { uri: 'data:image/jpeg;base64,' + response.data };
+        console.log("pic", response);
+        const source = { uri: Platform.OS === "ios" ? response.data : ('data:image/jpeg;base64,' + response.data) };
         
         const data = new FormData();
         data.append('name', 'avatar');
@@ -329,7 +332,7 @@ showAlert = () => {
 
   }
   handleSubmit = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/drivebys/upload';
+    var url = 'https://' + constants.ip + ':3210/data/drivebys/upload';
   
     const post = this.state.post
 
@@ -342,8 +345,9 @@ showAlert = () => {
     };
       this.setState({sending: true});
       await axios.post(url, post, config ).then( async (res) => {
+        console.log("data: ", res);
         if (res.data.response == 0){
-          url = 'http://' + constants.ip + ':3210/data/drivebys/newDB';
+          url = 'https://' + constants.ip + ':3210/data/drivebys/newDB';
           await axios.post(url,{
             path: res.data.path,
             id: this.props.userId,
@@ -394,9 +398,9 @@ showAlert = () => {
       <ScrollView>
         <Image source={this.bg} style={styles.background} />
         <TouchableOpacity style={{ marginHorizontal: '30%', marginVertical: '10%' }} onPress={() => this.openCamera()}>
-            <Image source={this.state.avatar || require('../config/images/plus.png')} style={this.state.avatar ? { alignSelf: 'center', height: 70, width: 70} : { alignSelf: 'center', height: 40, width: 40 }} />
-            <Text style={{ marginTop: 20, alignSelf: 'center', fontSize: 20, color: 'white' }}>{this.state.avatar ? "Change Image" : "Add Image"}</Text>
-          </TouchableOpacity>
+          <Image source={this.state.avatar || require('../config/images/plus.png')} style={this.state.avatar ? { alignSelf: 'center', height: 70, width: 70} : { alignSelf: 'center', height: 40, width: 40 }} />
+          <Text style={{ marginTop: 20, alignSelf: 'center', fontSize: 20, color: 'white' }}>{this.state.avatar ? "Change Image" : "Add Image"}</Text>
+        </TouchableOpacity>
         {this.formItem(0)}
         {this.formItem(1)}
         {this.pType(2)}

@@ -65,7 +65,7 @@ class EditProfile extends React.Component{
   };
 
   submitChanges = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/update';
+    var url = 'https://' + constants.ip + ':3210/data/users/update';
     var fName = this.state["First Name"] == undefined ? this.props.fName : this.state["First Name"]
     var lName = this.state["Last Name"] == undefined ? this.props.lName : this.state["Last Name"]
     var email = this.state["Email"] == undefined ? this.props.email : this.state["Email"]
@@ -120,7 +120,7 @@ class EditProfile extends React.Component{
   }
 
   submitPic = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/profilePic';
+    var url = 'https://' + constants.ip + ':3210/data/users/profilePic';
 
     const type = "profilePic"
     const post = this.state.post
@@ -136,7 +136,7 @@ class EditProfile extends React.Component{
 
     await axios.post(url, post, config).then(async (res) => {
       if (res.data.response == 0) {
-        url = 'http://' + constants.ip + ':3210/data/users/profilePic';
+        url = 'https://' + constants.ip + ':3210/data/users/profilePic';
         await axios.put(url, {
           value: res.data.path,
           id: this.props.userId
@@ -164,7 +164,7 @@ class EditProfile extends React.Component{
             })
           }}
           style={styles.profilePic}
-          source={{uri:('http://' + constants.ip + ':3210/' + this.state.profilePic)}}
+          source={{uri:('https://' + constants.ip + ':3210/' + this.state.profilePic)}}
         />
       </ImageButton>
     )

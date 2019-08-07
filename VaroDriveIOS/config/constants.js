@@ -1,5 +1,5 @@
 export default constants = {
-  ip: '165.22.173.23'
+  ip: 'varodrive.xyz'
 };
 
 //varo office 10.1.10.245

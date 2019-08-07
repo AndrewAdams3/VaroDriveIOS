@@ -54,7 +54,7 @@ class AllAssignmentsScreen extends Component {
   }
 
   populate = () => {
-    Axios.get('http://' + constants.ip + ':3210/data/assignments/byId/' + this.props.userId)
+    Axios.get('https://' + constants.ip + ':3210/data/assignments/byId/' + this.props.userId)
       .then(({ data }) => {
         this.setState({ assignments: data, count: data.length });
       })

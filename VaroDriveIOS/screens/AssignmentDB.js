@@ -99,7 +99,7 @@ class NewDBScreen extends React.Component {
   };
 
   componentDidMount(){
-    axios.get('http://' + constants.ip + ':3210/data/assignments/byId/incomplete/' + this.props.userId)
+    axios.get('https://' + constants.ip + ':3210/data/assignments/byId/incomplete/' + this.props.userId)
       .then(({data}) => {
         let sortedData = data.sort((a, b) => {
           if(a.Date > b.Date) return -1;
@@ -179,7 +179,7 @@ class NewDBScreen extends React.Component {
     this.setState({ lat: position.coords.latitude });
     this.setState({ lon: position.coords.longitude });
 
-    axios.get('http://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
+    axios.get('https://' + constants.ip + ':3210/location/' + this.state.lat + "/" + this.state.lon)
       .then( (res) => {
         this.setState({
           county: res.data.county,
@@ -249,7 +249,7 @@ showAlert = () => {
   
   handleSubmit = async () => {
     if(this.state.address && this.state.selected){
-      var url = 'http://' + constants.ip + ':3210/data/drivebys/upload';
+      var url = 'https://' + constants.ip + ':3210/data/drivebys/upload';
       const post = this.state.post
       const config = {
         method: 'POST',
@@ -261,7 +261,7 @@ showAlert = () => {
       this.setState({sending: true});
       await axios.post(url, post, config ).then( async (res) => {
         if (res.data.response == 0){
-          url = 'http://' + constants.ip + ':3210/data/drivebys/newDB';
+          url = 'https://' + constants.ip + ':3210/data/drivebys/newDB';
           await axios.post(url,{
             path: res.data.path,
             id: this.props.userId,
@@ -285,14 +285,14 @@ showAlert = () => {
               this.showAlert();
             }
             else{
-              url = 'http://' + constants.ip + ':3210/data/assignments/complete/one/' + this.props.userId;
+              url = 'https://' + constants.ip + ':3210/data/assignments/complete/one/' + this.props.userId;
               axios.put(url, {
                 address: this.state.selected,
               }).then(({ data }) => {
                 if (data.ok === -1) {
                   this.showAlert()
                 } else {
-                  url = 'http://' + constants.ip + ':3210/data/assignments/complete/byId/' + this.state.selectedId;
+                  url = 'https://' + constants.ip + ':3210/data/assignments/complete/byId/' + this.state.selectedId;
                   axios.put(url).then(({ data }) => {
                     if (data.ok === 1)
                       this.props.navigation.navigate("Home");

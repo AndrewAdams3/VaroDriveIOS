@@ -61,12 +61,12 @@ class AuthScreen extends React.Component {
   }
 
   klikPost = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/login';
+    var url = 'https://' + constants.ip + ':3210/data/users/login';
     var loggedIn = false;
     var seshId;
     var userId;
     var verified;
-    console.log("testing2");
+    console.log("testing2", this.props.email, this.props.password);
     if (this.props.email != '' && this.props.password != '') {
       console.log("testing");
       await axios.post(url, {
@@ -74,7 +74,7 @@ class AuthScreen extends React.Component {
         password: this.props.password
       })
         .then(function (response) {
-          console.log("res", response);
+          console.log("res", response.data);
           if (response.data.loggedIn === true) {
             loggedIn = true,
             seshId = response.data.seshId
@@ -86,6 +86,7 @@ class AuthScreen extends React.Component {
           }
         })
         .catch(function (error) {
+          console.log("err at",  url, error);
         });
       this.setState({ loginSuccess: loggedIn });
       if (this.state.loginSuccess === true && seshId && verified) {
@@ -93,7 +94,7 @@ class AuthScreen extends React.Component {
         this.props.isLoggedIn(true);
         this.props.setID(userId);
         this.props.navigation.navigate('Landing');
-      } else if(!verified){
+      } else if(this.state.loginSuccess === true && !verified){
         this.props.navigation.navigate('NotVerified');
       }
     }

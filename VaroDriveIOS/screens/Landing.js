@@ -92,7 +92,7 @@ class LandingScreen extends React.Component {
   }
 
    getUser = async (token, returner) => {
-    var url = 'http://' + constants.ip + ':3210/data/users/id';
+    var url = 'https://' + constants.ip + ':3210/data/users/id';
      var complete = false;
      await axios.post(url, { seshId: token }).then((Data) => {
       if(Data.data.ok == 1){

@@ -44,7 +44,7 @@ class TimeSheet extends React.Component {
   };
 
   componentDidMount(){
-    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + "30";
+    var url = 'https://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + "30";
     axios.get(url).then(({data}) => {
       this.setState({times: data});
     })
@@ -174,7 +174,7 @@ class TimeSheet extends React.Component {
     )
   }
   sortDates = () => {
-    var url = 'http://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + this.state.selectedStartDate + "/" + this.state.selectedEndDate;
+    var url = 'https://' + constants.ip + ':3210/data/times/byId/' + this.props.userId + "/" + this.state.selectedStartDate + "/" + this.state.selectedEndDate;
     axios.get(url).then(({data}) => {
         this.setState({times: data});
         this.setState({

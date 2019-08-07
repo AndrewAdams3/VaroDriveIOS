@@ -93,7 +93,7 @@ class SignUpScreen extends React.Component {
   }
 
   continue = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/signup/isVerified/' + this.state.userId;
+    var url = 'https://' + constants.ip + ':3210/data/users/signup/isVerified/' + this.state.userId;
     isV = false;
     axios.get(url)
       .then( function (res) {
@@ -116,7 +116,7 @@ class SignUpScreen extends React.Component {
   }
 
   klikPost = async () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/signup';
+    var url = 'https://' + constants.ip + ':3210/data/users/signup';
     var signup = true;
     var seshId;
     var userId;

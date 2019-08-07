@@ -57,7 +57,7 @@ class ProfileScreen extends React.Component {
       sort: "Default",
       showing: "",
       number: 30,
-      profilePic: 'http://' + constants.ip + ':3210/' + path,
+      profilePic: 'https://' + constants.ip + ':3210/' + path,
       profileEditor: false
     }
     this.background = require('../config/images/psbackground.png')
@@ -74,7 +74,7 @@ class ProfileScreen extends React.Component {
   removeToken = async () => {
     try {
       AsyncStorage.setItem(ACCESS_TOKEN, "");
-      var url = 'http://' + constants.ip + ':3210/data/users/logout';
+      var url = 'https://' + constants.ip + ':3210/data/users/logout';
       axios.put(url, {id: this.props.userId, value: ""} )
       this.props.LOG_OUT();
       this.props.navigation.navigate("Auth")
@@ -94,7 +94,7 @@ class ProfileScreen extends React.Component {
             <FastImage
               onError={() => {
                 this.setState({
-                  profilePic: 'http://' + constants.ip + ':3210/' + "file/uploads/profilePics/default.jpg"
+                  profilePic: 'https://' + constants.ip + ':3210/' + "file/uploads/profilePics/default.jpg"
                 })
               }}
               style={styles.profilePic}

@@ -26,7 +26,7 @@ class NotVerifiedScreen extends React.Component{
   }
 
   isVerified = () => {
-    var url = 'http://' + constants.ip + ':3210/data/users/signup/isVerified/' + this.props.userId;
+    var url = 'https://' + constants.ip + ':3210/data/users/signup/isVerified/' + this.props.userId;
     axios.get(url)
       .then( (res) => {
         if(res.data.ok == true) {
