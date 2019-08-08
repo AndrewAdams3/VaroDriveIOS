@@ -225,7 +225,7 @@ class NewDBScreen extends React.Component {
           type: response.type,
           name: imgName
         });
-        
+
         if(source != ""){
           this.getCurrentLocation();
           this.setState({
@@ -359,7 +359,7 @@ showAlert = () => {
         <View style={{flex: 1}}>
           <TouchableOpacity style={{ marginHorizontal: '30%', marginVertical: '10%' }} onPress={() => this.openCamera()}>
             <Image source={this.state.avatar || require('../config/images/plus.png')} style={this.state.avatar ? { alignSelf: 'center', height: 70, width: 70} : { alignSelf: 'center', height: 40, width: 40 }} />
-            <Text style={{ marginTop: 20, alignSelf: 'center', fontSize: 20, color: 'white' }}>{this.state.avatar ? "Change Image" : "Add Image"}</Text>
+            <Text style={{ marginTop: 20, alignSelf: 'center', fontSize: 20, color: 'white', height: 25 }}>{this.state.avatar ? "Change Image" : "Add Image"}</Text>
           </TouchableOpacity>
           {this.formItem(0)}
           {this.boolItem(1)}
