@@ -279,7 +279,6 @@ class NewDBScreen extends React.Component {
         // You can also display the image using data:
         this.setState({testRes: response});
         const source = { uri: 'data:image/jpeg;base64,' + response.data }
-        console.log("source", source);
         let imgName = response.fileName;
         if(typeof imgName === "undefined"){
           var getFileName = response.uri.split('/');
@@ -292,7 +291,6 @@ class NewDBScreen extends React.Component {
           type: response.type,
           name: imgName
         });
-        console.log("name", data);
 
         if(source != ""){
           this.getCurrentLocation();

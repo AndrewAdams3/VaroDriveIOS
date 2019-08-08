@@ -213,14 +213,19 @@ class NewDBScreen extends React.Component {
         // You can also display the image using data:
         const source = { uri: 'data:image/jpeg;base64,' + response.data };
         
+        let imgName = response.fileName;
+        if(typeof imgName === "undefined"){
+          var getFileName = response.uri.split('/');
+          imgName = getFileName[getFileName.length - 1];
+        }
         const data = new FormData();
         data.append('name', 'avatar');
         data.append('image', {
           uri: response.uri,
           type: response.type,
-          name: response.fileName
+          name: imgName
         });
-
+        
         if(source != ""){
           this.getCurrentLocation();
           this.setState({
