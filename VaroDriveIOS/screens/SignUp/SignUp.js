@@ -41,7 +41,9 @@ class SignUpScreen extends React.Component {
       invalidEmail: false
     }
     this.logo = require("../../config/images/VaroLogo.png");
-    this.bg = require('../../config/images/psbackground.png')
+    this.bg = require('../../config/images/psbackground.png');
+    this.usernameIcon = require('../config/images/usernameIcon.png');
+    this.passwordIcon = require('../config/images/passwordIcon.png');
   }
 
   async storeToken(accessToken) {
@@ -204,7 +206,7 @@ class SignUpScreen extends React.Component {
                       User Already Exists
                     </Text>
                     <UserInput
-                      source={{ uri: images.usernameIcon }}
+                      source={{ uri: this.usernameIcon }}
                       placeholder={"email"}
                       keyboardType={'email-address'}
                       autoCapitalize={'none'}
@@ -215,7 +217,7 @@ class SignUpScreen extends React.Component {
                   </View>
                   <View style={{ paddingBottom: 60 }}>
                     <UserInput
-                      source={{ uri: images.passwordIcon }}
+                      source={{ uri: this.passwordIcon }}
                       placeholder={"password"}
                       autoCapitalize={'none'}
                       returnKeyType={'done'}
