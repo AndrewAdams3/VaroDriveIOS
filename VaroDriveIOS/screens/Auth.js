@@ -42,6 +42,8 @@ class AuthScreen extends React.Component {
     }
     this.logo = require("../config/images/VaroLogo.png");
     this.bg = require('../config/images/psbackground.png');
+    this.usernameIcon = require('../config/images/usernameIcon.png');
+    this.passwordIcon = require('../config/images/passwordIcon.png');
 
   }
 
@@ -152,7 +154,7 @@ class AuthScreen extends React.Component {
                       No Account Found with Those Credentials
                     </Text>
                     <UserInput
-                      source={{ uri: images.usernameIcon }}
+                      source={ this.usernameIcon }
                       keyboardType={'email-address'}
                       placeholder={"email"}
                       autoCapitalize={'none'}
@@ -163,7 +165,7 @@ class AuthScreen extends React.Component {
                   </View>
                   <View style={{ paddingBottom: 60 }}>
                     <UserInput
-                      source={{ uri: images.passwordIcon }}
+                      source={ this.passwordIcon }
                       placeholder={"password"}
                       autoCapitalize={'none'}
                       returnKeyType={'done'}
