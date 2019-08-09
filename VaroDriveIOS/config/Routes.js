@@ -3,9 +3,6 @@ import { createSwitchNavigator, createStackNavigator, createAppContainer, create
 import React from 'react';
 import { ifIphoneX } from 'react-native-iphone-x-helper'
 
-// Component Imports
-import SlideMenu from '../components/SlideMenu'
-import LeftMenu from '../components/LeftMenu'
 // Route Imports
 import HomeScreen from '../screens/Home/Home.js'
 import SignUpScreen from '../screens/SignUp/SignUp.js'
@@ -98,30 +95,11 @@ const AppNav = createStackNavigator({
     },
 })
 
-// Renders the Main App navigator with the SlideMenu wrapped around it
-class AppStack extends React.Component {
-    // Have to explicitly pass in the AppStack's router, otherwise this will render a new Router when we render <AppStack/>
-    // and won't be able to interact with the rest of the navigators in the switch nav
-    static router = AppNav.router
-
-    render() {
-        return (
-            <SlideMenu
-                renderLeftView = {() => <LeftMenu navigation={this.props.navigation}/>}
-                renderCenterView = {() => <AppNav navigation={this.props.navigation}/>}
-            />
-        )
-    }
-}
-
-
-
 export default SwitchNav = createAppContainer(createSwitchNavigator({
     App: AppNav,
     Auth: AuthStack,
     Landing: LandingStack,
     Setup: SetupStack,
-   // NewDB: NewDBStack
 },{
     initialRouteName: 'Landing',
 }, ))
