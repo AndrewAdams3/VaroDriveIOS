@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Text, ImageBackground } from 'react-native';
 import { Swiper } from 'react-native-awesome-viewpager'
-import {images} from '../config/images'
 import {colors} from '../config/styles'
 
 export default class LoginSlide extends React.Component {

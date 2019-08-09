@@ -2,7 +2,6 @@ import React from 'react';
 import { View, Alert, AsyncStorage, Text, TouchableOpacity, StyleSheet, KeyboardAvoidingView, ScrollView, Dimensions, Image, Keyboard, Animated } from 'react-native';
 import { colors } from '../../config/styles'
 import UserInput from '../../components/UserInput'
-import { images } from '../../config/images'
 import constants from '../../config/constants'
 import axios from 'axios';
 import { connect } from 'react-redux';

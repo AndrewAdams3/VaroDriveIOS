@@ -2,9 +2,6 @@ import React from 'react';
 import { View, Text, Platform, TouchableOpacity, StyleSheet, Image, AsyncStorage } from 'react-native';
 import { colors, vars } from '../../config/styles'
 import { ifIphoneX, isIphoneX } from 'react-native-iphone-x-helper'
-import { images } from '../../config/images'
-
-const ACCESS_TOKEN = 'access_token';
 
 export default class HomeScreen extends React.Component {
     constructor(props) {
