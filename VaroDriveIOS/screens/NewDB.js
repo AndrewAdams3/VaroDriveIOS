@@ -205,11 +205,11 @@ class NewDBScreen extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => { this.handleTypePress(1) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
             <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 1 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: Platform.OS === "ios" ? 10 : 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND}} />
-            <Text style={styles.formText}>Single Family Home</Text>
+            <Text style={styles.formText}>Single-Family Residence</Text>
           </TouchableOpacity>  
           <TouchableOpacity onPress={() => { this.handleTypePress(2) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
             <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 2 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: Platform.OS === "ios" ? 10 : 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
-            <Text style={styles.formText}>Multi-Unit Building</Text>
+            <Text style={styles.formText}>Multi-Family Residence</Text>
           </TouchableOpacity> 
           <TouchableOpacity onPress={() => { this.handleTypePress(3) }} style={{ backgroundColor: this.state.fields[num].opacityl > 0 ? 'green' : 'transparent', paddingVertical: 7, flex: 1, flexDirection: 'row' }}>
             <Image source={this.circle} style={{ height: 20, width: 20, tintColor: this.state.fields[2].value == 3 ? colors.PRIMARY_BACKGROUND : 'transparent', borderRadius: Platform.OS === "ios" ? 10 : 15, borderWidth: 2, borderColor: colors.PRIMARY_BACKGROUND }} />
