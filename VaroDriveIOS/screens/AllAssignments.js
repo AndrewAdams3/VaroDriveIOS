@@ -119,7 +119,7 @@ class AllAssignmentsScreen extends Component {
           )
         })
       }
-      <Text>{ass.notes}</Text>
+      <Text style={[styles.contentStyle, {width: "100%"}]}>{ass.notes}</Text>
       </View>
     )
   }
