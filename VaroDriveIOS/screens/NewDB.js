@@ -348,47 +348,48 @@ showAlert = () => {
       body: post,
     };
       this.setState({sending: true});
-      await axios.post(url, post, config ).then( async (res) => {
-        console.log("data: ", res.data);
-        if (res.data.response == 0){
-          url = 'https://' + constants.ip + ':3210/data/drivebys/newDB';
-          await axios.post(url,{
-            path: res.data.path,
-            id: this.props.userId,
-            address: this.state.fields[0].value,
-            street: this.state.street,
-            date: this.state.fields[1].value.getTime(),
-            offset: this.state.fields[1].value.getTimezoneOffset(),
-            type: this.state.fields[2].value,
-            vacant: this.state.fields[3].value,
-            burned: this.state.fields[4].value,
-            boarded: this.state.fields[5].value,
-            lat: this.state.lat,
-            lon: this.state.lon,
-            city: this.state.city,
-            state: this.state.state,
-            county: this.state.county,
-            post: this.state.postal,
-          }).then( (res2) => {
-            if(res2.data.response == 0){
-              if(res2.data.already){
-                this.showAlreadyAlert();
+      if(this.state.state && this.state.city && this.state.street){
+        await axios.post(url, post, config ).then( async (res) => {
+          console.log("data: ", res.data);
+          if (res.data.response == 0){
+            url = 'https://' + constants.ip + ':3210/data/drivebys/newDB';
+            await axios.post(url,{
+              path: res.data.path,
+              id: this.props.userId,
+              address: this.state.fields[0].value,
+              street: this.state.street,
+              date: this.state.fields[1].value.getTime(),
+              offset: this.state.fields[1].value.getTimezoneOffset(),
+              type: this.state.fields[2].value,
+              vacant: this.state.fields[3].value,
+              burned: this.state.fields[4].value,
+              boarded: this.state.fields[5].value,
+              lat: this.state.lat,
+              lon: this.state.lon,
+              city: this.state.city,
+              state: this.state.state,
+              county: this.state.county,
+              post: this.state.postal,
+            }).then( (res2) => {
+              if(res2.data.response == 0){
+                if(res2.data.already){
+                  this.showAlreadyAlert();
+                }
+                else 
+                  this.props.navigation.navigate('Home');
               }
-              else 
-                this.props.navigation.navigate('Home');
-            }
-            else{
-              AlertPopup("Error Submitting", "Please ensure all fields are filled out");
-            }
-          }).catch((err) => { })
-        }
-        else{
-          AlertPopup("Error Submitting", "Please ensure all fields are filled out");
-        }
-      }).catch((err) => {
-        if(err.response.status == 500)
-          AlertPopup("Error Submitting", "Please ensure all fields are filled out");
-      })
+              else{
+                AlertPopup("Error Submitting", "Please ensure all fields are filled out and Location Services are turned on");
+              }
+            }).catch((err) => { })
+          }
+          else{
+            AlertPopup("Error Submitting", "Please ensure all fields are filled out and Location Services are turned on");
+          }
+        }).catch((err) => {
+            AlertPopup("Error Submitting", "Please ensure all fields are filled out and Location Services are turned on");
+        })
+      }
     this.setState({ sending: false });
   }
 
