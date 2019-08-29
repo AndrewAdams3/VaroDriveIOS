@@ -35,7 +35,8 @@ class AllAssignmentsScreen extends Component {
       activeSections: [],
       multipleSelect: false,
       assignments: [],
-      count: 0
+      count: 0,
+      task: {}
     };
     this.bg = require('../config/images/psbackground.png');
   }
@@ -57,6 +58,10 @@ class AllAssignmentsScreen extends Component {
     Axios.get('https://' + constants.ip + ':3210/data/assignments/byId/' + this.props.userId)
       .then(({ data }) => {
         this.setState({ assignments: data, count: data.length });
+      })
+    Axios.get('https://' + constants.ip + ':3210/data/assignments/target/byId/' + this.props.userId)
+      .then(({data})=>{
+        this.setState({task: data})
       })
   }
 
@@ -98,7 +103,7 @@ class AllAssignmentsScreen extends Component {
   renderContent(ass, _, isActive) {
     return (
       <View
-        style={[styles.content, isActive ? styles.active : styles.inactive]}
+        style={[styles.content]}
       >
       {
         ass.Addresses.map(({address, completed}, index) => {
@@ -114,6 +119,7 @@ class AllAssignmentsScreen extends Component {
           )
         })
       }
+      <Text>{ass.notes}</Text>
       </View>
     )
   }
@@ -124,7 +130,12 @@ class AllAssignmentsScreen extends Component {
     return (
       <View style={styles.container}>
         <Image source={this.bg} style={styles.background} />
-        <View style={{padding: 5, paddingTop: Platform.OS === "ios" ? 100 : 80}}>
+        <View style={{flex: 1, padding: 5, paddingTop: Platform.OS === "ios" ? 120 : 100}}>
+          <View style={{flex: .3, width: "100%", justifyContent: "flex-start", padding: 5, marginBottom: 10}}>
+            <Text style={{color: "white", fontSize: 20}}>-Current Target: {"\n\t"}<Text style={{fontSize: 22}} adjustsFontSizeToFit={true}>{this.state.task.area}</Text></Text>
+            <Text style={{color: "white", fontSize: 20}}>-Date Assigned: {"\n\t"}<Text style={{fontSize: 22}}>{new Date(this.state.task.date).toLocaleDateString()}</Text></Text>            
+          </View>
+          <View style={{flex: 1}}>
           <View style={styles.buttonsContainer}>
             <TouchableOpacity style={styles.button} onPress={this.openAll}>
               <Text style={{ textAlign: "center", color: "white" }}>Open All</Text>
@@ -147,6 +158,7 @@ class AllAssignmentsScreen extends Component {
               />
             </View>
           </ScrollView>
+          </View>
         </View>
       </View>
     );
@@ -156,8 +168,6 @@ class AllAssignmentsScreen extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
-    height: '100%'
   },
    background: {
     position: 'absolute',

@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
     overlayColor: 'grey'
   },
   mainView: {
-    flex: 1.5, width: '100%', 
+    flex: 1.5, 
+    width: '100%', 
     alignContent: 'space-around', 
     justifyContent: 'space-around', 
     alignItems: 'center',
