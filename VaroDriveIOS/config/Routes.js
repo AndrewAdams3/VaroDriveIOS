@@ -20,7 +20,6 @@ import AllAssignmentsScreen from '../screens/AllAssignments';
 import ShowDBsScreen from '../screens/ShowDBS';
 import { colors } from './styles';
 
-
 const SetupStack = createStackNavigator({
   NotVerified: NotVerifiedScreen,
   UserInfo: UserInfoScreen
