@@ -29,7 +29,6 @@ build/
 .gradle
 local.properties
 *.iml
-
 # node.js
 #
 node_modules/
@@ -56,3 +55,5 @@ buck-out/
 *.jsbundle
 
 .env
+android/app/src/main/AndroidManifest.xml
+ios/PropertySpotters/AppDelegate.m
